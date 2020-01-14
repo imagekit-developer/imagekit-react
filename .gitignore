@@ -1,0 +1,6 @@
+node_modules
+.env
+.vscode
+lib
+dist
+src/test/__snapshots__
