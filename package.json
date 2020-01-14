@@ -1,0 +1,51 @@
+{
+  "name": "imagekit-react",
+  "version": "1.0.0",
+  "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
+  "private": true,
+  "scripts": {
+    "test": "react-scripts test --env=jsdom --watchAll",
+    "storybook": "start-storybook -p 6007",
+    "compile": "node_modules/.bin/babel src --out-dir lib --copy-files ",
+    "dist": "node_modules/.bin/webpack",
+    "build-storybook": "build-storybook",
+    "build": "rm -f -r compile && npm run compile && rm -f -r dist && npm run dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:mindship/imagekit/imagekit-react.git"
+  },
+  "main": "dist/imagekit-react.js",
+  "author": "ImageKit",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-export-default-from": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "@babel/register": "^7.7.4",
+    "@babel/runtime": "^7.7.6",
+    "@storybook/addon-actions": "^5.2.8",
+    "@storybook/addon-info": "^5.2.8",
+    "@storybook/addon-links": "^5.2.8",
+    "@storybook/addon-storyshots": "^5.2.8",
+    "@storybook/addons": "^5.2.8",
+    "@storybook/react": "^5.2.8",
+    "babel-loader": "^8.0.6",
+    "eslint": "^6.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-test-renderer": "^16.12.0",
+    "require-context.macro": "^1.2.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "imagekit-javascript": "^1.0.1",
+    "prop-types": "^15.7.2",
+    "react-scripts": "^3.3.0"
+  }
+}
