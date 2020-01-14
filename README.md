@@ -3,7 +3,7 @@
 [![Node CI](https://github.com/imagekit-developer/imagekit-nodejs/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekit-react/)
 [![npm version](https://img.shields.io/npm/v/imagekit-react)](https://www.npmjs.com/package/imagekit-react) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ApacheAirflow)
+[![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ImagekitIo)
 
 React SDK for [ImageKit.io](https://imagekit.io) which implements client-side upload and URL generation for use inside a react application.
 
