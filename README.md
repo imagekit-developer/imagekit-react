@@ -1,5 +1,10 @@
 # ImageKit.io React SDK
 
+[![Node CI](https://github.com/imagekit-developer/imagekit-nodejs/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekit-react/)
+[![npm version](https://img.shields.io/npm/v/imagekit-react)](https://www.npmjs.com/package/imagekit-react) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ApacheAirflow)
+
 React SDK for [ImageKit.io](https://imagekit.io) which implements client-side upload and URL generation for use inside a react application.
 
 ImageKit is a complete image optimization and transformation solution that comes with an [image CDN](https://imagekit.io/features/imagekit-infrastructure) and media storage. It can be integrated with your existing infrastructure - storages like AWS S3, web servers, your CDN and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
