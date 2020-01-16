@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { IKImage, IKContext, IKUpload } from 'imagekit-react'
+import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
@@ -45,3 +45,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,5 +1,5 @@
 {
-  "name": "imagekit-react",
+  "name": "imagekitio-react",
   "version": "1.0.0",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "private": true,
@@ -13,9 +13,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:mindship/imagekit/imagekit-react.git"
+    "url": "https://github.com/imagekit-developer/imagekit-react"
   },
-  "main": "dist/imagekit-react.js",
+  "main": "dist/imagekitio-react.js",
   "author": "ImageKit",
   "license": "ISC",
   "devDependencies": {

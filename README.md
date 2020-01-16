@@ -1,7 +1,7 @@
 # ImageKit.io React SDK
 
-[![Node CI](https://github.com/imagekit-developer/imagekit-nodejs/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekit-react/)
-[![npm version](https://img.shields.io/npm/v/imagekit-react)](https://www.npmjs.com/package/imagekit-react) 
+[![Node CI](https://github.com/imagekit-developer/imagekit-nodejs/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekitio-react/)
+[![npm version](https://img.shields.io/npm/v/imagekitio-react)](https://www.npmjs.com/package/imagekitio-react) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ImagekitIo)
 
@@ -11,11 +11,11 @@ ImageKit is a complete image optimization and transformation solution that comes
 
 ## Installation
 
-  `npm install --save imagekit-react`
+  `npm install --save imagekitio-react`
 
 Include the components in your code:
 
-  `import {IKContext} from "imagekit-react"`
+  `import {IKContext} from "imagekitio-react"`
 
 ## Usage
 
