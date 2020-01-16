@@ -5,6 +5,8 @@ import ErrorBoundary from "../../components/ErrorBoundary"
 
 const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+const src = "https://ik.imagekit.io/mindship/default-image.jpg";
+const path = "/default-image.jpg";
 
 global.IntersectionObserver = class IntersectionObserver {
   constructor() {}
@@ -20,12 +22,12 @@ storiesOf("Image", module)
   .add(
     "image",
     () =>
-    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src="https://ik.imagekit.io/gqyojxcwzxj/ABC_BV8lzpfOS"/>
+    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src}/>
   )
   .add(
     "imageWithLQIP",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src="https://ik.imagekit.io/gqyojxcwzxj/ABC_BV8lzpfOS" transformation={[{
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} transformation={[{
         height: 300,
         width: 400
       }]} id="lqip"/>
@@ -33,7 +35,7 @@ storiesOf("Image", module)
   .add(
     "imageWithTransformations",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src="https://ik.imagekit.io/gqyojxcwzxj/ABC_BV8lzpfOS" transformation={[{
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src} transformation={[{
         height: 300,
         width: 400
       }]} />
@@ -53,7 +55,7 @@ storiesOf("Image", module)
     "imagePublicKeyFail",
     () =>
       <ErrorBoundary>
-        <IKImage urlEndpoint={urlEndpoint} path="/ABC_BV8lzpfOS" transformation={[{
+        <IKImage urlEndpoint={urlEndpoint} path={path} transformation={[{
           "heigth": "300",
           "width": "400"
         }]} />
@@ -64,7 +66,7 @@ storiesOf("Image", module)
     "imageUrlEndpointFail",
     () =>
       <ErrorBoundary>
-        <IKImage publicKey="public_oeVQ1TDolFID06vH0h6yMUeqjLY=" path="/ABC_BV8lzpfOS" transformation={[{
+        <IKImage publicKey="public_oeVQ1TDolFID06vH0h6yMUeqjLY=" path={path} transformation={[{
           "height": "300",
           "width": "400"
         }]} />
