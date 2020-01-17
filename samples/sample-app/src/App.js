@@ -3,10 +3,17 @@ import './App.css';
 import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
-  const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+  let urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+  if(urlEndpoint[urlEndpoint.length-1] === "/")
+    urlEndpoint = urlEndpoint.slice(0,urlEndpoint.length-1);
+
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
-  const path = "default-image.jpg";
-  const src = `${urlEndpoint}${path}`;
+
+  let path = "/default-image.jpg";
+  if(path[0] === "/")
+    path = path.split("/")[1];
+
+  const src = `${urlEndpoint}/${path}`;
 
   return (
     <div className="App">
