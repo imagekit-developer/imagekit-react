@@ -6,8 +6,7 @@ import ErrorBoundary from "../../components/ErrorBoundary";
 
 const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-const src = "https://ik.imagekit.io/mindship/default-image.jpg";
-const path = "/default-image.jpg";
+const path = "default-image.jpg";
 
 storiesOf("IKContext", module)
   .add(

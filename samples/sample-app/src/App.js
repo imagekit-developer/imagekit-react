@@ -5,8 +5,9 @@ function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
-  const src = "https://ik.imagekit.io/mindship/default-image.jpg";
-  const path = "/default-image.jpg";
+  const path = "default-image.jpg";
+  const src = `${urlEndpoint}${path}`;
+
   return (
     <div className="App">
       <h1>Hi! This is an ImageKit React SDK Demo!</h1>
