@@ -25,8 +25,12 @@ jobs:
         npm i -g yarn
         yarn install
         yarn test:ci
+        yarn build
       env:
         CI: true
+        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
+        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
+        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
 
   publish:
     needs: build
