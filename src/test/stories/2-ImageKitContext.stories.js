@@ -6,13 +6,14 @@ import ErrorBoundary from "../../components/ErrorBoundary";
 
 const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+const path = "default-image.jpg";
 
 storiesOf("IKContext", module)
   .add(
     "imageKitContext",
     () =>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
-        <IKImage path="/ABC_BV8lzpfOS" transformation={[{
+        <IKImage path={path} transformation={[{
           "height": "300",
           "width": "400"
         }]} />
@@ -23,7 +24,7 @@ storiesOf("IKContext", module)
     () =>
       <ErrorBoundary>
         <IKContext urlEndpoint={urlEndpoint} >
-          <IKImage path="/ABC_BV8lzpfOS" transformation={[{
+          <IKImage path={path} transformation={[{
             "height": "300",
             "width": "400"
           }]} />

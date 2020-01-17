@@ -21,7 +21,7 @@ jobs:
       run: |
         npm i -g yarn
         yarn install
-        yarn test
+        yarn test:ci
       env:
         CI: true
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}

@@ -4,12 +4,13 @@ import { storiesOf } from "@storybook/react";
 
 const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
+const path = "/default-image.jpg";
 
 storiesOf("Image-Transformation", module)
   .add(
     "imageWithSingleTransformations",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path="ABC_BV8lzpfOS" transformation={[{
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
         "height": "300",
         "width": "400"
       }]} />
@@ -17,7 +18,7 @@ storiesOf("Image-Transformation", module)
   .add(
     "imageWithChainedTransformations",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path="/ABC_BV8lzpfOS" transformation={[{
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
         "height": "300",
         "width": "400"
       }, {

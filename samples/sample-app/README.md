@@ -25,7 +25,7 @@ Now link it with, npm link
 ```js
 npm link
 ```
-This will create a global repository link for imagekit-react
+This will create a global repository link for imagekitio-react
 
 
 ### Installing the sample-app
@@ -43,10 +43,10 @@ npm install
 
 Now run,
 ```js
-npm link imagekit-react
+npm link imagekitio-react
 ```
 
-This should create a copy of `imagekit-react` library in `node_modules` of `sample-app`
+This should create a copy of `imagekitio-react` library in `node_modules` of `sample-app`
 
 ## Setting the enviroment variable
 

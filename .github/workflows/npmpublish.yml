@@ -24,11 +24,11 @@ jobs:
       run: |
         npm i -g yarn
         yarn install
-        yarn test
+        yarn test:ci
       env:
         CI: true
-  
-  publish: 
+
+  publish:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +41,7 @@ jobs:
       run: |
         npm i -g yarn
         yarn config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-        yarn publish        
+        yarn publish
       env:
         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
         CI: true
