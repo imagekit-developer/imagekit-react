@@ -1,6 +1,6 @@
 {
   "name": "imagekitio-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "scripts": {
     "compile": "node_modules/.bin/babel src --out-dir lib --copy-files",
