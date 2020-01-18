@@ -23,7 +23,7 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm i -g yarn
-        yarn install
+        yarn
         yarn test:ci
         yarn build
       env:
@@ -44,6 +44,8 @@ jobs:
     - name: yarn publish
       run: |
         npm i -g yarn
+        yarn
+        yarn build
         yarn config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
         yarn publish
       env:
