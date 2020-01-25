@@ -2,7 +2,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ImageKit from 'imagekit-javascript';
 import { ImageKitContextType } from '../IKContext/ImageKitContextType';
-const pjson = require('./package.json');
+const pjson = require('../../../package.json');
 
 class ImageKitComponent extends PureComponent {
   constructor(props, context) {
