@@ -2,6 +2,8 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ImageKit from 'imagekit-javascript';
 import { ImageKitContextType } from '../IKContext/ImageKitContextType';
+const pjson = require('../../../package.json');
+
 class ImageKitComponent extends PureComponent {
   constructor(props, context) {
     super(props, context);
@@ -52,12 +54,14 @@ class ImageKitComponent extends PureComponent {
 
     if (src) {
       let ik = new ImageKit({
+        sdkVersion : `react-${pjson.version}`,
         publicKey: publicKey,
         urlEndpoint: urlEndpoint,
       });
       return ik.url({ src: src, transformation: transformation, transformationPosition: "query" });
     } else if (path) {
       let ik = new ImageKit({
+        sdkVersion : `react-${pjson.version}`,
         publicKey: publicKey,
         urlEndpoint: urlEndpoint
       });
@@ -106,6 +110,7 @@ class ImageKitComponent extends PureComponent {
     }
 
     let ik = new ImageKit({
+      sdkVersion : `react-${pjson.version}`,
       publicKey: publicKey,
       urlEndpoint: urlEndpoint,
       authenticationEndpoint: authenticationEndpoint
