@@ -20,11 +20,11 @@ Include the components in your code:
 ## Usage
 
 The library includes 3 Components: 
-* IKContext
+* [IKContext](#IKContext)
 
-* IKImage
+* [IKImage](#IKImage)
 
-* IKUpload
+* [IKUpload](#file-upload)
 
 ### IKContext
 
