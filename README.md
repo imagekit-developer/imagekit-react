@@ -165,11 +165,11 @@ The SDK supports automatic support for LQIP for your images, if you set lqip to 
 The component tries to keep the it simple, it loads a lower quality image using the quality parameter to load a lower quality image, which is then replaced with the actual quality image later.
 
 #### File Upload
-The SDK provides a simple Component to upload files to the ImageKit Media Library. It accepts `fileName` parameter as a prop. The file parameter is provided as an input from the user. Additionally, this method uses the `authenticationEndpoint` that is specified at the time of SDK initialization. Client-side file upload requires a token, expiry timestamp and signature, and these values can be safely generated on the server-side using your ImageKit account's private key.
+The SDK provides a simple Component to upload files to the ImageKit Media Library. It accepts `fileName` parameter as a prop. The file parameter is provided as an input from the user. 
 
-The SDK issues a GET request to the authentication endpoint provided and the endpoint must respond with a JSON object with the values for `token`, `signature` and `expire`.
+Also make sure that you have specified `authenticationEndpoint` during SDK initialization. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token` and `expire`.  
 
-For example, you can use ImageKit's NodeJS SDK which implements the `getAuthenticationParameters` method to create a simple API endpoint like this on your server and provide the API endpoint as the `authenticationEndpoint` parameter.
+[Learn how to implement authenticationEndpoint](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#how-to-implement-authenticationendpoint-endpoint) on your server.
 
 An example of this server is provided in the samples folder of the SDK.
 
@@ -182,7 +182,8 @@ Sample Usage
     <IKUpload fileName="my-upload" />
  </IKContext>
 ```
-The SDK provides a simple interface using the .upload() method to upload files to the ImageKit Media Library. It accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data).
+
+`IKUpload` component accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data) as props e.g. `tags`, `useUniqueFileName`, `folder` etc.
 
 #### Error Handling
 We are using Error Boundaries to handle errors in the UI. `ErrorBoundary` is used to handle errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. example: 
