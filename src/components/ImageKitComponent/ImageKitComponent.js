@@ -46,26 +46,48 @@ class ImageKitComponent extends PureComponent {
 
     if (publicKey === undefined) {
       throw new Error('Missing publicKey during initialization');
+      return;
     }
 
     if (urlEndpoint === undefined) {
       throw new Error('Missing urlEndpoint during initialization');
+      return;
+    }
+
+    let newUrlEndpoint = urlEndpoint;
+
+
+    if(urlEndpoint) {
+      let pathInEndpoint = urlEndpoint.replace('https://ik.imagekit.io/','');
+      let leadingSlashes = pathInEndpoint.match("\/+");
+      if(leadingSlashes){
+        pathInEndpoint = pathInEndpoint.replace(leadingSlashes[0],'/');
+        newUrlEndpoint = "https://ik.imagekit.io/" + pathInEndpoint;
+      }
+    }
+
+    let newPath = path;
+    if(path) {
+      let trailingSlashes = newPath.match("\/+");
+      if(trailingSlashes){
+        newPath = newPath.replace(trailingSlashes[0],'/');
+      }
     }
 
     if (src) {
       let ik = new ImageKit({
         sdkVersion : `react-${pjson.version}`,
         publicKey: publicKey,
-        urlEndpoint: urlEndpoint,
+        urlEndpoint: newUrlEndpoint,
       });
       return ik.url({ src: src, transformation: transformation, transformationPosition: "query" });
     } else if (path) {
       let ik = new ImageKit({
         sdkVersion : `react-${pjson.version}`,
         publicKey: publicKey,
-        urlEndpoint: urlEndpoint
+        urlEndpoint: newUrlEndpoint,
       });
-      return ik.url({ path: path, transformation: transformation });
+      return ik.url({ path: newPath, transformation: transformation });
     } else {
       throw new Error('Missing src / path during initialization!');
     }
@@ -109,13 +131,25 @@ class ImageKitComponent extends PureComponent {
       throw new Error('Missing authenticationEndpoint during initialization');
     }
 
+    let newUrlEndpoint = urlEndpoint;
+
+
+    if(urlEndpoint) {
+      let pathInEndpoint = urlEndpoint.replace('https://ik.imagekit.io/','');
+      let leadingSlashes = pathInEndpoint.match("\/+");
+      if(leadingSlashes){
+        pathInEndpoint = pathInEndpoint.replace(leadingSlashes[0],'/');
+        newUrlEndpoint = "https://ik.imagekit.io/" + pathInEndpoint;
+      }
+    }
+
     let ik = new ImageKit({
       sdkVersion : `react-${pjson.version}`,
       publicKey: publicKey,
-      urlEndpoint: urlEndpoint,
+      urlEndpoint: newUrlEndpoint,
       authenticationEndpoint: authenticationEndpoint
     });
-
+w
     const params = {
       file: file,
       fileName: fileName,

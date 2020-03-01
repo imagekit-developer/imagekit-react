@@ -7,7 +7,7 @@
     "dist": "node_modules/.bin/webpack",
     "build": "rm -f -r compile && npm run compile && rm -f -r dist && npm run dist",
     "test:ci": "react-scripts test -u --env=jsdom --watchAll=false",
-    "test": "react-scripts test -u --env=jsdom --watchAll",
+    "test": "react-scripts test --env=jsdom --watchAll",
     "storybook": "start-storybook -p 6007",
     "build-storybook": "build-storybook"
   },
