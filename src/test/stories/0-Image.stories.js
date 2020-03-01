@@ -9,8 +9,6 @@ if(urlEndpoint[urlEndpoint.length-1] === "/")
   urlEndpoint = urlEndpoint.slice(0,urlEndpoint.length-1);
 
 let path = "/default-image.jpg";
-if(path[0] === "/")
-  path = path.split("/")[1];
 
 const src = `${urlEndpoint}${path}`;
 
@@ -26,9 +24,24 @@ global.IntersectionObserver = class IntersectionObserver {
 
 storiesOf("Image", module)
   .add(
-    "image",
+    "imageWithSrc",
     () =>
     <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src}/>
+  )
+  .add(
+    "imageWithPath",
+    () =>
+    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path}/>
+  )
+  .add(
+    "leadingSlashesInPath",
+    () =>
+    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path="////default-image.jpg"/>
+  )
+  .add(
+    "trailingSlashesInUrlEndpoint",
+    () =>
+    <IKImage publicKey={publicKey} urlEndpoint="https://ik.imagekit.io/mindship////" path={path}/>
   )
   .add(
     "imageWithLQIP",

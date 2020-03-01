@@ -30,6 +30,16 @@ storiesOf("IKContext", module)
           }]} />
         </IKContext>
       </ErrorBoundary>
+  )
+  .add(
+    "OverRidingUrlParameter",
+    () =>
+      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
+        <IKImage path={path} urlEndpoint="https://ik.imagekit.io/utkace/" transformation={[{
+          "height": "300",
+          "width": "400"
+        }]} />
+      </IKContext>
   );
 
 export default {

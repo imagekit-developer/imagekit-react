@@ -24,7 +24,22 @@ storiesOf("Image-Transformation", module)
       }, {
         "rotation": 90
       }]} />
-  );
+  )
+  .add(
+    "imageWithNonExistingTransformation",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
+        "foo": "bar",
+      }]} />
+  )
+  .add(
+    "imageWithNonExistingTransformationWithExistingTransformation",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
+        "foo": "bar",
+        "height": "300"
+      }]} />
+  );;
 
 export default {
   title: 'Image Transformation',
