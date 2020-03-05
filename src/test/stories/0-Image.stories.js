@@ -13,7 +13,6 @@ let path = "/default-image.jpg";
 const src = `${urlEndpoint}${path}`;
 
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
   observe() {
     return null;
   }
