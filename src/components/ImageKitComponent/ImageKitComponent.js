@@ -2,6 +2,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ImageKit from 'imagekit-javascript';
 import { ImageKitContextType } from '../IKContext/ImageKitContextType';
+import { parseURL } from '../../util/urlParser';
 const pjson = require('../../../package.json');
 
 class ImageKitComponent extends PureComponent {
@@ -56,11 +57,13 @@ class ImageKitComponent extends PureComponent {
 
 
     if(urlEndpoint) {
-      let pathInEndpoint = urlEndpoint.replace('https://ik.imagekit.io/','');
-      let leadingSlashes = pathInEndpoint.match("\/+");
+      const url_params = parseURL(urlEndpoint);
+      let {protocol, host, pathname } = url_params;
+      pathname = pathname.slice(1);
+      let leadingSlashes = pathname.match("\/+");
       if(leadingSlashes){
-        pathInEndpoint = pathInEndpoint.replace(leadingSlashes[0],'/');
-        newUrlEndpoint = "https://ik.imagekit.io/" + pathInEndpoint;
+        pathname = pathname.replace(leadingSlashes[0],'/');
+        newUrlEndpoint = `${protocol}//${host}/${pathname}`;
       }
     }
 
@@ -119,11 +122,13 @@ class ImageKitComponent extends PureComponent {
 
 
     if(urlEndpoint) {
-      let pathInEndpoint = urlEndpoint.replace('https://ik.imagekit.io/','');
-      let leadingSlashes = pathInEndpoint.match("\/+");
+      const url_params = parseURL(urlEndpoint);
+      let {protocol, host, pathname } = url_params;
+      pathname = pathname.slice(1);
+      let leadingSlashes = pathname.match("\/+");
       if(leadingSlashes){
-        pathInEndpoint = pathInEndpoint.replace(leadingSlashes[0],'/');
-        newUrlEndpoint = "https://ik.imagekit.io/" + pathInEndpoint;
+        pathname = pathname.replace(leadingSlashes[0],'/');
+        newUrlEndpoint = `${protocol}//${host}/${pathname}`;
       }
     }
 
