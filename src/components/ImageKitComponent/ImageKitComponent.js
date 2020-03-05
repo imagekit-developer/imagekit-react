@@ -46,12 +46,10 @@ class ImageKitComponent extends PureComponent {
 
     if (publicKey === undefined) {
       throw new Error('Missing publicKey during initialization');
-      return;
     }
 
     if (urlEndpoint === undefined) {
       throw new Error('Missing urlEndpoint during initialization');
-      return;
     }
 
     let newUrlEndpoint = urlEndpoint;
@@ -102,22 +100,8 @@ class ImageKitComponent extends PureComponent {
    * @returns  {Object} The object of the uploaded image
    * @protected
    */
-  upload(e, file, fileName, useUniqueFileName, tags, folder, isPrivateFile, customCoordinates, responseFields, extendedProps) {
+  upload(file, fileName, useUniqueFileName, tags, folder, isPrivateFile, customCoordinates, responseFields, extendedProps, onError, onSuccess) {
     const { publicKey, urlEndpoint, authenticationEndpoint } = extendedProps;
-
-    let onError = (e, err) => {
-      e.insertAdjacentHTML(
-        "afterend",
-        `<div>${err.message}</div>`
-      );
-    };
-
-    let onSuccess = (e) => {
-      e.insertAdjacentHTML(
-        "afterend",
-        `<div>Image Uploaded</div>`
-      );
-    };
 
     if (publicKey === undefined) {
       throw new Error('Missing publicKey during initialization');
@@ -149,7 +133,7 @@ class ImageKitComponent extends PureComponent {
       urlEndpoint: newUrlEndpoint,
       authenticationEndpoint: authenticationEndpoint
     });
-w
+
     const params = {
       file: file,
       fileName: fileName,
@@ -171,9 +155,9 @@ w
 
     ik.upload(params, function (err, result) {
       if (err) {
-        onError(e, err);
+        onError(err);
       } else {
-        onSuccess(e);
+        onSuccess(result);
       }
     });
   }
