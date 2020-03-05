@@ -185,6 +185,25 @@ Sample Usage
 
 `IKUpload` component accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data) as props e.g. `tags`, `useUniqueFileName`, `folder` etc.
 
+We also equip the user with two props `onSuccess` and `onError` to handle success and falure respectively, you can simply pass your custom functions to handle the response as you require it to be,
+
+```js
+const onError = err => {
+  console.log("Error");
+};
+
+const onSuccess = res => {
+  console.log("Success");
+};
+
+<IKContext 
+    publicKey="your_public_api_key" 
+    urlEndpoint="<https://ik.imagekit.io/your_imagekit_id>" 
+    authenticationEndpoint="<http://www.yourserver.com/auth">
+    <IKUpload fileName="custom_file_name" onError={onError} onSuccess={onSuccess} />
+</IKContext>
+```
+
 #### Error Handling
 We are using Error Boundaries to handle errors in the UI. `ErrorBoundary` is used to handle errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. example: 
 
