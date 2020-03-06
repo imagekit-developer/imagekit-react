@@ -25,7 +25,7 @@ storiesOf("Image", module)
   .add(
     "imageWithSrc",
     () =>
-    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src}/>
+    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src} alt="abc"/>
   )
   .add(
     "imageWithPath",

@@ -24,6 +24,12 @@ export default class IKImage extends ImageKitComponent {
       state.url = url;
     }
 
+    if(props.alt){
+      state.alt = props.alt;
+    }else{
+      state.alt="";
+    }
+
     return state;
   }
 
@@ -68,7 +74,7 @@ export default class IKImage extends ImageKitComponent {
   }
 
   render() {
-    let { url } = this.state;
+    let { url, alt } = this.state;
     const props = { ...this.props };
     const { nonImageKitProps } = extractImageKitProps(props);
     const lqip = props.lqip;
@@ -76,9 +82,9 @@ export default class IKImage extends ImageKitComponent {
     if (lqip !== undefined && lqip.active === true) {
       const { quality } = this.props.lqip;
       const url = this.lqipload(quality);
-      return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt="" />;
+      return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} />;
     } else {
-      return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt="" />;
+      return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} />;
     }
   }
 }
