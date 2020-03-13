@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 
 const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-const path = "/default-image.jpg";
+const path = "default-image.jpg";
 const src= urlEndpoint + path;
 
 storiesOf("Image-Transformation", module)

@@ -8,7 +8,7 @@ let urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 if(urlEndpoint[urlEndpoint.length-1] === "/")
   urlEndpoint = urlEndpoint.slice(0,urlEndpoint.length-1);
 
-let path = "/default-image.jpg";
+let path = "default-image.jpg";
 
 const src = `${urlEndpoint}${path}`;
 
