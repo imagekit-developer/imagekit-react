@@ -44,6 +44,8 @@ class ImageKitComponent extends PureComponent {
   getUrl(extendedProps) {
     const { publicKey, urlEndpoint, path, src } = extendedProps;
     const transformation = extendedProps.transformation || [];
+    const transformationPosition = extendedProps.transformationPosition;
+    const queryParameters = extendedProps.queryParameters;
 
     if (publicKey === undefined) {
       throw new Error('Missing publicKey during initialization');
@@ -81,14 +83,14 @@ class ImageKitComponent extends PureComponent {
         publicKey: publicKey,
         urlEndpoint: newUrlEndpoint,
       });
-      return ik.url({ src: src, transformation: transformation, transformationPosition: "query" });
+      return ik.url({ src: src, transformation: transformation, transformationPosition: "query", queryParameters: queryParameters });
     } else if (path) {
       let ik = new ImageKit({
         sdkVersion : `react-${pjson.version}`,
         publicKey: publicKey,
         urlEndpoint: newUrlEndpoint,
       });
-      return ik.url({ path: newPath, transformation: transformation });
+      return ik.url({ path: newPath, transformation: transformation, transformationPosition: transformationPosition ? transformationPosition : "path", queryParameters: queryParameters  });
     } else {
       throw new Error('Missing src / path during initialization!');
     }

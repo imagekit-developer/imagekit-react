@@ -12,6 +12,8 @@ let path = "/default-image.jpg";
 
 const src = `${urlEndpoint}${path}`;
 
+const srcWithQuery = `${src}?foo=bar`
+
 global.IntersectionObserver = class IntersectionObserver {
   observe() {
     return null;
@@ -31,6 +33,16 @@ storiesOf("Image", module)
     "imageWithPath",
     () =>
     <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path}/>
+  )
+  .add(
+    "imageWithQueryParameters",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} queryParameters={{version:5, name: 'check'}} />
+  )
+  .add(
+    "imageWithSrcQueryParameters",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={srcWithQuery} queryParameters={{version:5, name: 'check'}} />
   )
   .add(
     "leadingSlashesInPath",
