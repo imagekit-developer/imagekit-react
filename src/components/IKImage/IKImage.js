@@ -47,7 +47,13 @@ export default class IKImage extends ImageKitComponent {
         lqip = `${newUrl}`;
       }
     } else {
-      lqip = `${url}?tr=q-${quality}`;
+      if(url.includes("tr")){
+        lqip = `${url}&q-${quality}`;
+      }
+      else {
+        lqip = `${url}?tr=q-${quality}`;
+      }
+
     }
     return lqip;
   }
