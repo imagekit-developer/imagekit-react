@@ -7,7 +7,7 @@
     "dist": "node_modules/.bin/webpack",
     "build": "rm -f -r compile && npm run compile && rm -f -r dist && npm run dist",
     "test:ci": "export REACT_APP_PUBLIC_KEY=your_public_key;export REACT_APP_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id;export REACT_APP_AUTHENTICATION_ENDPOINT=https://www.example.com/auth;react-scripts test --env=jsdom --watchAll=false;unset REACT_APP_PUBLIC_KEY;unset REACT_APP_URL_ENDPOINT;unset REACT_APP_AUTHENTICATION_ENDPOINT",
-    "test": "react-scripts test --env=jsdom --watchAll",
+    "test": "export REACT_APP_PUBLIC_KEY=your_public_key;export REACT_APP_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id;export REACT_APP_AUTHENTICATION_ENDPOINT=https://www.example.com/auth;react-scripts test --env=jsdom --watchAll=true;unset REACT_APP_PUBLIC_KEY;unset REACT_APP_URL_ENDPOINT;unset REACT_APP_AUTHENTICATION_ENDPOINT",
     "storybook": "start-storybook -p 6007",
     "build-storybook": "build-storybook"
   },
