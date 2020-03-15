@@ -75,7 +75,7 @@ exports[`Storyshots Image imageWithLQIP 1`] = `
 <img
   alt=""
   id="lqip"
-  src="https://images.example.com/sample.jpg?ik-sdk-version=react-1.0.4&tr=h-300%2Cw-400&q-20"
+  src="https://images.example.com/sample.jpg?ik-sdk-version=react-1.0.4&tr=h-300%2Cw-400?tr=q-20"
 />
 `;
 
