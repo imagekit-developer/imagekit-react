@@ -3,4 +3,3 @@ node_modules
 .vscode
 lib
 dist
-src/test/__snapshots__

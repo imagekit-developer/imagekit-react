@@ -1,12 +1,12 @@
 {
   "name": "imagekitio-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "scripts": {
     "compile": "node_modules/.bin/babel src --out-dir lib --copy-files",
     "dist": "node_modules/.bin/webpack",
     "build": "rm -f -r compile && npm run compile && rm -f -r dist && npm run dist",
-    "test:ci": "react-scripts test -u --env=jsdom --watchAll=false",
+    "test:ci": "export REACT_APP_PUBLIC_KEY=your_public_key;export REACT_APP_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id;export REACT_APP_AUTHENTICATION_ENDPOINT=https://www.example.com/auth;react-scripts test --env=jsdom --watchAll=false;unset REACT_APP_PUBLIC_KEY;unset REACT_APP_URL_ENDPOINT;unset REACT_APP_AUTHENTICATION_ENDPOINT",
     "test": "react-scripts test --env=jsdom --watchAll",
     "storybook": "start-storybook -p 6007",
     "build-storybook": "build-storybook"
@@ -47,7 +47,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "dependencies": {
-    "imagekit-javascript": "^1.0.3",
+    "imagekit-javascript": "^1.1.1",
     "prop-types": "^15.7.2",
     "react-scripts": "^3.3.0"
   }

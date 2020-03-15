@@ -10,7 +10,7 @@ if(urlEndpoint[urlEndpoint.length-1] === "/")
 
 let path = "default-image.jpg";
 
-const src = `${urlEndpoint}${path}`;
+const src = `https://images.example.com/sample.jpg`;
 
 const srcWithQuery = `${src}?foo=bar`
 

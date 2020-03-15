@@ -5,9 +5,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ImagekitIo)
 
-React SDK for [ImageKit.io](https://imagekit.io) which implements client-side upload and URL generation for use inside a react application.
+React SDK for [ImageKit.io](https://imagekit.io), which implements client-side upload and URL generation for use inside a react application.
 
-ImageKit is a complete image optimization and transformation solution that comes with an [image CDN](https://imagekit.io/features/imagekit-infrastructure) and media storage. It can be integrated with your existing infrastructure - storages like AWS S3, web servers, your CDN and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
+ImageKit is a complete image optimization and transformation solution that comes with an [image CDN](https://imagekit.io/features/imagekit-infrastructure) and media storage. It can be integrated with your existing infrastructure - storages like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
 ## Installation
 
@@ -41,13 +41,13 @@ In order to use the SDK, you need to provide it with a few configuration paramet
 
 `publicKey` and `urlEndpoint` are mandatory parameters for SDK initialization.
 `authenticationEndpoint` is essential if you want to use the SDK for client-side uploads.
-`transformationPosition` is optional. The default value for the parametere is `path`. Acceptable values are `path` & `query`
+`transformationPosition` is optional. The default value for this parameter is `path`. Acceptable values are `path` & `query`
 
-_Note: Do not include your Private Key in any client side code, including this SDK or its initialization. If you pass the `privateKey` parameter while initializing this SDK, it throws an error_
+_Note: Do not include your Private Key in any client-side code, including this SDK or its initialization. If you pass the `privateKey` parameter while initializing this SDK, it throws an error_
 
 ### IKImage
 
-The IKImage component component defines a ImageKit Image tag. example usage:
+The IKImage component component defines an ImageKit Image tag. example usage:
 
 #### Using image path and image hostname or endpoint
 
@@ -78,7 +78,7 @@ The IKImage component component defines a ImageKit Image tag. example usage:
 
 #### List of supported transformations
 
-The complete list of transformations supported and their usage in ImageKit can be found [here](https://docs.imagekit.io/imagekit-docs/image-transformations). The SDK gives a name to each transformation parameter, making the code simpler and readable. If a transformation is supported in ImageKit, but a name for it cannot be found in the table below, then use the transformation code from ImageKit docs as the name when using in the `url` function.
+The complete list of transformations supported and their usage in ImageKit can be found [here](https://docs.imagekit.io/features/image-transformations). The SDK gives a name to each transformation parameter, making the code simpler and readable. If a transformation is supported in ImageKit, but a name for it cannot be found in the table below, then use the transformation code from ImageKit docs as the name when using in the `url` function.
 
 | Supported Transformation Name | Translates to parameter |
 | ----------------------------- | ----------------------- |
@@ -137,7 +137,7 @@ const transformations = [{
 The above image will apply transformation of width = 90 and height = 180 on the image. Since some transformatinos are destructive you might want to control the order in which the transforms are applied.
 
 ##### Chained Transforms
-Chained transforms make it easy to specify the order the transform are applied. example: 
+Chained transforms make it easy to specify the order in which transformations are applied. example: 
 
 ```js
 const transformations = [
@@ -150,7 +150,7 @@ const transformations = [
   }
 ];
 ```
-In the above case, rotation will be performed first and resizing according to width and aspect ratio will be performed afterwards.
+In the above case, the rotation will be performed first, and resizing according to width and aspect ratio will be performed afterward.
 
 #### Low Quality Image Placeholders (LQIP) for images
 The SDK supports automatic support for LQIP for your images, if you set lqip to true in the image component. example:
@@ -162,12 +162,12 @@ The SDK supports automatic support for LQIP for your images, if you set lqip to 
 `quality` decided the quaility of placeholder image. It can be any numeric value, a low number means low quality, and high number means high quality.
 
 ##### How does the lqip work?
-The component tries to keep the it simple, it loads a lower quality image using the quality parameter to load a lower quality image, which is then replaced with the actual quality image later.
+The component tries to keep it simple. It loads a lower quality image using the quality parameter to load a lower quality image, which is then replaced with the actual quality image later.
 
 #### File Upload
 The SDK provides a simple Component to upload files to the ImageKit Media Library. It accepts `fileName` parameter as a prop. The file parameter is provided as an input from the user. 
 
-Also make sure that you have specified `authenticationEndpoint` during SDK initialization. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token` and `expire`.  
+Also, make sure that you have specified `authenticationEndpoint` during SDK initialization. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token` and `expire`.  
 
 [Learn how to implement authenticationEndpoint](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#how-to-implement-authenticationendpoint-endpoint) on your server.
 
@@ -185,7 +185,7 @@ Sample Usage
 
 `IKUpload` component accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data) as props e.g. `tags`, `useUniqueFileName`, `folder` etc.
 
-We also equip the user with two props `onSuccess` and `onError` to handle success and falure respectively, you can simply pass your custom functions to handle the response as you require it to be,
+We also equip the user with two props `onSuccess` and `onError` to handle success and failure, respectively. You can pass your custom functions to handle the response as you require it to be,
 
 ```js
 const onError = err => {
