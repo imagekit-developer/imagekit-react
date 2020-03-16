@@ -122,7 +122,6 @@ class ImageKitComponent extends PureComponent {
 
     let newUrlEndpoint = urlEndpoint;
 
-
     if(urlEndpoint) {
       const url_params = parseURL(urlEndpoint);
       let {protocol, host, pathname } = url_params;
@@ -162,9 +161,18 @@ class ImageKitComponent extends PureComponent {
 
     ik.upload(params, function (err, result) {
       if (err) {
-        onError(err);
+        if(onError){
+          onError(err);
+        }
+        else{
+          console.log(err);
+        }
       } else {
-        onSuccess(result);
+        if(onSuccess) {
+          onSuccess(result);
+        }else{
+          console.log(result);
+        }
       }
     });
   }
