@@ -75,7 +75,7 @@ exports[`Storyshots Image imageWithLQIP 1`] = `
 <img
   alt=""
   id="lqip"
-  src="https://images.example.com/sample.jpg?ik-sdk-version=react-1.0.4&tr=h-300%2Cw-400&q-20"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.4&tr=h-300%2Cw-400&q-20"
 />
 `;
 
@@ -98,21 +98,21 @@ exports[`Storyshots Image imageWithQueryParameters 1`] = `
 exports[`Storyshots Image imageWithSrc 1`] = `
 <img
   alt="abc"
-  src="https://images.example.com/sample.jpg?ik-sdk-version=react-1.0.4"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.4"
 />
 `;
 
 exports[`Storyshots Image imageWithSrcQueryParameters 1`] = `
 <img
   alt=""
-  src="https://images.example.com/sample.jpg?foo=bar&ik-sdk-version=react-1.0.4&version=5&name=check"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?foo=bar&ik-sdk-version=react-1.0.4&version=5&name=check"
 />
 `;
 
 exports[`Storyshots Image imageWithTransformations 1`] = `
 <img
   alt=""
-  src="https://images.example.com/sample.jpg?ik-sdk-version=react-1.0.4&tr=h-300%2Cw-400"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.4&tr=h-300%2Cw-400"
 />
 `;
 
@@ -167,7 +167,7 @@ exports[`Storyshots Image-Transformation imageWithSingleTransformations 1`] = `
 exports[`Storyshots Image-Transformation imageWithTransformationPositionAsPathPassingSrc 1`] = `
 <img
   alt=""
-  src="https://ik.imagekit.io/your_imagekit_iddefault-image.jpg?ik-sdk-version=react-1.0.4&tr=h-300%2Cw-400"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.4&tr=h-300%2Cw-400"
   transformationPosition="path"
 />
 `;
