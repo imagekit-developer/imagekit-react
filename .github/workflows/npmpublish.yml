@@ -22,10 +22,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build, and test
       run: |
-        npm i -g yarn
-        yarn
-        yarn test:ci
-        yarn build
+        npm i
+        npm test:ci
+        npm build
       env:
         CI: true
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
@@ -41,13 +40,12 @@ jobs:
       with:
         node-version: 12
         registry-url: https://registry.npmjs.org/
-    - name: yarn publish
+    - name: npm publish
       run: |
-        npm i -g yarn
-        yarn
-        yarn build
-        yarn config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-        yarn publish
+        npm i
+        npm build
+        npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+        npm publish
       env:
         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
         CI: true
