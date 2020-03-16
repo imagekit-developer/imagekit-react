@@ -31,12 +31,12 @@ The library includes 3 Components:
 In order to use the SDK, you need to provide it with a few configuration parameters. The configuration parameters can be applied directly to the `IKImage` component or using an `IKContext` component. example:
 
 ```js
-    <IKContext
-      publicKey="your_public_api_key"
-      urlEndpoint="<https://ik.imagekit.io/your_imagekit_id>"
-      transformationPosition="path"
-      authenticationEndpoint="<http://www.yourserver.com/auth">
-    </IKContext>
+<IKContext
+  publicKey="your_public_api_key"
+  urlEndpoint="<https://ik.imagekit.io/your_imagekit_id>"
+  transformationPosition="path"
+  authenticationEndpoint="<http://www.yourserver.com/auth">
+</IKContext>
 ```
 
 `publicKey` and `urlEndpoint` are mandatory parameters for SDK initialization.
@@ -52,25 +52,24 @@ The IKImage component component defines an ImageKit Image tag. example usage:
 #### Using image path and image hostname or endpoint
 
 ```js
-  <IKContext publicKey="your_public_api_key" urlEndpoint="https://ik.imagekit.io/your_imagekit_id/endpoint/" >
-    <IKImage path="/default-image.jpg" transformation={[{
-      "height": "300",
-      "width": "400"
-    }]} />
-  </IKContext>
-
-  ```
+<IKContext publicKey="your_public_api_key" urlEndpoint="https://ik.imagekit.io/your_imagekit_id/endpoint/" >
+  <IKImage path="/default-image.jpg" transformation={[{
+    "height": "300",
+    "width": "400"
+  }]} />
+</IKContext>
+```
 #### Using full image URL  
 
-  ```js
-  <IKImage 
-      src="<full_image_url_from_db>" 
-      transformation={[{
-      "height": "300",
-      "width": "400"
-    }]}
-    />
-  ```
+```js
+<IKImage 
+    src="<full_image_url_from_db>" 
+    transformation={[{
+    "height": "300",
+    "width": "400"
+  }]}
+/>
+```
   
 `src` is the complete URL that is already mapped to ImageKit.
 `path` is the location of the image in the ImageKit cloud. `urlEndpoint` + `path` makes the complete url.
@@ -175,12 +174,12 @@ An example of this server is provided in the samples folder of the SDK.
 
 Sample Usage
 ```js
- <IKContext  
-    publicKey="your_public_api_key" 
-    urlEndpoint="<https://ik.imagekit.io/your_imagekit_id>" 
-    authenticationEndpoint="<http://www.yourserver.com/auth">
-    <IKUpload fileName="my-upload" />
- </IKContext>
+<IKContext
+  publicKey="your_public_api_key" 
+  urlEndpoint="<https://ik.imagekit.io/your_imagekit_id>" 
+  authenticationEndpoint="<http://www.yourserver.com/auth">
+  <IKUpload fileName="my-upload" />
+</IKContext>
 ```
 
 `IKUpload` component accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data) as props e.g. `tags`, `useUniqueFileName`, `folder` etc.
@@ -190,17 +189,19 @@ We also equip the user with two props `onSuccess` and `onError` to handle succes
 ```js
 const onError = err => {
   console.log("Error");
+  console.log(err);
 };
 
 const onSuccess = res => {
   console.log("Success");
+  console.log(res);
 };
 
 <IKContext 
-    publicKey="your_public_api_key" 
-    urlEndpoint="<https://ik.imagekit.io/your_imagekit_id>" 
-    authenticationEndpoint="<http://www.yourserver.com/auth">
-    <IKUpload fileName="custom_file_name" onError={onError} onSuccess={onSuccess} />
+  publicKey="your_public_api_key" 
+  urlEndpoint="<https://ik.imagekit.io/your_imagekit_id>" 
+  authenticationEndpoint="<http://www.yourserver.com/auth">
+  <IKUpload fileName="custom_file_name" onError={onError} onSuccess={onSuccess} />
 </IKContext>
 ```
 
