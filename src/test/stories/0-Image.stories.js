@@ -5,12 +5,8 @@ import ErrorBoundary from "../../components/ErrorBoundary"
 
 const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 let urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-if(urlEndpoint[urlEndpoint.length-1] === "/")
-  urlEndpoint = urlEndpoint.slice(0,urlEndpoint.length-1);
-
 let path = "default-image.jpg";
-
-const src = `https://images.example.com/sample.jpg`;
+const src= `${urlEndpoint}/${path}`;
 
 const srcWithQuery = `${src}?foo=bar`
 
