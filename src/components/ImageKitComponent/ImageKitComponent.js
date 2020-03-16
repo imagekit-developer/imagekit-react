@@ -164,14 +164,9 @@ class ImageKitComponent extends PureComponent {
         if(onError){
           onError(err);
         }
-        else{
-          console.log(err);
-        }
       } else {
         if(onSuccess) {
           onSuccess(result);
-        }else{
-          console.log(result);
         }
       }
     });
