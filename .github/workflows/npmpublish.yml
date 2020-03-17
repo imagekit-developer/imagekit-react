@@ -4,10 +4,8 @@ on:
   release:
     types: [published]
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -15,37 +13,37 @@ jobs:
         node-version: [8.x, 10.x, 12.x]
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm i
-        npm test:ci
-        npm build
-      env:
-        CI: true
-        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
-        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
-        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install, build, and test
+        run: |
+          npm i
+          npm run test:ci
+          npm run build
+        env:
+          CI: true
+          REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
+          REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
+          REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
 
   publish:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 12
-        registry-url: https://registry.npmjs.org/
-    - name: npm publish
-      run: |
-        npm i
-        npm build
-        npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-        npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-        CI: true
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - name: npm publish
+        run: |
+          npm i
+          npm run build
+          npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          CI: true
