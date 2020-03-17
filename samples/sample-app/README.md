@@ -21,13 +21,6 @@ Create the dist and lib:
 npm run build
 ```
 
-Now link it with, npm link
-```js
-npm link
-```
-This will create a global repository link for imagekitio-react
-
-
 ### Installing the sample-app
 
 Now,
@@ -39,11 +32,6 @@ cd samples/sample-app
 then,
 ```js
 npm install
-```
-
-Now run,
-```js
-npm link imagekitio-react
 ```
 
 This should create a copy of `imagekitio-react` library in `node_modules` of `sample-app`

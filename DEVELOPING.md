@@ -22,11 +22,9 @@ Before sample apps can be used, `imagekitio-react` library needs to be packed an
 
 1. In the root folder, install dependencies with `npm install`
 2. Build library with `npm run build`
-3. Now create a sys-link of the library by running `npm link`.
-4. Go to `samples/sample-app` folder and use `npm install` to install dependencies.
-5. Use `npm link imagekitio-react`, This should create a copy of `imagekitio-react` library in `node_modules` of `sample-app`
+4. Go to `samples/sample-app` folder.
 6. Configure sample app with required keys. Use sample-app's `Readme.md` for exact details.
-7. Use npm start from the `samples/sample-app` folder to run the app.
+7. Use `npm run start` from the `samples/sample-app` folder this will install the dependencies alongside our library and run our sample-app.
 
 ## Running sample backend server
 
