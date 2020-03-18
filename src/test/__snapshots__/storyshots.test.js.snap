@@ -71,7 +71,33 @@ exports[`Storyshots Image imageUrlEndpointFail 1`] = `
 </h1>
 `;
 
-exports[`Storyshots Image imageWithLQIP 1`] = `
+exports[`Storyshots Image imageWithLQIPWithPathNoTransformation 1`] = `
+<img
+  alt=""
+  id="lqip"
+  path="default-image.jpg"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:q-20/default-image.jpg?ik-sdk-version=react-1.0.4"
+/>
+`;
+
+exports[`Storyshots Image imageWithLQIPWithPathWithTransformation 1`] = `
+<img
+  alt=""
+  id="lqip"
+  path="default-image.jpg"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:q-20,h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.4"
+/>
+`;
+
+exports[`Storyshots Image imageWithLQIPWithSrcNoTransformation 1`] = `
+<img
+  alt=""
+  id="lqip"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.4&tr=q-20"
+/>
+`;
+
+exports[`Storyshots Image imageWithLQIPWithSrcWithTransformation 1`] = `
 <img
   alt=""
   id="lqip"

@@ -52,9 +52,27 @@ storiesOf("Image", module)
     <IKImage publicKey={publicKey} urlEndpoint="https://ik.imagekit.io/mindship////" path={path}/>
   )
   .add(
-    "imageWithLQIP",
+    "imageWithLQIPWithSrcNoTransformation",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} id="lqip"/>
+  )
+  .add(
+    "imageWithLQIPWithSrcWithTransformation",
     () =>
       <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} transformation={[{
+        height: 300,
+        width: 400
+      }]} id="lqip"/>
+  )
+  .add(
+    "imageWithLQIPWithPathNoTransformation",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={path} id="lqip"/>
+  )
+  .add(
+    "imageWithLQIPWithPathWithTransformation",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={path} transformation={[{
         height: 300,
         width: 400
       }]} id="lqip"/>
