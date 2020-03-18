@@ -9,9 +9,7 @@ function App() {
 
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
 
-  let path = "/default-image.jpg";
-  if(path[0] === "/")
-    path = path.split("/")[1];
+  let path = "/sample-folder/sample-file_X2bDJaxE5.jpg";
 
   const src = `${urlEndpoint}/${path}`;
 

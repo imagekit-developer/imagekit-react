@@ -124,6 +124,15 @@ exports[`Storyshots Image leadingSlashesInPath 1`] = `
 />
 `;
 
+exports[`Storyshots Image nestedImagePathWithLQIP 1`] = `
+<img
+  alt=""
+  id="lqip"
+  path="/sample-folder/default-image.jpg"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:q-20,h-300,w-400/sample-folder/default-image.jpg?ik-sdk-version=react-1.0.4"
+/>
+`;
+
 exports[`Storyshots Image trailingSlashesInUrlEndpoint 1`] = `
 <img
   alt=""

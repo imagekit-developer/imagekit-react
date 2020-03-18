@@ -24,13 +24,13 @@ npm run build
 ### Installing the sample-app
 
 Now,
-Go to `sample-app` by,
-```js
+Go to `sample-app`,
+```bash
 cd samples/sample-app
 ```
 
 then,
-```js
+```bash
 npm install
 ```
 
@@ -42,24 +42,23 @@ Create a .env file by renaming the sample.env in `samples/sample-app`
 
 Fill is the required parameters according to your imagekit account.
 
-## Starting the app
+## Starting the frontend sample app
 
 Finally run the app,
-```js
+```bash
 npm start
 ```
-To run the upload component you also will have set up a server
+To run the upload component you also will have set up a backend server
 
-## Setting up the server
+## Setting up the sample backend server
 
-There is a sample server present in the sample app directory in server directory. To run this server, go to server directory,
+There is a sample server present in the sample app directory in server directory.
 
-```cd server```, then run
-
-```js
-npm install
-
-npm run server
-```
 It takes the `private key` from .env file, so create a .env file by renaming the sample.env in `samples/sample-app/server`
 
+ To run this server, go to server directory `cd server`, then run:
+
+```bash
+npm install # for first time
+npm run server
+```

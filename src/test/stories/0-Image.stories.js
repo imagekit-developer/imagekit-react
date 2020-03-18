@@ -7,6 +7,7 @@ const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 let urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 let path = "default-image.jpg";
 const src= `${urlEndpoint}/${path}`;
+let nestedImagePath = "/sample-folder/default-image.jpg";
 
 const srcWithQuery = `${src}?foo=bar`
 
@@ -54,6 +55,14 @@ storiesOf("Image", module)
     "imageWithLQIP",
     () =>
       <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} transformation={[{
+        height: 300,
+        width: 400
+      }]} id="lqip"/>
+  )
+  .add(
+    "nestedImagePathWithLQIP",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={nestedImagePath} transformation={[{
         height: 300,
         width: 400
       }]} id="lqip"/>
