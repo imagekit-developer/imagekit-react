@@ -43,7 +43,7 @@ export default class IKImage extends ImageKitComponent {
         newUrl = `${newUrl[0]}//${newUrl[2]}/${newUrl[3]}/tr:q-${quality}/${newUrl[4]}`;
         lqip = `${newUrl}`;
       } else {
-        newUrl = `${newUrl[0]}tr:q-${quality}${newUrl[1]}`;
+        newUrl = `${newUrl[0]}tr:q-${quality},${newUrl[1]}`;
         lqip = `${newUrl}`;
       }
     } else {
@@ -51,7 +51,7 @@ export default class IKImage extends ImageKitComponent {
         lqip = `${url}&q-${quality}`;
       }
       else {
-        lqip = `${url}?tr=q-${quality}`;
+        lqip = `${url}&tr=q-${quality}`;
       }
 
     }
