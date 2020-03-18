@@ -9,7 +9,7 @@ function App() {
 
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
 
-  let path = "/sample-folder/sample-file_X2bDJaxE5.jpg";
+  let path = "/default-image.jpg";
 
   const src = `${urlEndpoint}/${path}`;
 
@@ -17,7 +17,7 @@ function App() {
     console.log("Error");
     console.log(err);
   };
-  
+
   const onSuccess = res => {
     console.log("Success");
     console.log(res);
@@ -55,9 +55,9 @@ function App() {
       <p>Upload</p>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
         <IKUpload
-         fileName="sample-file.jpg" 
-         tags={["sample-tag1","sample-tag2"]} 
-         customCoordinates={"10,10,10,10"} 
+         fileName="sample-file.jpg"
+         tags={["sample-tag1","sample-tag2"]}
+         customCoordinates={"10,10,10,10"}
          isPrivateFile={false}
          useUniqueFileName={true}
          folder={"/sample-folder"}
