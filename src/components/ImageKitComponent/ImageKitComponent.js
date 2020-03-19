@@ -2,6 +2,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ImageKit from 'imagekit-javascript';
 import { ImageKitContextType } from '../IKContext/ImageKitContextType';
+import { parseURL } from '../../util/urlParser';
 const pjson = require('../../../package.json');
 
 class ImageKitComponent extends PureComponent {
@@ -43,6 +44,8 @@ class ImageKitComponent extends PureComponent {
   getUrl(extendedProps) {
     const { publicKey, urlEndpoint, path, src } = extendedProps;
     const transformation = extendedProps.transformation || [];
+    const transformationPosition = extendedProps.transformationPosition;
+    const queryParameters = extendedProps.queryParameters;
 
     if (publicKey === undefined) {
       throw new Error('Missing publicKey during initialization');
@@ -52,20 +55,42 @@ class ImageKitComponent extends PureComponent {
       throw new Error('Missing urlEndpoint during initialization');
     }
 
+    let newUrlEndpoint = urlEndpoint;
+
+
+    if(urlEndpoint) {
+      const url_params = parseURL(urlEndpoint);
+      let {protocol, host, pathname } = url_params;
+      pathname = pathname.slice(1);
+      let leadingSlashes = pathname.match("\/+");
+      if(leadingSlashes){
+        pathname = pathname.replace(leadingSlashes[0],'/');
+        newUrlEndpoint = `${protocol}//${host}/${pathname}`;
+      }
+    }
+
+    let newPath = path;
+    if(path) {
+      let trailingSlashes = newPath.match("\/+");
+      if(trailingSlashes){
+        newPath = newPath.replace(trailingSlashes[0],'/');
+      }
+    }
+
     if (src) {
       let ik = new ImageKit({
         sdkVersion : `react-${pjson.version}`,
         publicKey: publicKey,
-        urlEndpoint: urlEndpoint,
+        urlEndpoint: newUrlEndpoint,
       });
-      return ik.url({ src: src, transformation: transformation, transformationPosition: "query" });
+      return ik.url({ src: src, transformation: transformation, transformationPosition: "query", queryParameters: queryParameters });
     } else if (path) {
       let ik = new ImageKit({
         sdkVersion : `react-${pjson.version}`,
         publicKey: publicKey,
-        urlEndpoint: urlEndpoint
+        urlEndpoint: newUrlEndpoint,
       });
-      return ik.url({ path: path, transformation: transformation });
+      return ik.url({ path: newPath, transformation: transformation, transformationPosition: transformationPosition ? transformationPosition : "path", queryParameters: queryParameters  });
     } else {
       throw new Error('Missing src / path during initialization!');
     }
@@ -80,22 +105,8 @@ class ImageKitComponent extends PureComponent {
    * @returns  {Object} The object of the uploaded image
    * @protected
    */
-  upload(e, file, fileName, useUniqueFileName, tags, folder, isPrivateFile, customCoordinates, responseFields, extendedProps) {
+  upload(file, fileName, useUniqueFileName, tags, folder, isPrivateFile, customCoordinates, responseFields, extendedProps, onError, onSuccess) {
     const { publicKey, urlEndpoint, authenticationEndpoint } = extendedProps;
-
-    let onError = (e, err) => {
-      e.insertAdjacentHTML(
-        "afterend",
-        `<div>${err.message}</div>`
-      );
-    };
-
-    let onSuccess = (e) => {
-      e.insertAdjacentHTML(
-        "afterend",
-        `<div>Image Uploaded</div>`
-      );
-    };
 
     if (publicKey === undefined) {
       throw new Error('Missing publicKey during initialization');
@@ -109,10 +120,23 @@ class ImageKitComponent extends PureComponent {
       throw new Error('Missing authenticationEndpoint during initialization');
     }
 
+    let newUrlEndpoint = urlEndpoint;
+
+    if(urlEndpoint) {
+      const url_params = parseURL(urlEndpoint);
+      let {protocol, host, pathname } = url_params;
+      pathname = pathname.slice(1);
+      let leadingSlashes = pathname.match("\/+");
+      if(leadingSlashes){
+        pathname = pathname.replace(leadingSlashes[0],'/');
+        newUrlEndpoint = `${protocol}//${host}/${pathname}`;
+      }
+    }
+
     let ik = new ImageKit({
       sdkVersion : `react-${pjson.version}`,
       publicKey: publicKey,
-      urlEndpoint: urlEndpoint,
+      urlEndpoint: newUrlEndpoint,
       authenticationEndpoint: authenticationEndpoint
     });
 
@@ -137,9 +161,13 @@ class ImageKitComponent extends PureComponent {
 
     ik.upload(params, function (err, result) {
       if (err) {
-        onError(e, err);
+        if(onError){
+          onError(err);
+        }
       } else {
-        onSuccess(e);
+        if(onSuccess) {
+          onSuccess(result);
+        }
       }
     });
   }

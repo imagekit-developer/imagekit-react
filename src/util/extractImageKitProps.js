@@ -1,5 +1,5 @@
 
-const IMAGEKIT_REACT_PROPS = {includeOwnBody : true, src:true, transformation:true};
+const IMAGEKIT_REACT_PROPS = {includeOwnBody : true, src:true, transformation:true, queryParameters: true};
 
 const IMAGEKIT_PROPS = {
   publicKey: true,

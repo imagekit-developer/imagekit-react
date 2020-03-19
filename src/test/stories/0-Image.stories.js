@@ -5,17 +5,13 @@ import ErrorBoundary from "../../components/ErrorBoundary"
 
 const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 let urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-if(urlEndpoint[urlEndpoint.length-1] === "/")
-  urlEndpoint = urlEndpoint.slice(0,urlEndpoint.length-1);
+let path = "default-image.jpg";
+const src= `${urlEndpoint}/${path}`;
+let nestedImagePath = "/sample-folder/default-image.jpg";
 
-let path = "/default-image.jpg";
-if(path[0] === "/")
-  path = path.split("/")[1];
-
-const src = `${urlEndpoint}${path}`;
+const srcWithQuery = `${src}?foo=bar`
 
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
   observe() {
     return null;
   }
@@ -26,14 +22,65 @@ global.IntersectionObserver = class IntersectionObserver {
 
 storiesOf("Image", module)
   .add(
-    "image",
+    "imageWithSrc",
     () =>
-    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src}/>
+    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src} alt="abc"/>
   )
   .add(
-    "imageWithLQIP",
+    "imageWithPath",
+    () =>
+    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path}/>
+  )
+  .add(
+    "imageWithQueryParameters",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} queryParameters={{version:5, name: 'check'}} />
+  )
+  .add(
+    "imageWithSrcQueryParameters",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={srcWithQuery} queryParameters={{version:5, name: 'check'}} />
+  )
+  .add(
+    "leadingSlashesInPath",
+    () =>
+    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path="////default-image.jpg"/>
+  )
+  .add(
+    "trailingSlashesInUrlEndpoint",
+    () =>
+    <IKImage publicKey={publicKey} urlEndpoint="https://ik.imagekit.io/mindship////" path={path}/>
+  )
+  .add(
+    "imageWithLQIPWithSrcNoTransformation",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} id="lqip"/>
+  )
+  .add(
+    "imageWithLQIPWithSrcWithTransformation",
     () =>
       <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} transformation={[{
+        height: 300,
+        width: 400
+      }]} id="lqip"/>
+  )
+  .add(
+    "imageWithLQIPWithPathNoTransformation",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={path} id="lqip"/>
+  )
+  .add(
+    "imageWithLQIPWithPathWithTransformation",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={path} transformation={[{
+        height: 300,
+        width: 400
+      }]} id="lqip"/>
+  )
+  .add(
+    "nestedImagePathWithLQIP",
+    () =>
+      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={nestedImagePath} transformation={[{
         height: 300,
         width: 400
       }]} id="lqip"/>

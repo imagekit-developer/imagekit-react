@@ -8,11 +8,11 @@ const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
 
 let onError = err => {
-
+  console.log("Error");
 };
 
 let onSuccess = res => {
-
+  console.log("Success");
 };
 
 storiesOf("IKUpload", module)
@@ -20,20 +20,20 @@ storiesOf("IKUpload", module)
     "imageKitUploadwithAuthentication",
     () =>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
-        <IKUpload filename="ABC" onError={onError} onSuccess={onSuccess} />
+        <IKUpload fileName="ABC" onError={onError} onSuccess={onSuccess} />
       </IKContext>
   ).add(
     "imageKitUploadwithAllTheProps",
     () =>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
-        <IKUpload filename="ABC" useUniqueFileName="false" tags={["tag1", "tag2"]} folder="/" isPrivateFile="true" customCoordinates="0,0,0,0" responseFields={["isPrivateFile", "customCoordinates"]} onError={onError} onSuccess={onSuccess} />
+        <IKUpload fileName="ABC" useUniqueFileName="false" tags={["tag1", "tag2"]} folder="/" isPrivateFile="true" customCoordinates="0,0,0,0" responseFields={["isPrivateFile", "customCoordinates"]} onError={onError} onSuccess={onSuccess} />
       </IKContext>
   )
   .add(
     "imageKitUploadwithoutAuthentication",
     () =>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint}>
-        <IKUpload filename="ABC" />
+        <IKUpload fileName="ABC" />
       </IKContext>
   );
 

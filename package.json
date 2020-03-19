@@ -1,13 +1,13 @@
 {
   "name": "imagekitio-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "scripts": {
     "compile": "node_modules/.bin/babel src --out-dir lib --copy-files",
     "dist": "node_modules/.bin/webpack",
     "build": "rm -f -r compile && npm run compile && rm -f -r dist && npm run dist",
-    "test:ci": "react-scripts test -u --env=jsdom --watchAll=false",
-    "test": "react-scripts test -u --env=jsdom --watchAll",
+    "test:ci": "export REACT_APP_PUBLIC_KEY=your_public_key;export REACT_APP_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id;export REACT_APP_AUTHENTICATION_ENDPOINT=https://www.example.com/auth;react-scripts test --env=jsdom --watchAll=false;unset REACT_APP_PUBLIC_KEY;unset REACT_APP_URL_ENDPOINT;unset REACT_APP_AUTHENTICATION_ENDPOINT",
+    "test": "export REACT_APP_PUBLIC_KEY=your_public_key;export REACT_APP_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id;export REACT_APP_AUTHENTICATION_ENDPOINT=https://www.example.com/auth;react-scripts test --env=jsdom --watchAll=true;unset REACT_APP_PUBLIC_KEY;unset REACT_APP_URL_ENDPOINT;unset REACT_APP_AUTHENTICATION_ENDPOINT",
     "storybook": "start-storybook -p 6007",
     "build-storybook": "build-storybook"
   },
@@ -42,13 +42,13 @@
     "react-dom": "^16.12.0",
     "react-test-renderer": "^16.12.0",
     "require-context.macro": "^1.2.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "webpack": "4.41.5",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-server": "3.10.2"
   },
   "dependencies": {
-    "imagekit-javascript": "^1.0.3",
+    "imagekit-javascript": "^1.2.0",
     "prop-types": "^15.7.2",
-    "react-scripts": "^3.3.0"
+    "react-scripts": "3.4.0"
   }
 }
