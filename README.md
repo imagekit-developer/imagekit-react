@@ -22,9 +22,9 @@ Include the components in your code:
 The library includes 3 Components: 
 * [IKContext](#IKContext)
 
-* [IKImage](#IKImage)
+* [IKImage - URL generation](#IKImage)
 
-* [IKUpload](#file-upload)
+* [IKUpload - File upload](#file-upload)
 
 ### IKContext
 
@@ -45,7 +45,7 @@ In order to use the SDK, you need to provide it with a few configuration paramet
 
 _Note: Do not include your Private Key in any client-side code, including this SDK or its initialization. If you pass the `privateKey` parameter while initializing this SDK, it throws an error_
 
-### IKImage
+### IKImage - URL generation
 
 The IKImage component component defines an ImageKit Image tag. example usage:
 
@@ -163,7 +163,7 @@ The SDK supports automatic support for LQIP for your images, if you set lqip to 
 ##### How does the lqip work?
 The component tries to keep it simple. It loads a lower quality image using the quality parameter to load a lower quality image, which is then replaced with the actual quality image later.
 
-#### File Upload
+### IKUpload - File Upload
 The SDK provides a simple Component to upload files to the ImageKit Media Library. It accepts `fileName` parameter as a prop. The file parameter is provided as an input from the user. 
 
 Also, make sure that you have specified `authenticationEndpoint` during SDK initialization. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token` and `expire`.  
@@ -184,7 +184,7 @@ Sample Usage
 
 `IKUpload` component accepts all the parameters supported by the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data) as props e.g. `tags`, `useUniqueFileName`, `folder` etc.
 
-We also equip the user with two props `onSuccess` and `onError` to handle success and failure, respectively. You can pass your custom functions to handle the response as you require it to be,
+You can use `onSuccess` and `onError` callbacks to handle success and failure, respectively. You can pass your custom functions to handle the response from API.
 
 ```js
 const onError = err => {
@@ -204,8 +204,10 @@ const onSuccess = res => {
   <IKUpload fileName="custom_file_name" onError={onError} onSuccess={onSuccess} />
 </IKContext>
 ```
+## Demo Application
+The fastest way to get started is by running the demo application. You can run the code locally. The source code is in samples/sample-app. For the instructions in [readme.md](https://github.com/imagekit-developer/imagekit-react/blob/test-case/samples/sample-app/README.md) file within [samples/sample-app](https://github.com/imagekit-developer/imagekit-react/tree/test-case/samples/sample-app) folder.
 
-#### Error Handling
+## Error Handling
 We are using Error Boundaries to handle errors in the UI. `ErrorBoundary` is used to handle errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. example: 
 
 ```js
@@ -216,3 +218,15 @@ We are using Error Boundaries to handle errors in the UI. `ErrorBoundary` is use
   }]} />
 </ErrorBoundary>
 ```
+
+## Support
+
+For any feedback or to report any issues or general implementation support please reach out to [support@imagekit.io](mailto:support@imagekit.io)
+
+## Links
+* [Documentation](https://docs.imagekit.io)
+* [Main website](https://imagekit.io)
+
+## License
+
+Released under the MIT license.
