@@ -22,9 +22,9 @@ Include the components in your code:
 The library includes 3 Components: 
 * [IKContext](#IKContext)
 
-* [IKImage - URL generation](#IKImage)
+* [IKImage - URL generation](#ikimage---url-generation)
 
-* [IKUpload - File upload](#file-upload)
+* [IKUpload - File upload](#ikupload---file-upload)
 
 ### IKContext
 
@@ -71,9 +71,16 @@ The IKImage component component defines an ImageKit Image tag. example usage:
 />
 ```
   
-`src` is the complete URL that is already mapped to ImageKit.
-`path` is the location of the image in the ImageKit cloud. `urlEndpoint` + `path` makes the complete url.
-`transformations` is optional. The transformations to be applied to a given image. It is declared in the form of an array of objects, where each object specifies the transformation you need. The values are mentioned below.
+#### Supported props:
+
+| Option           | Description                    |
+| :----------------| :----------------------------- |
+| urlEndpoint      | Optional. The base URL to be appended before the path of the image. If not specified, the URL Endpoint specified at the time of SDK initialization is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
+| path             | Conditional. This is the path at which the image exists. For example, `/path/to/image.jpg`. Either the `path` or `src` parameter need to be specified for URL generation. |
+| src              | Conditional. This is the complete URL of an image already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/image.jpg`. Either the `path` or `src` parameter need to be specified for URL generation. |
+| transformation   | Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name  and the value should be specified as a key-value pair in the object. Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as different objects of the array. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |
+| transformationPostion | Optional. The default value is `path` that places the transformation string as a path parameter in the URL. It can also be specified as `query` which adds the transformation string as the query parameter `tr` in the URL. If you use `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
+| queryParameters  | Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and not necessarily related to ImageKit. Especially useful if you want to add some versioning parameter to your URLs. |
 
 #### List of supported transformations
 
