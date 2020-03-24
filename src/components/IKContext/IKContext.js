@@ -28,7 +28,7 @@ class IKContext extends ImageKitComponent {
 }
 
 IKContext.propTypes = { ...ImageKitComponent.PropTypes, urlEndpoint: PropTypes.string, publicKey: PropTypes.string, includeOwnBody: PropTypes.bool };
-IKContext.defaultProps = { includeOwnBody: false };
+IKContext.defaultProps = { includeOwnBody: true };
 IKContext.contextType = ImageKitContextType;
 
 export default IKContext;

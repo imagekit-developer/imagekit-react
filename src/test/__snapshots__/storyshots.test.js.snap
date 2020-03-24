@@ -1,23 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots IKContext OverRidingUrlParameter 1`] = `
-<div>
-  <img
-    alt=""
-    path="default-image.jpg"
-    src="https://ik.imagekit.io/utkace/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.4"
-  />
-</div>
+<img
+  alt=""
+  path="default-image.jpg"
+  src="https://ik.imagekit.io/utkace/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.4"
+/>
 `;
 
 exports[`Storyshots IKContext imageKitContext 1`] = `
-<div>
-  <img
-    alt=""
-    path="default-image.jpg"
-    src="https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.4"
-  />
-</div>
+<img
+  alt=""
+  path="default-image.jpg"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.4"
+/>
 `;
 
 exports[`Storyshots IKContext imagePublicKeyFail 1`] = `
@@ -27,30 +23,24 @@ exports[`Storyshots IKContext imagePublicKeyFail 1`] = `
 `;
 
 exports[`Storyshots IKUpload imageKitUploadwithAllTheProps 1`] = `
-<div>
-  <input
-    onChange={[Function]}
-    type="file"
-  />
-</div>
+<input
+  onChange={[Function]}
+  type="file"
+/>
 `;
 
 exports[`Storyshots IKUpload imageKitUploadwithAuthentication 1`] = `
-<div>
-  <input
-    onChange={[Function]}
-    type="file"
-  />
-</div>
+<input
+  onChange={[Function]}
+  type="file"
+/>
 `;
 
 exports[`Storyshots IKUpload imageKitUploadwithoutAuthentication 1`] = `
-<div>
-  <input
-    onChange={[Function]}
-    type="file"
-  />
-</div>
+<input
+  onChange={[Function]}
+  type="file"
+/>
 `;
 
 exports[`Storyshots Image imageLinkFail 1`] = `
