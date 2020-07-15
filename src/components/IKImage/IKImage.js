@@ -95,6 +95,6 @@ class IKImage extends ImageKitComponent {
   }
 }
 
-IKImage.propTypes = { ...ImageKitComponent.propTypes };
+IKImage.propTypes = ImageKitComponent.propTypes;
 
 export default IKImage;
