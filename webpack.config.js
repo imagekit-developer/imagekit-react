@@ -12,7 +12,7 @@ module.exports = {
     libraryTarget: 'umd',
     publicPath: '/dist/',
 	umdNamedDefine: true,
-	globalObject: 'typeof self !== \'undefined\' ? self : this',
+	globalObject: 'this'
   },
   module: {
     rules: [{
