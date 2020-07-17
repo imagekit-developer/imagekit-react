@@ -4,7 +4,7 @@ exports[`Storyshots IKContext OverRidingUrlParameter 1`] = `
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/utkace/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/utkace/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -12,7 +12,7 @@ exports[`Storyshots IKContext imageKitContext 1`] = `
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -66,7 +66,7 @@ exports[`Storyshots Image imageWithLQIPWithPathNoTransformation 1`] = `
   alt=""
   id="lqip"
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/tr:q-20/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:q-20/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -75,7 +75,7 @@ exports[`Storyshots Image imageWithLQIPWithPathWithTransformation 1`] = `
   alt=""
   id="lqip"
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/tr:q-20,h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:q-20,h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -83,7 +83,7 @@ exports[`Storyshots Image imageWithLQIPWithSrcNoTransformation 1`] = `
 <img
   alt=""
   id="lqip"
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.5&tr=q-20"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.6&tr=q-20"
 />
 `;
 
@@ -91,7 +91,7 @@ exports[`Storyshots Image imageWithLQIPWithSrcWithTransformation 1`] = `
 <img
   alt=""
   id="lqip"
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.5&tr=h-300%2Cw-400&q-20"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.6&tr=h-300%2Cw-400&q-20"
 />
 `;
 
@@ -99,7 +99,7 @@ exports[`Storyshots Image imageWithPath 1`] = `
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -107,28 +107,28 @@ exports[`Storyshots Image imageWithQueryParameters 1`] = `
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.5&version=5&name=check"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.6&version=5&name=check"
 />
 `;
 
 exports[`Storyshots Image imageWithSrc 1`] = `
 <img
   alt="abc"
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
 exports[`Storyshots Image imageWithSrcQueryParameters 1`] = `
 <img
   alt=""
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?foo=bar&ik-sdk-version=react-1.0.5&version=5&name=check"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?foo=bar&ik-sdk-version=react-1.0.6&version=5&name=check"
 />
 `;
 
 exports[`Storyshots Image imageWithTransformations 1`] = `
 <img
   alt=""
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.5&tr=h-300%2Cw-400"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.6&tr=h-300%2Cw-400"
 />
 `;
 
@@ -136,7 +136,7 @@ exports[`Storyshots Image leadingSlashesInPath 1`] = `
 <img
   alt=""
   path="////default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -145,7 +145,7 @@ exports[`Storyshots Image nestedImagePathWithLQIP 1`] = `
   alt=""
   id="lqip"
   path="/sample-folder/default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/tr:q-20,h-300,w-400/sample-folder/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:q-20,h-300,w-400/sample-folder/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -153,7 +153,7 @@ exports[`Storyshots Image trailingSlashesInUrlEndpoint 1`] = `
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/mindship/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/mindship/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -161,7 +161,7 @@ exports[`Storyshots Image-Transformation imageWithChainedTransformations 1`] = `
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400:rt-90/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400:rt-90/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -169,7 +169,7 @@ exports[`Storyshots Image-Transformation imageWithNonExistingTransformation 1`] 
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/tr:foo-bar/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:foo-bar/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -177,7 +177,7 @@ exports[`Storyshots Image-Transformation imageWithNonExistingTransformationWithE
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/tr:foo-bar,h-300/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:foo-bar,h-300/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
@@ -185,14 +185,14 @@ exports[`Storyshots Image-Transformation imageWithSingleTransformations 1`] = `
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.5"
+  src="https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.6"
 />
 `;
 
 exports[`Storyshots Image-Transformation imageWithTransformationPositionAsPathPassingSrc 1`] = `
 <img
   alt=""
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.5&tr=h-300%2Cw-400"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.6&tr=h-300%2Cw-400"
   transformationPosition="path"
 />
 `;
@@ -201,7 +201,7 @@ exports[`Storyshots Image-Transformation imageWithTransformationPositionAsQuery 
 <img
   alt=""
   path="default-image.jpg"
-  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.5&tr=h-300%2Cw-400"
+  src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.6&tr=h-300%2Cw-400"
   transformationPosition="query"
 />
 `;
