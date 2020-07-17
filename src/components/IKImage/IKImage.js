@@ -2,7 +2,7 @@ import React from 'react';
 import ImageKitComponent from "../ImageKitComponent/ImageKitComponent";
 import extractImageKitProps from '../../util/extractImageKitProps';
 
-export default class IKImage extends ImageKitComponent {
+class IKImage extends ImageKitComponent {
   constructor(props, context) {
     super(props, context);
     this.imageRef = React.createRef();
@@ -95,4 +95,6 @@ export default class IKImage extends ImageKitComponent {
   }
 }
 
-Image.propTypes = ImageKitComponent.propTypes;
+IKImage.propTypes = ImageKitComponent.propTypes;
+
+export default IKImage;
