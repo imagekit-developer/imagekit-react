@@ -30,6 +30,13 @@ storiesOf("IKUpload", module)
       </IKContext>
   )
   .add(
+    "imageKitUploadWithoutFileName",
+    () =>
+      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+        <IKUpload useUniqueFileName="true" onError={onError} onSuccess={onSuccess} />
+      </IKContext>
+  )
+  .add(
     "imageKitUploadwithoutAuthentication",
     () =>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint}>

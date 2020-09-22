@@ -55,7 +55,6 @@ function App() {
       <p>Upload</p>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
         <IKUpload
-         fileName="sample-file.jpg"
          tags={["sample-tag1","sample-tag2"]}
          customCoordinates={"10,10,10,10"}
          isPrivateFile={false}

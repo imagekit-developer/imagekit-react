@@ -9,8 +9,12 @@ export default class IKUpload extends ImageKitComponent {
       customOnChangeHandler(e);
       return;
     }
+    const file = e.target.files[0];
 
-    this.upload(e.target.files[0], fileName, useUniqueFileName, tags, folder, isPrivateFile, customCoordinates, responseFields, extendedProps, onError, onSuccess)
+    const customFileName = fileName.trim();
+    const uploadFileName = customFileName && customFileName.length ? customFileName : file.name;
+
+    this.upload(file, uploadFileName, useUniqueFileName, tags, folder, isPrivateFile, customCoordinates, responseFields, extendedProps, onError, onSuccess)
   }
 
   render() {

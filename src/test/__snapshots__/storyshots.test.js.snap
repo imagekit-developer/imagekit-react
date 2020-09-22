@@ -22,6 +22,13 @@ exports[`Storyshots IKContext imagePublicKeyFail 1`] = `
 </h1>
 `;
 
+exports[`Storyshots IKUpload imageKitUploadWithoutFileName 1`] = `
+<input
+  onChange={[Function]}
+  type="file"
+/>
+`;
+
 exports[`Storyshots IKUpload imageKitUploadwithAllTheProps 1`] = `
 <input
   onChange={[Function]}
