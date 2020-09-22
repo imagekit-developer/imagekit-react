@@ -12,6 +12,14 @@ class IKImage extends ImageKitComponent {
     this.state = Object.assign(state, this.prepareState(props, context));
   }
 
+  onError = (e) => {
+	if(this.props.onError) this.props.onError(e);
+  }
+
+  onLoad = (e) => {
+	if(this.props.onLoad) this.props.onLoad(e);
+  }
+
   prepareState(props = this.props, context = this.getContext()) {
     let extendedProps = ImageKitComponent.normalizeOptions(context, props);
     let url = this.getUrl(extendedProps);
@@ -88,9 +96,9 @@ class IKImage extends ImageKitComponent {
     if (lqip !== undefined && lqip.active === true) {
       const { quality } = this.props.lqip;
       const url = this.lqipload(quality);
-      return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} />;
+      return < img onLoad={this.onLoad} src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} onError={this.onError} />;
     } else {
-      return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} />;
+      return < img onLoad={this.onLoad} src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} onError={this.onError} />;
     }
   }
 }
