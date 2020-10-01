@@ -100,7 +100,7 @@ The complete list of transformations supported and their usage in ImageKit can b
 | format                        | f                       |
 | radius                        | r                       |
 | background                    | bg                      |
-| border                        | bo                      |
+| border                        | b                       |
 | rotation                      | rt                      |
 | blur                          | bl                      |
 | named                         | n                       |
