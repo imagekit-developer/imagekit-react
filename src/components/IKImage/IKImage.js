@@ -86,20 +86,20 @@ class IKImage extends ImageKitComponent {
     } = this.state;
 
     if (loading !== "lazy" && lqip === null) {
-      return imageAttrs.src;
-    } else if (loading !== "lazy" && this.lqip && this.lqip.active) {
+      return url;
+    } else if (loading !== "lazy" && lqip && lqip.active) {
       if (originalSrcLoaded) {
         return url;
       } else {
         return lqipload(lqip.quality, lqip.blur);
       }
-    } else if (this.loading === "lazy" && this.lqip === null) {
-      if (this.intersected) {
+    } else if (loading === "lazy" && lqip === null) {
+      if (intersected) {
         return url;
       } else {
         return "";
       }
-    } else if (this.loading === "lazy" && this.lqip && this.lqip.active) {
+    } else if (loading === "lazy" && lqip && lqip.active) {
       if (intersected && originalSrcLoaded) {
         return url;
       } else {
