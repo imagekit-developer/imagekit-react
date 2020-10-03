@@ -33,25 +33,27 @@ class IKImage extends ImageKitComponent {
     return state;
   }
 
-  lqipload(quality, blur) {
+  lqipload(quality, blur, threshold) {
+    const finalQuality = parseInt((quality || threshold), 10) || 20;
+    const finalBlur = parseInt(blur, 10) || 6;
     let url = this.state.url;
     let lqip = "";
     if (this.props.path !== undefined) {
       let newUrl = url.split("tr:");
       if (newUrl[0] === url) {
         let newUrl = url.split("/");
-        newUrl = `${newUrl[0]}//${newUrl[2]}/${newUrl[3]}/tr:q-${quality},b-${blur}/${newUrl[4]}`;
+        newUrl = `${newUrl[0]}//${newUrl[2]}/${newUrl[3]}/tr:q-${finalQuality},bl-${finalBlur}/${newUrl[4]}`;
         lqip = `${newUrl}`;
       } else {
-        newUrl = `${newUrl[0]}tr:q-${quality},b-${blur},${newUrl[1]}`;
+        newUrl = `${newUrl[0]}tr:q-${finalQuality},bl-${finalBlur},${newUrl[1]}`;
         lqip = `${newUrl}`;
       }
     } else {
       if(url.includes("tr")){
-        lqip = `${url}&q-${quality},b-${blur}`;
+        lqip = `${url}&q-${finalQuality},bl-${finalBlur}`;
       }
       else {
-        lqip = `${url}&tr=q-${quality},b-${blur}`;
+        lqip = `${url}&tr=q-${finalQuality},bl-${finalBlur}`;
       }
 
     }
@@ -91,7 +93,7 @@ class IKImage extends ImageKitComponent {
       if (originalSrcLoaded) {
         return url;
       } else {
-        return lqipload(lqip.quality, lqip.blur);
+        return lqipload(lqip.quality, lqip.blur, lqip.threshold);
       }
     } else if (loading === "lazy" && lqip === null) {
       if (intersected) {
@@ -103,7 +105,7 @@ class IKImage extends ImageKitComponent {
       if (intersected && originalSrcLoaded) {
         return url;
       } else {
-        return lqipload(lqip.quality, lqip.blur);
+        return lqipload(lqip.quality, lqip.blur, lqip.threshold);
       }
     }
   }
