@@ -33,29 +33,79 @@ class IKImage extends ImageKitComponent {
     return state;
   }
 
-  lqipload(quality) {
+  lqipload(quality, blur) {
     let url = this.state.url;
     let lqip = "";
     if (this.props.path !== undefined) {
       let newUrl = url.split("tr:");
       if (newUrl[0] === url) {
         let newUrl = url.split("/");
-        newUrl = `${newUrl[0]}//${newUrl[2]}/${newUrl[3]}/tr:q-${quality}/${newUrl[4]}`;
+        newUrl = `${newUrl[0]}//${newUrl[2]}/${newUrl[3]}/tr:q-${quality},b-${blur}/${newUrl[4]}`;
         lqip = `${newUrl}`;
       } else {
-        newUrl = `${newUrl[0]}tr:q-${quality},${newUrl[1]}`;
+        newUrl = `${newUrl[0]}tr:q-${quality},b-${blur},${newUrl[1]}`;
         lqip = `${newUrl}`;
       }
     } else {
       if(url.includes("tr")){
-        lqip = `${url}&q-${quality}`;
+        lqip = `${url}&q-${quality},b-${blur}`;
       }
       else {
-        lqip = `${url}&tr=q-${quality}`;
+        lqip = `${url}&tr=q-${quality},b-${blur}`;
       }
 
     }
     return lqip;
+  }
+
+  getFinalImageSrcURL(loading, lqip){
+
+    /*
+    No lazy loading no lqip
+      src=originalImage
+    No lazy loading lqip
+      src=lqip
+      src=originalImage (when loaded)
+    lazy loading and no lqip
+      src=''
+      onIntersect:
+      src=originalImage
+    lazy loading and lqip
+      src=lqip
+      onInterserct:
+      src=originalImage (when loaded)
+   */
+
+    const {
+      originalSrcLoaded,
+      intersected,
+    } = this.imageRef.current;
+
+    const {
+      url
+    } = this.state;
+
+    if (loading !== "lazy" && lqip === null) {
+      return imageAttrs.src;
+    } else if (loading !== "lazy" && this.lqip && this.lqip.active) {
+      if (originalSrcLoaded) {
+        return url;
+      } else {
+        return lqipload(lqip.quality, lqip.blur);
+      }
+    } else if (this.loading === "lazy" && this.lqip === null) {
+      if (this.intersected) {
+        return url;
+      } else {
+        return "";
+      }
+    } else if (this.loading === "lazy" && this.lqip && this.lqip.active) {
+      if (intersected && originalSrcLoaded) {
+        return url;
+      } else {
+        return lqipload(lqip.quality, lqip.blur);
+      }
+    }
   }
 
   componentDidMount() {
@@ -83,15 +133,10 @@ class IKImage extends ImageKitComponent {
     let { url, alt } = this.state;
     const props = { ...this.props };
     const { nonImageKitProps } = extractImageKitProps(props);
-    const lqip = props.lqip;
-
-    if (lqip !== undefined && lqip.active === true) {
-      const { quality } = this.props.lqip;
-      const url = this.lqipload(quality);
-      return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} />;
-    } else {
-      return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} />;
-    }
+    const { lqip, loading } = props;
+    const url = getfinalImageSrcURL(loading, lqip);
+    
+    return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} />;
   }
 }
 
