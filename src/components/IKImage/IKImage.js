@@ -8,7 +8,7 @@ class IKImage extends ImageKitComponent {
     this.imageRef = React.createRef();
     this.state = {};
 
-    let state = { url: undefined };
+    let state = { url: undefined, imageLoaded: false };
     this.state = Object.assign(state, this.prepareState(props, context));
   }
 
@@ -74,14 +74,14 @@ class IKImage extends ImageKitComponent {
       src=originalImage
     lazy loading and lqip
       src=lqip
-      onInterserct:
+      onIntersect:
       src=originalImage (when loaded)
    */
 
     const {
-      originalSrcLoaded,
-      intersected,
-    } = this.imageRef.current;
+      imageLoaded,
+      isIntersecting,
+    } = this.state;
 
     const {
       url
@@ -90,19 +90,19 @@ class IKImage extends ImageKitComponent {
     if (loading !== "lazy" && lqip === null) {
       return url;
     } else if (loading !== "lazy" && lqip && lqip.active) {
-      if (originalSrcLoaded) {
+      if (imageLoaded) {
         return url;
       } else {
         return lqipload(lqip.quality, lqip.blur, lqip.threshold);
       }
     } else if (loading === "lazy" && lqip === null) {
-      if (intersected) {
+      if (isIntersecting) {
         return url;
       } else {
         return "";
       }
     } else if (loading === "lazy" && lqip && lqip.active) {
-      if (intersected && originalSrcLoaded) {
+      if (isIntersecting && imageLoaded) {
         return url;
       } else {
         return lqipload(lqip.quality, lqip.blur, lqip.threshold);
@@ -114,6 +114,7 @@ class IKImage extends ImageKitComponent {
     const imageObserver = new IntersectionObserver(function (entry, observer) {
       if (entry[0].isIntersecting) {
         let image = entry[0].target;
+        this.setState({isIntersecting: true});
         image.src = url;
         imageObserver.unobserve(image);
       }
@@ -138,7 +139,13 @@ class IKImage extends ImageKitComponent {
     const { lqip, loading } = props;
     const url = getfinalImageSrcURL(loading, lqip);
     
-    return < img src={url} {...nonImageKitProps} ref={this.imageRef} alt={alt} />;
+    return <img 
+      src={url} 
+      {...nonImageKitProps} 
+      ref={this.imageRef} 
+      alt={alt}
+      onLoad={() => this.setState({imageLoaded: true})} 
+    />;
   }
 }
 
