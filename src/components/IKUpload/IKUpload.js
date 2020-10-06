@@ -7,7 +7,6 @@ export default class IKUpload extends ImageKitComponent {
   onChangeHandler = (customOnChangeHandler, e, fileName, useUniqueFileName, tags, folder, isPrivateFile, customCoordinates, responseFields, extendedProps,  onError, onSuccess) => {
     if (customOnChangeHandler) {
       customOnChangeHandler(e);
-      return;
     }
     const file = e.target.files[0];
 
