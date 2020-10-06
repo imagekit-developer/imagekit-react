@@ -13,11 +13,11 @@ class IKImage extends ImageKitComponent {
   }
 
   onError = (e) => {
-	if(this.props.onError) this.props.onError(e);
+	if(this.props.onError && typeof this.props.onError === 'function') this.props.onError(e);
   }
 
   onLoad = (e) => {
-	if(this.props.onLoad) this.props.onLoad(e);
+	if(this.props.onLoad && typeof this.props.onLoad === 'function') this.props.onLoad(e);
   }
 
   prepareState(props = this.props, context = this.getContext()) {
