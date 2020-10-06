@@ -11,7 +11,7 @@ export default class IKUpload extends ImageKitComponent {
     }
     const file = e.target.files[0];
 
-    const customFileName = fileName.trim();
+    const customFileName = fileName && fileName.length ? fileName.trim() : null;
     const uploadFileName = customFileName && customFileName.length ? customFileName : file.name;
 
     this.upload(file, uploadFileName, useUniqueFileName, tags, folder, isPrivateFile, customCoordinates, responseFields, extendedProps, onError, onSuccess)
