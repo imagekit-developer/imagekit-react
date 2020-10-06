@@ -14,7 +14,8 @@ const IMAGEKIT_PROPS = {
   responseFields: true,
   isPrivateFile: true,
   folder: true,
-  customCoordinates: true
+  customCoordinates: true,
+  loading: true,
 };
 
 const isDefined = (props, key) => {
