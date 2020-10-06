@@ -11,8 +11,8 @@ module.exports = {
     library: 'imageKitReact',
     libraryTarget: 'umd',
     publicPath: '/dist/',
-	umdNamedDefine: true,
-	globalObject: 'this'
+    umdNamedDefine: true,
+    globalObject: 'this'
   },
   module: {
     rules: [{

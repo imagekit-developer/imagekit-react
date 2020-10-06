@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
+import { IKImage, IKContext, IKUpload } from './src'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   let urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-  if(urlEndpoint[urlEndpoint.length-1] === "/")
-    urlEndpoint = urlEndpoint.slice(0,urlEndpoint.length-1);
+  if (urlEndpoint[urlEndpoint.length - 1] === "/")
+    urlEndpoint = urlEndpoint.slice(0, urlEndpoint.length - 1);
 
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
 
@@ -26,44 +26,78 @@ function App() {
   return (
     <div className="App">
       <h1>Hi! This is an ImageKit React SDK Demo!</h1>
-      <p>Let's add an Image</p>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src} />
-      <p>Let's transform this once</p>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src} transformation={[{
-        "height": "200",
-        "width": "200"
-      }]} />
-      <p>Let's transform this more than once</p>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
-        "height": "200",
-        "width": "200",
-      },
-      {
-        "rotation": "90"
-      }]} />
-      <p>Adding a Image with Context</p>
-      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
-        <IKImage path={path} transformation={[{
-          "height": "300",
-          "width": "400"
-        }]} />
-      </IKContext>
-      <p>LQIP</p>
-      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
-        <IKImage path={path} queryParameters={{param1:"value1"}} lqip={{ active: true, quality: 30 }} />
-      </IKContext>
-      <p>Upload</p>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
-        <IKUpload
-         tags={["sample-tag1","sample-tag2"]}
-         customCoordinates={"10,10,10,10"}
-         isPrivateFile={false}
-         useUniqueFileName={true}
-         folder={"/sample-folder"}
-         onError={onError} onSuccess={onSuccess}
+        <p>Let's add an Image</p>
+        <IKImage src={src} />
+
+        <p>Transformation - height and width manipulation</p>
+        <IKImage src={src} transformation={[{
+          "height": "200",
+          "width": "200"
+        }]} />
+
+        <p>Chained transformation</p>
+        <IKImage path={path} transformation={[{
+          "height": "200",
+          "width": "200",
+        },
+        {
+          "rotation": "90"
+        }]} />
+
+        <p>Lazy loading image</p>
+        <IKImage
+          path={path}
+          transformation={[{
+            "height": "200",
+            "width": "200"
+          }]}
+          loading="lazy"
         />
+
+        <p>Progressive image loading wihtout lazy loading</p>
+        <IKImage
+          path="/custom.jpg"
+          transformation={[{
+            "height": "200",
+            "width": "200"
+          }]}
+          onError={(e) => {
+            debugger;
+          }}
+          lqip={{ active: true, quality: 20, blur: 10 }}
+        />
+
+        <p>Progressive image loading with lazy loading</p>
+        <IKImage
+          path={path}
+          transformation={[{
+            "height": "200",
+            "width": "200"
+          }]}
+          loading="lazy"
+          lqip={{ active: true, quality: 20, blur: 30 }}
+        />
+
+
+        <p>File upload - To use this funtionality please remember to setup the server</p>
+        <IKUpload
+          onError={onError}
+          onSuccess={onSuccess}
+        />
+
+        <p>File upload along with upload API options - To use this funtionality please remember to setup the server</p>
+        <IKUpload
+          fileName="manu.jpg"
+          tags={["sample-tag1", "sample-tag2"]}
+          customCoordinates={"10,10,10,10"}
+          isPrivateFile={false}
+          useUniqueFileName={true}
+          folder={"/sample-folder"}
+          onError={onError} onSuccess={onSuccess}
+        />
+
       </IKContext>
-      <p>To use this funtionality please remember to setup the server</p>
     </div>
   );
 }
