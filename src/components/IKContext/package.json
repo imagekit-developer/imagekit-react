@@ -1,6 +1,0 @@
-{
-  "name": "image-kit-context",
-  "version": "1.0.0",
-  "main": "./IKContext.js",
-  "private": true
-}

@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "@storybook/react";
-import IKContext from "../../components/IKContext/IKContext";
-import IKUpload from "../../components/IKUpload/IKUpload";
+import IKContext from "../../components/IKContext";
+import IKUpload from "../../components/IKUpload";
 
 const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
@@ -26,14 +26,14 @@ storiesOf("IKUpload", module)
     "imageKitUploadwithAllTheProps",
     () =>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
-        <IKUpload fileName="ABC" useUniqueFileName="false" tags={["tag1", "tag2"]} folder="/" isPrivateFile="true" customCoordinates="0,0,0,0" responseFields={["isPrivateFile", "customCoordinates"]} onError={onError} onSuccess={onSuccess} />
+        <IKUpload fileName="ABC" useUniqueFileName={false} tags={["tag1", "tag2"]} folder="/" isPrivateFile={true} customCoordinates="0,0,0,0" responseFields={["isPrivateFile", "customCoordinates"]} onError={onError} onSuccess={onSuccess} />
       </IKContext>
   )
   .add(
     "imageKitUploadWithoutFileName",
     () =>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
-        <IKUpload useUniqueFileName="true" onError={onError} onSuccess={onSuccess} />
+        <IKUpload useUniqueFileName={true} onError={onError} onSuccess={onSuccess} />
       </IKContext>
   )
   .add(

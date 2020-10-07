@@ -11,7 +11,7 @@ storiesOf("Image-Transformation", module)
   .add(
     "imageWithSingleTransformations",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} path={path} transformation={[{
         "height": "300",
         "width": "400"
       }]} />
@@ -19,7 +19,7 @@ storiesOf("Image-Transformation", module)
   .add(
     "imageWithTransformationPositionAsQuery",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} path={path} transformation={[{
         "height": "300",
         "width": "400"
       }]} transformationPosition="query" />
@@ -27,7 +27,7 @@ storiesOf("Image-Transformation", module)
   .add(
     "imageWithTransformationPositionAsPathPassingSrc",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} src={src} transformation={[{
         "height": "300",
         "width": "400"
       }]} transformationPosition="path" />
@@ -35,7 +35,7 @@ storiesOf("Image-Transformation", module)
   .add(
     "imageWithChainedTransformations",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} path={path} transformation={[{
         "height": "300",
         "width": "400"
       }, {
@@ -45,14 +45,14 @@ storiesOf("Image-Transformation", module)
   .add(
     "imageWithNonExistingTransformation",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} path={path} transformation={[{
         "foo": "bar",
       }]} />
   )
   .add(
     "imageWithNonExistingTransformationWithExistingTransformation",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} path={path} transformation={[{
         "foo": "bar",
         "height": "300"
       }]} />

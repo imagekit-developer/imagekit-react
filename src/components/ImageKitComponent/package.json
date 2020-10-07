@@ -1,6 +1,0 @@
-{
-  "name": "image-kit-component",
-  "version": "1.0.0",
-  "main": "./ImageKitComponent.js",
-  "private": true
-}

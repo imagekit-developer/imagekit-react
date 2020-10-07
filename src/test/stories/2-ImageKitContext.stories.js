@@ -1,7 +1,7 @@
 import React from "react"
 import IKImage from "../../components/IKImage";
 import { storiesOf } from "@storybook/react";
-import IKContext from "../../components/IKContext/IKContext";
+import IKContext from "../../components/IKContext";
 import ErrorBoundary from "../../components/ErrorBoundary";
 
 const publicKey = process.env.REACT_APP_PUBLIC_KEY;
@@ -20,22 +20,10 @@ storiesOf("IKContext", module)
       </IKContext>
   )
   .add(
-    "imagePublicKeyFail",
-    () =>
-      <ErrorBoundary>
-        <IKContext urlEndpoint={urlEndpoint} >
-          <IKImage path={path} transformation={[{
-            "height": "300",
-            "width": "400"
-          }]} />
-        </IKContext>
-      </ErrorBoundary>
-  )
-  .add(
-    "OverRidingUrlParameter",
+    "OverRidingUrlEndpoint",
     () =>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
-        <IKImage path={path} urlEndpoint="https://ik.imagekit.io/utkace/" transformation={[{
+        <IKImage path={path} urlEndpoint="https://www.custom-domain.com/" transformation={[{
           "height": "300",
           "width": "400"
         }]} />

@@ -1,6 +1,10 @@
+## Contributing
+When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
+
 ## Building package
 
-Execute following command from the root folder to build the library. This creates a package in `dist/imagekitio-react.js` folder.
+Execute following command from the root folder to build the library. This will create bundles in `dist` folder.
+
 ```sh
 npm install # run for first time
 npm run build

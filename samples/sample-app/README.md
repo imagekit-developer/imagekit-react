@@ -6,35 +6,12 @@ We will assume you are in the directory `samples\sample-app` while following the
 
 Run the following commands from your shell.
 
-### Getting the SDK ready 
-
-We will first go to the root,
-```js
-cd ../../
-```
-Install the node modules,
-```js
-npm install
-```
-Create the dist and lib:
-```js
-npm run build
-```
-
 ### Installing the sample-app
 
-Now,
-Go to `sample-app`,
-```bash
-cd samples/sample-app
-```
-
-then,
+Inside `sample-app`, run
 ```bash
 npm install
 ```
-
-This should create a copy of `imagekitio-react` library in `node_modules` of `sample-app`
 
 ## Setting the enviroment variable
 
