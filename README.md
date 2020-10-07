@@ -35,13 +35,13 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 
 ```js
 <IKContext urlEndpoint="https://ik.imagekit.io/your_imagekit_id">
-  // Render an image using relative path - https://ik.imagekit.io/your_imagekit_id/default-image.jpg
+  // Render an image using a relative path - https://ik.imagekit.io/your_imagekit_id/default-image.jpg
   <IKImage path="/default-image.jpg" />
 
   // Overriding urlEndpoint defined in parent IkContext - https://www.custom-domain.com/default-image.jpg
   <IKImage urlEndpoint="https://www.custom-domain.com" path="/default-image.jpg" />
 
-  // Render an image using absolute URL - https://www1.custom-domain.com/default-image.jpg?tr=w-100
+  // Render an image using an absolute URL - https://www1.custom-domain.com/default-image.jpg?tr=w-100
   <IKImage src="https://www1.custom-domain.com/default-image.jpg?tr=w-100" />
 
   // Height and width manipulation - https://ik.imagekit.io/your_imagekit_id/tr:h-200,w-200/default-image.jpg
@@ -70,8 +70,8 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
   />
 
   /*
-     Low quality image placeholder
-     Will first load https://ik.imagekit.io/your_imagekit_id/tr:h-200,w-200:q-20,bl-6/default-image.jpg, while the original image i.e. https://ik.imagekit.io/your_imagekit_id/tr:h-200,w-200/default-image.jpg is being loaded in the background
+     Low-quality image placeholder
+     Will first load https://ik.imagekit.io/your_imagekit_id/tr:h-200,w-200:q-20,bl-6/default-image.jpg, while the original image, i.e., https://ik.imagekit.io/your_imagekit_id/tr:h-200,w-200/default-image.jpg is being loaded in the background.
   */
   <IKImage
     path="/default-image.jpg"
@@ -126,14 +126,14 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 ```
 
 ## Demo application
-* The offical step by step quickstart guide - https://github.com/imagekit-samples/quickstart/tree/master/react
+* The official step by step quick start guide - https://github.com/imagekit-samples/quickstart/tree/master/react
 * You can also run the demo application in [samples/sample-app](/samples/sample-app) folder as per the [README.md](/samples/sample-app/README.md).
 
 ## Components
 
 The library includes 3 Components:
 
-* [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticationEndpoint` to all children elements. This does not render anything.
+* [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticationEndpoint` to all children elements. This component does not render anything.
 * `IKImage` for [image resizing](#image-resizing). This renders a `<img>` tag.
 * `IKUpload`for client-side [file uploading](#file-upload). This renders a `<input type="file">` tag.
 
@@ -161,19 +161,19 @@ will render:
 * `publicKey` and `authenticationEndpoint` parameters are required if you want to use the SDK for client-side file upload. You can get these parameters from the developer section in your ImageKit dashboard - https://imagekit.io/dashboard#developers.
 * `transformationPosition` is optional. The default value for this parameter is `path`. Acceptable values are `path` & `query`
 
-> Note: Do not include your Private Key in any client-side code, including this SDK or its initialization. If you pass the `privateKey` parameter while initializing this SDK, it throws an error_
+> Note: Do not include your Private Key in any client-side code.
 
 ## Image resizing
 
-The `IKImage` component renders a `img` tag. It used for manipulating images in real-time. `IKImage` component accepts the following props:
+The `IKImage` component renders an `img` tag. It is used for rendering and manipulating images in real-time. `IKImage` component accepts the following props:
 
 | Prop             | Type | Description                    |
 | :----------------| :----|:----------------------------- |
 | urlEndpoint      | String | Optional. The base URL to be appended before the path of the image. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
 | path             | String |Conditional. This is the path at which the image exists. For example, `/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation. |
 | src              | String |Conditional. This is the complete URL of an image already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation. |
-| transformation   | Array of objects |Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as the array's different objects. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |
-| transformationPostion | String |Optional. The default value is `path` that places the transformation string as a path parameter in the URL. It can also be specified as `query` which adds the transformation string as the query parameter `tr` in the URL. If you use `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
+| transformation   | Array of objects |Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as the Array's different objects. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it is applied in the URL as it is. |
+| transformationPosition | String |Optional. The default value is `path` that places the transformation string as a URL path parameter. It can also be specified as `query`, which adds the transformation string as the URL's query parameter i.e.`tr`. If you use `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
 | queryParameters  | Object |Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and not necessarily related to ImageKit. Especially useful if you want to add some versioning parameter to your URLs. |
 | loading  | String |Optional. Pass `lazy` to lazy load images |
 | lqip  | Object |Optional. You can use this to show a low-quality blurred placeholder while the original image is being loaded e.g. `{active:true, quality: 20, blur: 6`}. The default value of `quality` is `20` and `blur` is `6`.|
@@ -295,13 +295,21 @@ See the complete list of transformations supported in ImageKit [here](https://do
 
 ### Chained Transforms
 
-Chained transforms make it easy to specify the order the transform are applied. For example:
+Chained transforms make it easy to specify the order the transform is applied. For example:
 
 ```js
-// Using chained transformation. First resize and then rotate image to 90 degree.
+// Using chained transformation. First, resize and then rotate the image to 90 degrees.
 <IKImage
   path="/default-image.jpg"
-  transformation="[{height:300,width:400}, {rotation:90}]"
+  transformation={[
+    {
+      height: 300,
+      width: 400
+    },
+    {
+      rotation: 90
+    }
+  ]}
 />
 ```
 
@@ -389,7 +397,7 @@ The SDK provides the `IKUpload` component to upload files to the [ImageKit Media
 
 `IKUpload` component accepts the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data) options as props.
 
-The SDK provides `IKUpload` component to upload files to the ImageKit Media Library. It accepts `fileName` parameter as a prop. The file parameter is provided as an input from the user.
+The SDK provides `IKUpload` component to upload files to the ImageKit Media Library. It accepts the `fileName` parameter as a prop. The file parameter is provided as an input from the user.
 
 
 | Prop             | Type | Description                    |
@@ -401,11 +409,11 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 | isPrivateFile | Boolean | Optional. Accepts `true` of `false`. The default value is `false`. Specify whether to mark the file as private or not. This is only relevant for image type files|
 | customCoordinates   | String | Optional. Define an important area in the image. This is only relevant for image type files. To be passed as a string with the `x` and `y` coordinates of the top-left corner, and `width` and `height` of the area of interest in format `x,y,width,height`. For example - `10,10,100,100` |
 | responseFields   | Array of string | Optional. Values of the fields that you want upload API to return in the response. For example, set the value of this field to `["tags", "customCoordinates", "isPrivateFile"]` to get value of `tags`, `customCoordinates`, and `isPrivateFile` in the response. |
-| onSuccess   | Function callback | Optional. Called if upload is successfull. The first and only argument is the response JOSN from the upload API |
+| onSuccess   | Function callback | Optional. Called if the upload is successful. The first and only argument is the response JOSN from the upload API |
 | onError   | Function callback | Optional. Called if upload results in an error. The first and only argument is the error received from the upload API |
-| urlEndpoint      | String | Optional. If not specified, the URL-endpoint specified at the time of [SDK initialization](#initialization) is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
-| publicKey      | String | Optional. If not specified, the `publicKey` specified at the time of [SDK initialization](#initialization) is used.|
-| authenticationEndpoint      | String | Optional. If not specified, the `authenticationEndpoint` specified at the time of [SDK initialization](#initialization) is used. |
+| urlEndpoint      | String | Optional. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
+| publicKey      | String | Optional. If not specified, the `publicKey` specified in the parent `IKContext` component is used.|
+| authenticationEndpoint      | String | Optional. If not specified, the `authenticationEndpoint` specified in the parent `IKContext` component is used. |
 
 > Make sure that you have specified `authenticationEndpoint` and `publicKey` in `IKUpload` or in the parent `IKContext` component as a prop. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token`, and `expire`. [Learn how to implement authenticationEndpoint](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#how-to-implement-authenticationendpoint-endpoint) on your server. Refer to [demo application](#demo-application) for an example implementation.
 
@@ -439,7 +447,7 @@ const onSuccess = (res) => {
 You can use `ErrorBoundary` to handle errors anywhere in their child component tree. Log those errors or display a fallback UI instead of the component tree that crashed. For example:
 
 ```js
-// urlEndpoint should be present in IKImage or parent IKContext component otherwise it will throw error
+// urlEndpoint should be present in IKImage or parent IKContext component; otherwise, it will throw an error. For example:
 <ErrorBoundary>
   <IKImage
     path = "/default-image.jpg"
@@ -463,4 +471,3 @@ For any feedback or to report any issues or general implementation support, plea
 
 ## License
 Released under the MIT license.
-
