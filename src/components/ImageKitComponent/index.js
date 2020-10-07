@@ -42,10 +42,5 @@ class ImageKitComponent extends PureComponent {
 }
 
 ImageKitComponent.contextType = ImageKitContextType;
-ImageKitComponent.publicKey = PropTypes.string;
-ImageKitComponent.urlEndpoint = PropTypes.string;
-ImageKitComponent.src = PropTypes.string;
-ImageKitComponent.path = PropTypes.string;
-ImageKitComponent.transformation = PropTypes.arrayOf(PropTypes.object)
 
 export default ImageKitComponent;

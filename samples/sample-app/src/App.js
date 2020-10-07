@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { IKImage, IKContext, IKUpload } from '@imagekit/imagekitio-react'
+import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
@@ -60,7 +60,7 @@ function App() {
 
         <p>Progressive image loading wihtout lazy loading</p>
         <IKImage
-          path="/custom.jpg"
+          path={path}
           transformation={[{
             "height": "200",
             "width": "200"
