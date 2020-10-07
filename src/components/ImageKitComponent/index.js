@@ -2,7 +2,7 @@ import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ImageKit from 'imagekit-javascript';
 import { ImageKitContextType } from '../IKContext/ImageKitContextType';
-const VERSION = "1.0.6";
+import pkg from '../../../package.json';
 
 class ImageKitComponent extends PureComponent {
   constructor(props, context) {
@@ -11,7 +11,7 @@ class ImageKitComponent extends PureComponent {
   }
 
   getVersion() {
-    return VERSION;
+    return pkg.version;
   }
 
   getContext() {

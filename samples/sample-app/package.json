@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@imagekit/imagekitio-react": "^1.0.7",
+    "imagekitio-react": "^1.0.7",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "export SKIP_PREFLIGHT_CHECK=true;react-scripts start",
-    "build": "react-scripts build",
+    "build": "export SKIP_PREFLIGHT_CHECK=true;react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

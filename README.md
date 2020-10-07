@@ -5,31 +5,40 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Twitter Follow](https://img.shields.io/twitter/follow/imagekitio?label=Follow&style=social)](https://twitter.com/ImagekitIo)
 
-React SDK for [ImageKit.io](https://imagekit.io), which implements client-side upload and URL generation for use inside a react application.
 
-ImageKit is a complete image optimization and transformation solution that comes with an [image CDN](https://imagekit.io/features/imagekit-infrastructure) and media storage. It can be integrated with your existing infrastructure - storages like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
+ImageKit React SDK allows you to use real-time [image resizing](https://docs.imagekit.io/features/image-transformations), [optimization](https://docs.imagekit.io/features/image-optimization), and [file uploading](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload) in the client-side.
 
 ## Installation
 
-`npm install --save imagekitio-react`
+```shell
+npm install --save imagekitio-react
+```
 
-Include the components in your code:
+or
 
-`import {IKContext} from "imagekitio-react"`
+```shell
+yarn add imagekitio-react
+```
 
 ## Usage
 
+Import components in your code:
+
+```js
+import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
+```
+
 The library includes 3 Components:
 
-- [IKContext](#IKContext)
-
-- [IKImage - URL generation](#ikimage---url-generation)
-
-- [IKUpload - File upload](#ikupload---file-upload)
+* [IKContext](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticationEndpoint` to all children elements.
+* [IKImage](#ikimage---url-generation) for URL generation
+* [IKUpload](#ikupload---file-upload) for client-side file uploading.
 
 ### IKContext
 
-In order to use the SDK, you need to provide it with a few configuration parameters. The configuration parameters can be applied directly to the `IKImage` component or using an `IKContext` component. example:
+In order to use the SDK, you need to provide it with a few configuration parameters. You can use a parent `IKContext` component to define common options for all children `IkImage` or `IKupload` compoents. For example:
+
+> The configuration parameters can be applied directly to the `IKImage` or `IkUpload` components as well.
 
 ```js
 <IKContext
@@ -46,11 +55,11 @@ In order to use the SDK, you need to provide it with a few configuration paramet
 
 `transformationPosition` is optional. The default value for this parameter is `path`. Acceptable values are `path` & `query`
 
-_Note: Do not include your Private Key in any client-side code, including this SDK or its initialization. If you pass the `privateKey` parameter while initializing this SDK, it throws an error_
+>Note: Do not include your Private Key in any client-side code, including this SDK or its initialization. If you pass the `privateKey` parameter while initializing this SDK, it throws an error_
 
 ### IKImage - URL generation
 
-The IKImage component component defines an ImageKit Image tag. example usage:
+The IKImage component renders an `img` tag. For example:
 
 #### Using image path and image hostname or endpoint
 
@@ -87,9 +96,9 @@ The IKImage component component defines an ImageKit Image tag. example usage:
 
 #### Supported props:
 
-| Option                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Prop                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| urlEndpoint           | Optional. The base URL to be appended before the path of the image. If not specified, the URL Endpoint specified at the time of SDK initialization is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/                                                                                                                                                                                                                                                                                                                                                               |
+| urlEndpoint           | Optional. The base URL to be appended before the path of the image. If not specified, the URL Endpoint specified in parent `IKContext` component is used. For example - https://ik.imagekit.io/your_imagekit_id/endpoint/                                                                                                                                                                                                                                                                                                                                                               |
 | path                  | Conditional. This is the path at which the image exists. For example, `/path/to/image.jpg`. Either the `path` or `src` parameter need to be specified for URL generation.                                                                                                                                                                                                                                                                                                                                                                                                                |
 | src                   | Conditional. This is the complete URL of an image already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/image.jpg`. Either the `path` or `src` parameter need to be specified for URL generation.                                                                                                                                                                                                                                                                                                                                           |
 | transformation        | Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as different objects of the array. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { IKImage, IKContext, IKUpload } from './src'
+import { IKImage, IKContext, IKUpload } from '@imagekit/imagekitio-react'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
