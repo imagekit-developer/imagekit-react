@@ -3,13 +3,11 @@ import './App.css';
 import { IKImage, IKContext, IKUpload } from './src'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
-  let urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-  if (urlEndpoint[urlEndpoint.length - 1] === "/")
-    urlEndpoint = urlEndpoint.slice(0, urlEndpoint.length - 1);
+  const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
 
-  let path = "default-image.jpg";
+  const path = "default-image.jpg";
 
   const src = `${urlEndpoint}/${path}`;
 
@@ -26,6 +24,11 @@ function App() {
   return (
     <div className="App">
       <h1>Hi! This is an ImageKit React SDK Demo!</h1>
+
+      <p>Directly using <code>IkImage</code></p>
+      <IKImage urlEndpoint={urlEndpoint} src={src} />
+
+      <p>Using context <code>IKContext</code></p>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
         <p>Let's add an Image</p>
         <IKImage src={src} />
@@ -63,7 +66,6 @@ function App() {
             "width": "200"
           }]}
           onError={(e) => {
-            debugger;
           }}
           lqip={{ active: true, quality: 20, blur: 10 }}
         />
@@ -93,6 +95,7 @@ function App() {
           customCoordinates={"10,10,10,10"}
           isPrivateFile={false}
           useUniqueFileName={true}
+          responseFields={["tags"]}
           folder={"/sample-folder"}
           onError={onError} onSuccess={onSuccess}
         />

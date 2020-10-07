@@ -1,7 +1,12 @@
 import React from 'react';
-import ImageKitComponent from "../ImageKitComponent/ImageKitComponent";
-import extractImageKitProps from '../../util/extractImageKitProps';
-import ImageKit from 'imagekit-javascript';
+import ImageKitComponent from "../ImageKitComponent/";
+import COMMON_PROPS from "../IKContext/props"
+import IK_IMAGE_PROPS from "./props"
+
+const PROP_TYPES = {
+  ...COMMON_PROPS,
+  ...IK_IMAGE_PROPS
+};
 
 class IKImage extends ImageKitComponent {
   constructor(props, context) {
@@ -17,27 +22,19 @@ class IKImage extends ImageKitComponent {
     };
   }
 
-  getIKClient() {
-    var contextOptions = this.getContext();
-    const { urlEndpoint } = this.props;
-    var ikClient = new ImageKit({
-      sdkVersion: `react-${this.getVersion()}`,
-      urlEndpoint: urlEndpoint || contextOptions.urlEndpoint,
-    });
-    return ikClient;
-  }
-
   getSrc() {
     const result = {};
     const { lqip, src, path, transformation, transformationPosition, queryParameters } = this.props;
     var ikClient = this.getIKClient();
+    const contextOptions = this.getContext();
 
     var options = {
-      src,
-      path,
-      transformation,
-      transformationPosition,
-      queryParameters
+      urlEndpoint: this.props.urlEndpoint || contextOptions.urlEndpoint,
+      src: src || contextOptions.src,
+      path: path || contextOptions.path,
+      transformation: transformation || contextOptions.transformation,
+      transformationPosition: transformationPosition || contextOptions.transformationPosition,
+      queryParameters: queryParameters || contextOptions.queryParameters
     };
 
     result.originalSrc = ikClient.url(options);
@@ -163,18 +160,16 @@ class IKImage extends ImageKitComponent {
 
   render() {
     let { currentUrl } = this.state;
-    const props = { ...this.props };
-    const { nonImageKitProps } = extractImageKitProps(props);
-    const { onError } = this.props;
+    const { urlEndpoint, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = this.props;
     return <img
-      onError={(e) => { if (onError) onError(e) }}
+      alt={this.props.alt || ""}
       src={currentUrl}
       ref={this.imageRef}
-      {...nonImageKitProps}
+      {...restProps}
     />;
   }
 }
 
-IKImage.propTypes = ImageKitComponent.propTypes;
+IKImage.propTypes = PROP_TYPES;
 
 export default IKImage;

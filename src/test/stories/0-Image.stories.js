@@ -24,42 +24,42 @@ storiesOf("Image", module)
   .add(
     "imageWithSrc",
     () =>
-    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src} alt="abc"/>
+    <IKImage urlEndpoint={urlEndpoint} src={src} alt="abc"/>
   )
   .add(
     "imageWithPath",
     () =>
-    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path}/>
+    <IKImage urlEndpoint={urlEndpoint} path={path}/>
   )
   .add(
     "imageWithQueryParameters",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path={path} queryParameters={{version:5, name: 'check'}} />
+      <IKImage urlEndpoint={urlEndpoint} path={path} queryParameters={{version:5, name: 'check'}} />
   )
   .add(
     "imageWithSrcQueryParameters",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={srcWithQuery} queryParameters={{version:5, name: 'check'}} />
+      <IKImage urlEndpoint={urlEndpoint} src={srcWithQuery} queryParameters={{version:5, name: 'check'}} />
   )
   .add(
     "leadingSlashesInPath",
     () =>
-    <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} path="////default-image.jpg"/>
+    <IKImage urlEndpoint={urlEndpoint} path="////default-image.jpg"/>
   )
   .add(
     "trailingSlashesInUrlEndpoint",
     () =>
-    <IKImage publicKey={publicKey} urlEndpoint="https://ik.imagekit.io/mindship////" path={path}/>
+    <IKImage urlEndpoint="https://ik.imagekit.io/mindship////" path={path}/>
   )
   .add(
     "imageWithLQIPWithSrcNoTransformation",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} id="lqip"/>
+      <IKImage urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} id="lqip"/>
   )
   .add(
     "imageWithLQIPWithSrcWithTransformation",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} src={src} transformation={[{
         height: 300,
         width: 400
       }]} id="lqip"/>
@@ -67,12 +67,12 @@ storiesOf("Image", module)
   .add(
     "imageWithLQIPWithPathNoTransformation",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={path} id="lqip"/>
+      <IKImage urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={path} id="lqip"/>
   )
   .add(
     "imageWithLQIPWithPathWithTransformation",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={path} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={path} transformation={[{
         height: 300,
         width: 400
       }]} id="lqip"/>
@@ -80,7 +80,7 @@ storiesOf("Image", module)
   .add(
     "nestedImagePathWithLQIP",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} lqip={{active:true, quality: 20}} path={nestedImagePath} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} lqip={{active:true, quality: 50, blur: 25}} path={nestedImagePath} transformation={[{
         height: 300,
         width: 400
       }]} id="lqip"/>
@@ -88,28 +88,17 @@ storiesOf("Image", module)
   .add(
     "imageWithTransformations",
     () =>
-      <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} src={src} transformation={[{
+      <IKImage urlEndpoint={urlEndpoint} src={src} transformation={[{
         height: 300,
         width: 400
       }]} />
   )
   .add(
-    "imageLinkFail",
+    "missingUrlEndpointFail",
     () =>
       <ErrorBoundary>
-        <IKImage publicKey={publicKey} urlEndpoint={urlEndpoint} transformation={[{
+        <IKImage transformation={[{
           "height": "300",
-          "width": "400"
-        }]} />
-      </ErrorBoundary>
-
-  )
-  .add(
-    "imagePublicKeyFail",
-    () =>
-      <ErrorBoundary>
-        <IKImage urlEndpoint={urlEndpoint} path={path} transformation={[{
-          "heigth": "300",
           "width": "400"
         }]} />
       </ErrorBoundary>
@@ -119,7 +108,7 @@ storiesOf("Image", module)
     "imageUrlEndpointFail",
     () =>
       <ErrorBoundary>
-        <IKImage publicKey="public_oeVQ1TDolFID06vH0h6yMUeqjLY=" path={path} transformation={[{
+        <IKImage path={path} transformation={[{
           "height": "300",
           "width": "400"
         }]} />
