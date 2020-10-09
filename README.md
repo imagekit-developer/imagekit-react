@@ -126,7 +126,8 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 ```
 
 ## Demo application
-* The official step by step quick start guide - https://github.com/imagekit-samples/quickstart/tree/master/react
+* The official step by step React quick start guide - https://docs.imagekit.io/getting-started/quickstart-guides/react
+* The official step by step React Native quick start guide - https://docs.imagekit.io/getting-started/quickstart-guides/react-native
 * You can also run the demo application in [samples/sample-app](/samples/sample-app) folder as per the [README.md](/samples/sample-app/README.md).
 
 ## Components
