@@ -5,9 +5,10 @@
   "scripts": {
     "build": "rm -rf dist*;rollup -c",
     "test:ci": "export SKIP_PREFLIGHT_CHECK=true;export REACT_APP_PUBLIC_KEY=your_public_key;export REACT_APP_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id;export REACT_APP_AUTHENTICATION_ENDPOINT=https://www.example.com/auth;react-scripts test --env=jsdom --watchAll=false;unset REACT_APP_PUBLIC_KEY;unset REACT_APP_URL_ENDPOINT;unset REACT_APP_AUTHENTICATION_ENDPOINT",
-    "test": "export REACT_APP_PUBLIC_KEY=your_public_key;export REACT_APP_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id;export REACT_APP_AUTHENTICATION_ENDPOINT=https://www.example.com/auth;react-scripts test --env=jsdom --watchAll=true;unset REACT_APP_PUBLIC_KEY;unset REACT_APP_URL_ENDPOINT;unset REACT_APP_AUTHENTICATION_ENDPOINT",
-    "storybook": "start-storybook -p 6007",
-    "build-storybook": "build-storybook"
+    "test:old": "export REACT_APP_PUBLIC_KEY=your_public_key;export REACT_APP_URL_ENDPOINT=https://ik.imagekit.io/your_imagekit_id;export REACT_APP_AUTHENTICATION_ENDPOINT=https://www.example.com/auth;react-scripts test --env=jsdom --coverage;unset REACT_APP_PUBLIC_KEY;unset REACT_APP_URL_ENDPOINT;unset REACT_APP_AUTHENTICATION_ENDPOINT",
+    "test": "jest src/test",
+    "test:watch": "jest src/test --watch",
+    "test:codecov": "jest src/test && codecov"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,13 @@
     "dist",
     "src"
   ],
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/test/setupTests.js"
+    ],
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  },
   "author": "ImageKit",
   "license": "MIT",
   "devDependencies": {
@@ -43,8 +51,11 @@
     "@storybook/addons": "^5.2.8",
     "@storybook/react": "^5.2.8",
     "babel-loader": "^8.0.6",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "jest": "^26.5.2",
     "react-scripts": "^3.4.3",
-    "react-test-renderer": "^16.12.0",
+    "react-test-renderer": "^16.13.1",
     "require-context.macro": "^1.2.2",
     "rollup": "^2.28.2",
     "rollup-plugin-node-resolve": "^5.2.0",
