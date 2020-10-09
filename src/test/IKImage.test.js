@@ -3,45 +3,60 @@ import { shallow } from 'enzyme';
 import IKImage from '../components/IKImage';
 import ErrorBoundary from '../components/ErrorBoundary';
 
-const urlEndpoint = 'http://ik.imagekit.io/demo';
+const urlEndpoint = 'http://ik.imagekit.io/test_imagekit_id';
 const relativePath = 'default-image.jpg';
 const absolutePath = `${urlEndpoint}/${relativePath}`;
 const absolutePathWithQuery = `${absolutePath}?foo=bar`
 const nestedImagePath = '/sample-folder/default-image.jpg';
 
+// NOTE: check all transform strings
 describe('IKImage: Snapshot migrated tests', () => {
   test("imageWithSrc", () => {
     const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} src={absolutePath} alt="abc" />);
+    // <img alt="abc" src="http://ik.imagekit.io/test_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.7"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(absolutePath);
   });
 
   test("imageWithPath", () => {
     const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} path={relativePath} />);
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.7"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(absolutePath);
   });
 
   test("imageWithQueryParameters", () => {
     const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} path={relativePath} queryParameters={{ version: 5, name: 'check' }} />);
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.7&amp;version=5&amp;name=check"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(absolutePath);
   });
 
   test("imageWithSrcQueryParameters", () => {
     const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} src={absolutePathWithQuery} queryParameters={{ version: 5, name: 'check' }} />);
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/default-image.jpg?foo=bar&amp;ik-sdk-version=react-1.0.7&amp;version=5&amp;name=check"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(absolutePath);
   });
 
   test("leadingSlashesInPath", () => {
     const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} path="////default-image.jpg" />);
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.7"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(absolutePath);
   });
 
   test("trailingSlashesInUrlEndpoint", () => {
-    const ikImage = shallow(<IKImage urlEndpoint="http://ik.imagekit.io/demo////" path={relativePath} />);
+    const ikImage = shallow(<IKImage urlEndpoint="http://ik.imagekit.io/test_imagekit_id////" path={relativePath} />);
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.7"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(absolutePath);
   });
 
   test("imageWithLQIPWithSrcNoTransformation", () => {
     const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} lqip={{ active: true, quality: 20 }} src={absolutePath} id="lqip" />);
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.7&amp;tr=q-20%2Cbl-6" id="lqip"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(absolutePath);
   });
 
@@ -52,12 +67,16 @@ describe('IKImage: Snapshot migrated tests', () => {
         width: 400
       }]} id="lqip" />
     );
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.7&amp;tr=h-300%2Cw-400%3Aq-20%2Cbl-6" id="lqip"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(absolutePath);
   });
 
   test("imageWithLQIPWithPathNoTransformation", () => {
     const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} lqip={{ active: true, quality: 20 }} path={relativePath} id="lqip" />);
-    const imageWithLQIPWithPathNoTransformation = 'http://ik.imagekit.io/demo/tr:q-20,bl-6/default-image.jpg';
+    const imageWithLQIPWithPathNoTransformation = 'http://ik.imagekit.io/test_imagekit_id/tr:q-20,bl-6/default-image.jpg';
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:q-20,bl-6/default-image.jpg?ik-sdk-version=react-1.0.7" id="lqip"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(imageWithLQIPWithPathNoTransformation);
   });
 
@@ -68,7 +87,9 @@ describe('IKImage: Snapshot migrated tests', () => {
         width: 400
       }]} id="lqip" />
     );
-    const imageWithLQIPWithPathWithTransformation = 'http://ik.imagekit.io/demo/tr:h-300,w-400:q-20,bl-6/default-image.jpg';
+    const imageWithLQIPWithPathWithTransformation = 'http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400:q-20,bl-6/default-image.jpg';
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400:q-20,bl-6/default-image.jpg?ik-sdk-version=react-1.0.7" id="lqip"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(imageWithLQIPWithPathWithTransformation);
   });
 
@@ -79,7 +100,9 @@ describe('IKImage: Snapshot migrated tests', () => {
         width: 400
       }]} id="lqip" />
     );
-    const nestedImagePathWithLQIP = 'http://ik.imagekit.io/demo/tr:h-300,w-400:q-50,bl-25/sample-folder/default-image.jpg';
+    const nestedImagePathWithLQIP = 'http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400:q-50,bl-25/sample-folder/default-image.jpg';
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400:q-50,bl-25/sample-folder/default-image.jpg?ik-sdk-version=react-1.0.7" id="lqip"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(nestedImagePathWithLQIP);
   });
 
@@ -90,6 +113,8 @@ describe('IKImage: Snapshot migrated tests', () => {
         width: 400
       }]} />
     );
+    // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/default-image.jpg?ik-sdk-version=react-1.0.7&amp;tr=h-300%2Cw-400"/>
+
     expect(ikImage.find('img').prop('src')).toMatch(absolutePath);
   });
 
@@ -115,6 +140,7 @@ describe('IKImage: Snapshot migrated tests', () => {
         }]} />
       </ErrorBoundary>
     );
+
     expect(ikImage.find('img')).toBeNull;
   });
 });
