@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1602229328535" clover="3.2.0">
+  <project timestamp="1602229328535" name="All files">
+    <metrics statements="94" coveredstatements="61" conditionals="90" coveredconditionals="51" methods="21" coveredmethods="15" elements="205" coveredelements="127" complexity="0" loc="94" ncloc="94" packages="5" files="7" classes="7"/>
+    <package name="components">
+      <metrics statements="6" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="2"/>
+      <file name="ErrorBoundary.js" path="/Users/niksh/projects/tutorial/imagekit-react/src/components/ErrorBoundary.js">
+        <metrics statements="6" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="2"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="19" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.IKContext">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="ImageKitContextType.js" path="/Users/niksh/projects/tutorial/imagekit-react/src/components/IKContext/ImageKitContextType.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+      <file name="props.js" path="/Users/niksh/projects/tutorial/imagekit-react/src/components/IKContext/props.js">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="components.IKImage">
+      <metrics statements="67" coveredstatements="39" conditionals="76" coveredconditionals="42" methods="10" coveredmethods="6"/>
+      <file name="index.js" path="/Users/niksh/projects/tutorial/imagekit-react/src/components/IKImage/index.js">
+        <metrics statements="67" coveredstatements="39" conditionals="76" coveredconditionals="42" methods="10" coveredmethods="6"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="13" count="12" type="stmt"/>
+        <line num="14" count="12" type="stmt"/>
+        <line num="15" count="12" type="stmt"/>
+        <line num="16" count="12" type="stmt"/>
+        <line num="26" count="12" type="stmt"/>
+        <line num="27" count="12" type="stmt"/>
+        <line num="28" count="12" type="stmt"/>
+        <line num="29" count="12" type="stmt"/>
+        <line num="31" count="12" type="stmt"/>
+        <line num="40" count="12" type="stmt"/>
+        <line num="42" count="12" type="cond" truecount="4" falsecount="0"/>
+        <line num="43" count="5" type="cond" truecount="2" falsecount="2"/>
+        <line num="44" count="5" type="cond" truecount="4" falsecount="0"/>
+        <line num="45" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="5" type="stmt"/>
+        <line num="50" count="5" type="stmt"/>
+        <line num="53" count="12" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="84" count="24" type="stmt"/>
+        <line num="89" count="24" type="stmt"/>
+        <line num="91" count="24" type="cond" truecount="4" falsecount="0"/>
+        <line num="92" count="14" type="stmt"/>
+        <line num="93" count="10" type="cond" truecount="4" falsecount="1"/>
+        <line num="94" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="95" count="0" type="stmt"/>
+        <line num="97" count="10" type="stmt"/>
+        <line num="99" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="100" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="105" count="0" type="cond" truecount="0" falsecount="5"/>
+        <line num="106" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="115" count="5" type="stmt"/>
+        <line num="116" count="5" type="stmt"/>
+        <line num="117" count="0" type="stmt"/>
+        <line num="118" count="0" type="stmt"/>
+        <line num="120" count="5" type="stmt"/>
+        <line num="124" count="12" type="stmt"/>
+        <line num="125" count="12" type="stmt"/>
+        <line num="126" count="12" type="stmt"/>
+        <line num="128" count="12" type="cond" truecount="3" falsecount="2"/>
+        <line num="129" count="0" type="stmt"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="132" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="133" count="0" type="stmt"/>
+        <line num="134" count="0" type="stmt"/>
+        <line num="135" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="136" count="0" type="stmt"/>
+        <line num="137" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="138" count="0" type="stmt"/>
+        <line num="139" count="0" type="stmt"/>
+        <line num="144" count="0" type="stmt"/>
+        <line num="145" count="0" type="stmt"/>
+        <line num="150" count="12" type="stmt"/>
+        <line num="151" count="12" type="cond" truecount="4" falsecount="0"/>
+        <line num="152" count="12" type="stmt"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="158" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="162" count="36" type="stmt"/>
+        <line num="163" count="36" type="stmt"/>
+        <line num="164" count="36" type="stmt"/>
+        <line num="173" count="1" type="stmt"/>
+      </file>
+      <file name="props.js" path="/Users/niksh/projects/tutorial/imagekit-react/src/components/IKImage/props.js">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="components.ImageKitComponent">
+      <metrics statements="15" coveredstatements="12" conditionals="10" coveredconditionals="6" methods="5" coveredmethods="4"/>
+      <file name="index.js" path="/Users/niksh/projects/tutorial/imagekit-react/src/components/ImageKitComponent/index.js">
+        <metrics statements="15" coveredstatements="12" conditionals="10" coveredconditionals="6" methods="5" coveredmethods="4"/>
+        <line num="9" count="12" type="stmt"/>
+        <line num="10" count="12" type="stmt"/>
+        <line num="14" count="12" type="stmt"/>
+        <line num="18" count="24" type="cond" truecount="1" falsecount="1"/>
+        <line num="22" count="12" type="stmt"/>
+        <line num="23" count="12" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="12" type="stmt"/>
+        <line num="27" count="12" type="cond" truecount="1" falsecount="1"/>
+        <line num="29" count="12" type="cond" truecount="3" falsecount="1"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="32" count="12" type="stmt"/>
+        <line num="36" count="12" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="test">
+      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+      <file name="CheckboxWithLabel.js" path="/Users/niksh/projects/tutorial/imagekit-react/src/test/CheckboxWithLabel.js">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
