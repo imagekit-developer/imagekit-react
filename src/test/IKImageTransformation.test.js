@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { shallow } from 'enzyme';
+import sinon from 'sinon';
 import IKImage from '../../src/components/IKImage';
 
 const urlEndpoint = 'http://ik.imagekit.io/test_imagekit_id';
@@ -105,5 +106,30 @@ describe('IKImage transformation snapshots', () => {
 
     const transformURL = 'http://ik.imagekit.io/test_imagekit_id/tr:foo-bar,h-300/default-image.jpg';
     expect(ikImage.find('img').prop('src')).toEqual(`${transformURL}?${global.SDK_VERSION}`);
+  });
+});
+
+describe('IKImage transformations', () => {
+  test('observer disconnects when component unmounts', () => {
+    const ikImage = shallow(
+      <IKImage
+        urlEndpoint={urlEndpoint}
+        path={path}
+        loading="lazy"
+      />
+    );
+    // spies
+    const spy = sinon.spy(ikImage.instance(), 'componentWillUnmount');
+    expect(spy.called).toEqual(false);
+    const observerStub = { observe: { disconnect: sinon.spy() } };
+    ikImage.setState(observerStub);
+
+    // trigger unmount
+    ikImage.unmount();
+
+    // verify spies
+    expect(spy.calledOnce).toEqual(true);
+    expect(observerStub.observe.disconnect.called).toEqual(true);
+    spy.restore();
   });
 });

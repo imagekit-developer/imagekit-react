@@ -153,7 +153,7 @@ class IKImage extends ImageKitComponent {
     }
   }
 
-  componentwillunmount() {
+  componentWillUnmount() {
     const { observe } = this.state;
     if (observe) observe.disconnect();
   }
