@@ -16,7 +16,7 @@ let onSuccess = res => {
 };
 
 describe('IKUpload snapshots', () => {
-  test('imageKitUploadwithAuthentication', () => {
+  test('with authentication', () => {
     const ikUpload = mount(
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
         <IKUpload onError={onError} onSuccess={onSuccess} />
@@ -25,7 +25,7 @@ describe('IKUpload snapshots', () => {
     expect(ikUpload.html()).toEqual('<input type="file">');
   });
 
-  test('imageKitUploadwithAllTheProps', () => {
+  test('with all the props', () => {
     const ikUpload = mount(
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
         <IKUpload
@@ -43,7 +43,7 @@ describe('IKUpload snapshots', () => {
     expect(ikUpload.html()).toEqual('<input type="file">');
   });
 
-  test('imageKitUploadWithoutFileName', () => {
+  test('without fileName prop', () => {
     const ikUpload = mount(
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
         <IKUpload useUniqueFileName={true} onError={onError} onSuccess={onSuccess} />
@@ -52,7 +52,7 @@ describe('IKUpload snapshots', () => {
     expect(ikUpload.html()).toEqual('<input type="file">');
   });
 
-  test('imageKitUploadwithoutAuthentication', () => {
+  test('without authentication', () => {
     const ikUpload = mount(
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint}>
         <IKUpload />
