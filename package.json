@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rm -rf dist*;rollup -c",
     "test": "jest",
-    "test:ci": "export SKIP_PREFLIGHT_CHECK=true;jest;",
+    "test:ci": "jest --coverage && codecov",
     "test:cov": "jest --coverage",
     "test:watch": "jest --watch"
   },
