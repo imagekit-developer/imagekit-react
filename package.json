@@ -57,7 +57,7 @@
     "sinon": "^9.2.0"
   },
   "dependencies": {
-    "imagekit-javascript": "^1.3.5",
+    "imagekit-javascript": "^1.3.6",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
