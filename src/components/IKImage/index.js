@@ -42,12 +42,15 @@ class IKImage extends ImageKitComponent {
     if (lqip && lqip.active) {
       var quality = parseInt((lqip.quality || lqip.threshold), 10) || 20;
       var blur = parseInt((lqip.blur || lqip.blur), 10) || 6;
-      options.transformation = options.transformation || [];
-      options.transformation.push({
+      var newTransformation = options.transformation ? [...options.transformation] : [];
+      newTransformation.push({
         quality,
         blur
       })
-      result.lqipSrc = ikClient.url(options);
+      result.lqipSrc = ikClient.url({
+        ...options,
+        transformation: newTransformation
+      });
     }
 
     return result;
