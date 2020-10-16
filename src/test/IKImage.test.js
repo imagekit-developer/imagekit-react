@@ -104,7 +104,7 @@ describe('IKImage', () => {
           <IKImage urlEndpoint="http://ik.imagekit.io/test_imagekit_id////" path={relativePath} />
         );
         
-        expect(ikImage.find('img').prop('src')).toEqual(`http://ik.imagekit.io/test_imagekit_id${relativePath}?${global.SDK_VERSION}`);
+        expect(ikImage.find('img').prop('src')).toEqual(`http://ik.imagekit.io/test_imagekit_id/${relativePath}?${global.SDK_VERSION}`);
       });
 
       test("path with lqip", () => {
