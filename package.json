@@ -25,6 +25,9 @@
     "verbose": true,
     "setupFilesAfterEnv": [
       "<rootDir>/src/test/setupTests.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/test/mocks"
     ]
   },
   "author": "ImageKit",
