@@ -261,6 +261,29 @@ describe('IKImage', () => {
       // spies
       const observeSpy = sinon.spy();
       let intersectionObserverSpy;
+      let originalNavigatorPrototype;
+
+      const mockNavigator = (effectiveType = '4g') => {
+        // backup original connection value
+        originalNavigatorPrototype = Object.getOwnPropertyDescriptor(global.Navigator.prototype, 'connection');
+
+        // mock connection
+        Object.defineProperty(global.Navigator.prototype, 'connection', {
+          get: function () {
+            return { effectiveType };
+          },
+          configurable: true
+        });
+      };
+
+      const restoreNavigator = () => {
+        const navigatorConnection = originalNavigatorPrototype || {
+          get: function () { },
+          configurable: true
+        };
+
+        Object.defineProperty(global.Navigator.prototype, 'connection', navigatorConnection);
+      }
 
       beforeEach(() => {
         IntersectionObserverMock({ observe: observeSpy });
@@ -331,6 +354,72 @@ describe('IKImage', () => {
         expect(observerStub.observe.disconnect.called).toEqual(true);
         spy.restore();
       });
+
+      test('should set smaller threshold margin for fast connections', () => {
+        // mock fast network connection
+        mockNavigator('4g');
+
+        const ikImage = mount(
+          <IKImage
+            urlEndpoint={urlEndpoint}
+            path={relativePath}
+            loading="lazy"
+          />
+        );
+
+        // verify that src is blank initially
+        expect(ikImage.find('img').prop('src')).toEqual('')
+
+        // verify mocks were called
+        expect(observeSpy.calledOnce).toEqual(true);
+        expect(intersectionObserverSpy.calledOnce).toEqual(true);
+
+        // check rootMargin
+        expect(intersectionObserverSpy.args[0][1].rootMargin).toEqual('1250px 0px 1250px 0px')
+
+        // trigger element intersection callback
+        intersectionObserverSpy.args[0][0]([{ isIntersecting: true }]);
+        // update wrapper
+        ikImage.update();
+
+        const lazyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
+        expect(ikImage.find('img').prop('src')).toEqual(lazyLoadedURL);
+
+        restoreNavigator();
+      });
+
+      test('should set larger threshold margin for slower connections', () => {
+        // mock slow network connection
+        mockNavigator('2g');
+
+        const ikImage = mount(
+          <IKImage
+            urlEndpoint={urlEndpoint}
+            path={relativePath}
+            loading="lazy"
+          />
+        );
+
+        // verify that src is blank initially
+        expect(ikImage.find('img').prop('src')).toEqual('')
+
+        // verify mocks were called
+        expect(observeSpy.calledOnce).toEqual(true);
+        expect(intersectionObserverSpy.calledOnce).toEqual(true);
+
+        // check rootMargin
+        expect(intersectionObserverSpy.args[0][1].rootMargin).toEqual('2500px 0px 2500px 0px')
+
+        // trigger element intersection callback
+        intersectionObserverSpy.args[0][0]([{ isIntersecting: true }]);
+        // update wrapper
+        ikImage.update();
+
+        const lazyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
+        expect(ikImage.find('img').prop('src')).toEqual(lazyLoadedURL);
+
+        restoreNavigator();
+      });
     });
 
     describe('LQIP', () => {
@@ -338,7 +427,7 @@ describe('IKImage', () => {
       const observeSpy = sinon.spy();
       let intersectionObserverSpy;
 
-      let originalImageSrcProto;
+      let originalImagePrototype;
       let imageOnload = null;
 
       const stubImagePrototype = () => {
@@ -359,10 +448,7 @@ describe('IKImage', () => {
         intersectionObserverSpy = sinon.spy(window, 'IntersectionObserver');
 
         // backup the original Image.prototype.src
-        originalImageSrcProto = Object.getOwnPropertyDescriptor(
-          global.Image.prototype,
-          'src'
-        );
+        originalImagePrototype = Object.getOwnPropertyDescriptor(global.Image.prototype, 'src');
 
         stubImagePrototype();
       });
@@ -372,7 +458,7 @@ describe('IKImage', () => {
         observeSpy.resetHistory();
 
         // restore the original Image.prototype.src
-        Object.defineProperty(global.Image.prototype, 'src', originalImageSrcProto);
+        Object.defineProperty(global.Image.prototype, 'src', originalImagePrototype);
       });
 
       test('image with lqip should have actual src when element is loaded', () => {
@@ -420,6 +506,52 @@ describe('IKImage', () => {
         const fullyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
         expect(ikImage.find('img').prop('src')).toEqual(fullyLoadedURL);
       });
+
+      test('should not work for image with lqip active key set to false and lazy loading enabled', () => {
+        const ikImage = mount(
+          <IKImage
+            urlEndpoint={urlEndpoint}
+            path={relativePath}
+            loading="lazy"
+            lqip={{ active: false }}
+          />
+        );
+
+        expect(observeSpy.calledOnce).toEqual(true);
+        expect(intersectionObserverSpy.calledOnce).toEqual(true);
+
+        expect(ikImage.find('img').prop('src')).toBeUndefined();
+
+        // trigger element intersection callback
+        intersectionObserverSpy.args[0][0]([{ isIntersecting: true }]);
+        ikImage.update();
+
+        expect(ikImage.find('img').prop('src')).toBeUndefined();
+      });
     });
-  })
+
+    describe('Miscellaneous', () => {
+      // covers 'else' condition for observer disconnection in non-lazyload cases
+      test('IKImage should unmount properly', () => {
+        const ikImage = shallow(
+          <IKImage
+            urlEndpoint={urlEndpoint}
+            path={relativePath}
+          />
+        );
+        // spies
+        const spy = sinon.spy(ikImage.instance(), 'componentWillUnmount');
+        expect(spy.called).toEqual(false);
+
+        // trigger unmount
+        ikImage.unmount();
+
+        // verify spies
+        expect(spy.calledOnce).toEqual(true);
+        spy.restore();
+
+        expect(ikImage.find('img').length).toEqual(0);
+      });
+    });
+  });
 });
