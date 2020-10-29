@@ -262,6 +262,7 @@ describe('IKImage', () => {
       const observeSpy = sinon.spy();
       let intersectionObserverSpy;
       let originalNavigatorPrototype;
+      let originalWindowPrototype;
 
       const mockNavigator = (effectiveType = '4g') => {
         // backup original connection value
@@ -284,6 +285,15 @@ describe('IKImage', () => {
 
         Object.defineProperty(global.Navigator.prototype, 'connection', navigatorConnection);
       }
+
+      const removeIntersectionObserverMock = () => {
+        originalWindowPrototype = Object.getOwnPropertyDescriptor(window, 'IntersectionObserver');
+        delete window['IntersectionObserver'];
+      };
+
+      const restoreIntersectionObserverMock = () => {
+        Object.defineProperty(window, 'IntersectionObserver', originalWindowPrototype);
+      };
 
       beforeEach(() => {
         IntersectionObserverMock({ observe: observeSpy });
@@ -420,6 +430,45 @@ describe('IKImage', () => {
 
         restoreNavigator();
       });
+
+      // covers 'else' condition when checking for presence of IntersectionObserver in 'window'
+      test('should set original src if IntersectionObserver is not present', () => {
+        removeIntersectionObserverMock();
+
+        const ikImage = mount(
+          <IKImage
+            urlEndpoint={urlEndpoint}
+            path={relativePath}
+            loading="lazy"
+          />
+        );
+
+        expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+
+        restoreIntersectionObserverMock();
+      });
+
+      // covers 'else' condition for observer disconnection in non-lazyload cases
+      test('should unmount properly when lazyload is not enabled', () => {
+        const ikImage = shallow(
+          <IKImage
+            urlEndpoint={urlEndpoint}
+            path={relativePath}
+          />
+        );
+        // spies
+        const spy = sinon.spy(ikImage.instance(), 'componentWillUnmount');
+        expect(spy.called).toEqual(false);
+
+        // trigger unmount
+        ikImage.unmount();
+
+        // verify spies
+        expect(spy.calledOnce).toEqual(true);
+        spy.restore();
+
+        expect(ikImage.find('img').length).toEqual(0);
+      });
     });
 
     describe('LQIP', () => {
@@ -527,30 +576,6 @@ describe('IKImage', () => {
         ikImage.update();
 
         expect(ikImage.find('img').prop('src')).toBeUndefined();
-      });
-    });
-
-    describe('Miscellaneous', () => {
-      // covers 'else' condition for observer disconnection in non-lazyload cases
-      test('IKImage should unmount properly', () => {
-        const ikImage = shallow(
-          <IKImage
-            urlEndpoint={urlEndpoint}
-            path={relativePath}
-          />
-        );
-        // spies
-        const spy = sinon.spy(ikImage.instance(), 'componentWillUnmount');
-        expect(spy.called).toEqual(false);
-
-        // trigger unmount
-        ikImage.unmount();
-
-        // verify spies
-        expect(spy.calledOnce).toEqual(true);
-        spy.restore();
-
-        expect(ikImage.find('img').length).toEqual(0);
       });
     });
   });
