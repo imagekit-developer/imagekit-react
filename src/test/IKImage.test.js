@@ -538,14 +538,15 @@ describe('IKImage', () => {
           />
         );
 
+        const lazyLoadedURL = `${urlEndpoint}/tr:q-20,bl-6/${relativePath}?${global.SDK_VERSION}`
+        expect(ikImage.find('img').prop('src')).toEqual(lazyLoadedURL);
+
         expect(observeSpy.calledOnce).toEqual(true);
         expect(intersectionObserverSpy.calledOnce).toEqual(true);
 
         // trigger element intersection callback
         intersectionObserverSpy.args[0][0]([{ isIntersecting: true }]);
         ikImage.update();
-
-        const lazyLoadedURL = `${urlEndpoint}/tr:q-20,bl-6/${relativePath}?${global.SDK_VERSION}`
         expect(ikImage.find('img').prop('src')).toEqual(lazyLoadedURL);
 
         // simulate image onload
@@ -566,10 +567,10 @@ describe('IKImage', () => {
           />
         );
 
+        expect(ikImage.find('img').prop('src')).toBeUndefined();
+        
         expect(observeSpy.calledOnce).toEqual(true);
         expect(intersectionObserverSpy.calledOnce).toEqual(true);
-
-        expect(ikImage.find('img').prop('src')).toBeUndefined();
 
         // trigger element intersection callback
         intersectionObserverSpy.args[0][0]([{ isIntersecting: true }]);
