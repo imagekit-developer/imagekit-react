@@ -117,8 +117,9 @@ class IKImage extends ImageKitComponent {
   triggerOriginalImageLoad() {
     var img = new Image();
     img.onload = () => {
-      this.setState({ originalSrcLoaded: true });
-      this.updateImageUrl();
+      this.setState({ originalSrcLoaded: true }, () => {
+        this.updateImageUrl();
+      });
     }
     img.src = this.state.originalSrc;
   }
@@ -136,10 +137,11 @@ class IKImage extends ImageKitComponent {
       const imageObserver = new IntersectionObserver(entries => {
         const el = entries[0];
         if (el && el.isIntersecting) {
-          this.setState({ intersected: true });
-          if (lqip && lqip.active) this.triggerOriginalImageLoad();
-          imageObserver.disconnect();
-          this.updateImageUrl();
+          this.setState({ intersected: true }, () => {
+            if (lqip && lqip.active) this.triggerOriginalImageLoad();
+            imageObserver.disconnect();
+            this.updateImageUrl();
+          });
         }
       }, {
         rootMargin: `${rootMargin} 0px ${rootMargin} 0px`
@@ -150,9 +152,10 @@ class IKImage extends ImageKitComponent {
       })
     } else {
       // Load original image right away
-      this.setState({ intersected: true });
-      if (lqip && lqip.active) this.triggerOriginalImageLoad();
-      this.updateImageUrl();
+      this.setState({ intersected: true }, () => {
+        if (lqip && lqip.active) this.triggerOriginalImageLoad();
+        this.updateImageUrl();
+      });
     }
   }
 
