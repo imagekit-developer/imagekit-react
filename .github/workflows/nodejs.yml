@@ -21,6 +21,7 @@ jobs:
       run: |
         npm install
         npm run test:ci
+        npm run test:e2e
       env:
         CI: true
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}

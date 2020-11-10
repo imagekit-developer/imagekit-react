@@ -50,6 +50,7 @@ function App() {
 
         <p>Lazy loading image</p>
         <IKImage
+          className={'lazyload'}
           path={path}
           transformation={[{
             "height": "200",
@@ -60,6 +61,7 @@ function App() {
 
         <p>Progressive image loading wihtout lazy loading</p>
         <IKImage
+        className={'lqip'}
           path={path}
           transformation={[{
             "height": "200",
@@ -72,6 +74,7 @@ function App() {
 
         <p>Progressive image loading with lazy loading</p>
         <IKImage
+        className={'lazyload-lqip'}
           path={path}
           transformation={[{
             "height": "200",
@@ -90,7 +93,7 @@ function App() {
 
         <p>File upload along with upload API options - To use this funtionality please remember to setup the server</p>
         <IKUpload
-          fileName="manu.jpg"
+          fileName="test.jpg"
           tags={["sample-tag1", "sample-tag2"]}
           customCoordinates={"10,10,10,10"}
           isPrivateFile={false}
