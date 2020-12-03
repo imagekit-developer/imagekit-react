@@ -29,8 +29,8 @@ jobs:
         REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
 
   unit:
+    runs-on: ubuntu-latest
     needs: build
-
     steps:
     - name: Unit Tests
       run: npm run test:ci
