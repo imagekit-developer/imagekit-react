@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,28 +18,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: npm install, build, and test
+    - name: Setup module and run unit tests
       run: |
         npm install
+        npm run test:ci
       env:
         CI: true
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
         REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
         REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
 
-  unit:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Unit Tests
-      run: npm run test:ci
-      env:
-        CI: true
-        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
-        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
-        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
-
-  integration:
+  e2e:
     runs-on: ubuntu-latest
 
     strategy:
@@ -55,19 +43,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: npm install
+    - name: Setup module and build sample-app
       run: |
         npm install
         cd samples/sample-app
-        echo 'test e2e'
         echo REACT_APP_URL_ENDPOINT = ${{ secrets.ik_url_endopint }} > .env;
         npm install
         npm run build
 
-    - name: e2e
+    - name: Run E2E tests
       uses: cypress-io/github-action@v2
       with:
-        # project: ./samples/sample-app
         start: npm run start:sample
         wait-on: http://localhost:3000
       env:
