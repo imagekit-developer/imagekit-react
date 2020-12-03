@@ -48,9 +48,8 @@ jobs:
       run: |
         npm install
         cd samples/sample-app
-        echo ${{ secrets.ik_url_endopint }}
         echo 'test e2e'
-        echo ${{ secrets.ik_url_endopint }} > .env;
+        echo REACT_APP_URL_ENDPOINT = ${{ secrets.ik_url_endopint }} > .env;
         npm install
         npm run build
 
