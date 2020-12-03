@@ -13,10 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: npm install, build, and test
       run: |
         npm install
@@ -26,10 +28,15 @@ jobs:
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
         REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
         REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
+
     - name: e2e
       uses: cypress-io/github-action@v2
-      run: |
-        npm run test:e2e
+      with:
+        project: ./samples/sample-app
+        build: npm run build
+        start: npm start
+        wait-on: http://localhost:3000
       env:
         CI: true
         REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
+        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}

@@ -1,13 +1,15 @@
 describe('ImageKit React SDK', () => {
+  const APP_HOST =  Cypress.env().APP_HOST;
+
   describe('Lazyload', () => {
     it('should have empty src before reaching lazyload threshold', () => {
-      cy.visit('http://localhost:3000');
+      cy.visit(APP_HOST);
 
       cy.get('.lazyload').should('have.attr', 'src').and('equal', '');
     });
 
     it('should have actual src after reaching lazyload threshold', () => {
-      cy.visit('http://localhost:3000');
+      cy.visit(APP_HOST);
 
       cy.get('.lazyload').scrollIntoView();
 
@@ -21,7 +23,7 @@ describe('ImageKit React SDK', () => {
 
   describe('Lazyload with LQIP', () => {
     it('should have lqip src before reaching threshold', () => {
-      cy.visit('http://localhost:3000');
+      cy.visit(APP_HOST);
 
       cy.get('.lazyload-lqip')
         .should('have.attr', 'src')
@@ -29,7 +31,7 @@ describe('ImageKit React SDK', () => {
     });
 
     it('should have actual src after reaching element', () => {
-      cy.visit('http://localhost:3000');
+      cy.visit(APP_HOST);
 
       cy.get('.lazyload-lqip').scrollIntoView();
 
@@ -44,7 +46,7 @@ describe('ImageKit React SDK', () => {
   describe('LQIP', () => {
     // unable to test this because actual image load always finishes too quickly
     it.skip('should have lqip src before image is loaded', () => {
-      cy.visit('http://localhost:3000');
+      cy.visit(APP_HOST);
 
       cy.get('.lqip')
         .should('have.attr', 'src')
@@ -52,7 +54,7 @@ describe('ImageKit React SDK', () => {
     });
 
     it('should have actual src after image is loaded', () => {
-      cy.visit('http://localhost:3000');
+      cy.visit(APP_HOST);
 
       cy.get('.lqip').scrollIntoView();
 
