@@ -1,6 +1,5 @@
 describe('ImageKit React SDK', () => {
-  // const APP_HOST = (Cypress && Cypress.env() && Cypress.env().APP_HOST) || 'http://localhost:3000/';
-  const APP_HOST = 'http://localhost:3000/';
+  const APP_HOST = Cypress.env().APP_HOST;
 
   describe('Lazyload', () => {
     it('should have empty src before reaching lazyload threshold', () => {
