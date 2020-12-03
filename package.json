@@ -29,6 +29,9 @@
     ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/test/mocks"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/cypress/"
     ]
   },
   "author": "ImageKit",

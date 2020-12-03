@@ -47,13 +47,15 @@ jobs:
     - name: npm install
       run: |
         npm install
+        cd samples/sample-app
+        npm install
+        npm run build
 
     - name: e2e
       uses: cypress-io/github-action@v2
       with:
         project: ./samples/sample-app
-        build: npm run build
-        start: npm start
+        start: cd ./samples/sample-app && npm start
         wait-on: http://localhost:3000
       env:
         CI: true
