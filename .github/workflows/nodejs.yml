@@ -22,7 +22,18 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install
-        npm run test:ci
+      env:
+        CI: true
+        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
+        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
+        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
+
+  unit:
+    needs: build
+
+    steps:
+    - name: Unit Tests
+      run: npm run test:ci
       env:
         CI: true
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
