@@ -5,6 +5,7 @@
   "scripts": {
     "build": "rm -rf dist*;rollup -c",
     "test": "jest",
+    "start:sample": "cd samples/sample-app;export SKIP_PREFLIGHT_CHECK=true;npx serve -s build -p 3000",
     "test:ci": "jest --coverage && codecov",
     "test:cov": "jest --coverage",
     "test:e2e": "cypress open",

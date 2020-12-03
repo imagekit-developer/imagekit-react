@@ -54,8 +54,8 @@ jobs:
     - name: e2e
       uses: cypress-io/github-action@v2
       with:
-        project: ./samples/sample-app
-        start: cd ./samples/sample-app && npm start
+        # project: ./samples/sample-app
+        start: npm run start:sample
         wait-on: http://localhost:3000
       env:
         CI: true
