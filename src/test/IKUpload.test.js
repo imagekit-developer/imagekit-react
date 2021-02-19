@@ -205,6 +205,20 @@ describe('IKUpload', () => {
         // verify change callback
         expect(onChange.calledOnce).toEqual(true);
       });
+
+      test('should allow access to inputRef', () => {
+        const ikUploadRef = React.createRef();
+
+        // mount component
+        const ikUpload = mount(
+          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+            <IKUpload onError={onError} onSuccess={onSuccess} onChange={onChange} ref={ikUploadRef} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');        
+        expect(ikUploadRef.current.inputRef.current.tagName).toEqual('INPUT');
+      });
     });
   });
 

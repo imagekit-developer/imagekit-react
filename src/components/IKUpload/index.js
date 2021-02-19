@@ -9,6 +9,11 @@ const PROP_TYPES = {
 };
 
 export default class IKUpload extends ImageKitComponent {
+  constructor(props, context) {
+    super(props, context)
+    this.inputRef = React.createRef();
+  }
+
   uploadFile(e) {
     const contextOptions = this.getContext();
 
@@ -106,6 +111,7 @@ export default class IKUpload extends ImageKitComponent {
     return (
       <input
         type="file"
+        ref={this.inputRef}
         {...restProps}
         onChange={(e) => {
           if (this.props.onChange && typeof this.props.onChange === "function") {
