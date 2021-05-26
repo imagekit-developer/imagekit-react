@@ -206,6 +206,144 @@ describe('IKUpload', () => {
         expect(onChange.calledOnce).toEqual(true);
       });
     });
+
+	describe('props update', () => {
+		test('upload with no urlEndpoint should throw error, then after should succed updating urlEndpoint in IKContext with state change', () => {
+			// mount component
+			const ikUpload = mount(
+				<IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} >
+					<IKUpload onError={onError} onSuccess={onSuccess} />
+				</IKContext>
+			);
+
+			// verify setup integrity
+			expect(ikUpload.html()).toEqual('<input type="file">');
+			expect(ikInstanceUploadStub.called).toEqual(false)
+	
+			// trigger file change and upload 
+			ikUpload.find('IKUpload').simulate('change', sampleEvent);
+	
+			// verify upload spy
+			expect(ikInstanceUploadStub.called).toEqual(false);
+	
+			// verify error callback
+			expect(onError.calledOnce).toEqual(true)
+			expect(onError.args[0][0]).toEqual({ message: 'Missing urlEndpoint' });
+			
+			//update urlEndpoint in IKContext
+			ikUpload.setProps({ urlEndpoint });
+			ikUpload.update();
+			//Now after updating urlEndpoint in IKContext, it should successfully upload
+
+			// verify setup integrity
+			expect(ikUpload.html()).toEqual('<input type="file">');
+			expect(ikInstanceUploadStub.called).toEqual(false)
+	
+			// trigger file change and upload 
+			ikUpload.find('IKUpload').simulate('change', sampleEvent);
+	
+			// verify upload spy
+			expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+	
+			// verify success callback
+			expect(onSuccess.calledOnce).toEqual(true)
+			expect(onSuccess.args[0][0]).toEqual(successResponse);
+
+			// trigger unmount
+			ikUpload.unmount();
+		});
+
+		test('upload with no publicKey should throw error, then after should succed updating publicKey in IKContext with state change', () => {
+			// mount component
+			const ikUpload = mount(
+				<IKContext urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+					<IKUpload onError={onError} onSuccess={onSuccess} />
+				</IKContext>
+			);
+
+			// verify setup integrity
+			expect(ikUpload.html()).toEqual('<input type="file">');
+			expect(ikInstanceUploadStub.called).toEqual(false)
+	
+			// trigger file change and upload 
+			ikUpload.find('IKUpload').simulate('change', sampleEvent);
+	
+			// verify upload spy
+			expect(ikInstanceUploadStub.called).toEqual(false);
+	
+			// verify error callback
+			expect(onError.calledOnce).toEqual(true)
+			expect(onError.args[0][0]).toEqual({ message: 'Missing publicKey' });
+			
+			//update publicKey in IKContext
+			ikUpload.setProps({ publicKey });
+			ikUpload.update();
+			//Now after updating publicKey in IKContext, it should successfully upload
+
+			// verify setup integrity
+			expect(ikUpload.html()).toEqual('<input type="file">');
+			expect(ikInstanceUploadStub.called).toEqual(false)
+	
+			// trigger file change and upload 
+			ikUpload.find('IKUpload').simulate('change', sampleEvent);
+	
+			// verify upload spy
+			expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+	
+			// verify success callback
+			expect(onSuccess.calledOnce).toEqual(true)
+			expect(onSuccess.args[0][0]).toEqual(successResponse);
+
+			// trigger unmount
+			ikUpload.unmount();
+		});
+		
+		test('upload with no authenticationEndpoint should throw error, then after should succed updating authenticationEndpoint in IKContext with state change', () => {
+			// mount component
+			const ikUpload = mount(
+				<IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
+					<IKUpload onError={onError} onSuccess={onSuccess} />
+				</IKContext>
+			);
+
+			// verify setup integrity
+			expect(ikUpload.html()).toEqual('<input type="file">');
+			expect(ikInstanceUploadStub.called).toEqual(false)
+	
+			// trigger file change and upload 
+			ikUpload.find('IKUpload').simulate('change', sampleEvent);
+	
+			// verify upload spy
+			expect(ikInstanceUploadStub.called).toEqual(false);
+	
+			// verify error callback
+			expect(onError.calledOnce).toEqual(true)
+			expect(onError.args[0][0]).toEqual({ message: 'Missing authenticationEndpoint' });
+			
+			//update authenticationEndpoint in IKContext
+			ikUpload.setProps({ authenticationEndpoint });
+			ikUpload.update();
+			//Now after updating authenticationEndpoint in IKContext, it should successfully upload
+
+			// verify setup integrity
+			expect(ikUpload.html()).toEqual('<input type="file">');
+			expect(ikInstanceUploadStub.called).toEqual(false)
+	
+			// trigger file change and upload 
+			ikUpload.find('IKUpload').simulate('change', sampleEvent);
+	
+			// verify upload spy
+			expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+	
+			// verify success callback
+			expect(onSuccess.calledOnce).toEqual(true)
+			expect(onSuccess.args[0][0]).toEqual(successResponse);
+
+			// trigger unmount
+			ikUpload.unmount();
+		});
+	})
+	
   });
 
   describe('Snapshots', () => {
