@@ -19,7 +19,8 @@ class IKImage extends ImageKitComponent {
       originalSrc: originalSrc,
       lqipSrc: lqipSrc,
       originalSrcLoaded: false,
-      intersected: false
+      intersected: false,
+	  contextOptions : {}
     };
   }
 
@@ -127,6 +128,8 @@ class IKImage extends ImageKitComponent {
 
   componentDidMount() {
     this.updateImageUrl();
+	this.setState({ contextOptions : this.getContext() });
+
     const image = this.imageRef.current;
     const { lqip, loading } = this.props;
 
@@ -165,7 +168,7 @@ class IKImage extends ImageKitComponent {
     if (observe) observe.disconnect();
   }
 
-  shouldUpdateImageURL(prevProps, newProps) {
+  areObjectsDifferent(prevProps, newProps) {
 	for(var index=0; index<propsAffectingURL.length; index++){
 		if(prevProps[propsAffectingURL[index]] != newProps[propsAffectingURL[index]]) return true;
 	}
@@ -173,10 +176,16 @@ class IKImage extends ImageKitComponent {
   }
 
 	componentDidUpdate(prevProps, prevState) {
-		if (this.shouldUpdateImageURL(prevProps, this.props)) {
+		var contextOptions = this.getContext();
+
+		if (
+			this.areObjectsDifferent(prevProps, this.props) || 
+			this.areObjectsDifferent(prevState.contextOptions, contextOptions)
+		) {
 			const { originalSrc, lqipSrc } = this.getSrc();
 			this.setState({originalSrc, lqipSrc }, () => {
 				this.updateImageUrl();
+				this.setState({ contextOptions : this.getContext() });
 			});
 		}
 	}
