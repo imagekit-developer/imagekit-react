@@ -8,6 +8,7 @@ const PROP_TYPES = {
   ...IK_IMAGE_PROPS
 };
 
+const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
 class IKImage extends ImageKitComponent {
   constructor(props, context) {
     super(props, context);
@@ -163,6 +164,22 @@ class IKImage extends ImageKitComponent {
     const { observe } = this.state;
     if (observe) observe.disconnect();
   }
+
+  shouldUpdateImageURL(prevProps, newProps) {
+	for(var index=0; index<propsAffectingURL.length; index++){
+		if(prevProps[propsAffectingURL[index]] != newProps[propsAffectingURL[index]]) return true;
+	}
+	return false;
+  }
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.shouldUpdateImageURL(prevProps, this.props)) {
+			const { originalSrc, lqipSrc } = this.getSrc();
+			this.setState({originalSrc, lqipSrc }, () => {
+				this.updateImageUrl();
+			});
+		}
+	}
 
   render() {
     let { currentUrl } = this.state;
