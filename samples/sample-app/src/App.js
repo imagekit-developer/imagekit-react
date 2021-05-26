@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
-
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
 
   const path = "default-image.jpg";
@@ -19,7 +18,14 @@ function App() {
   const onSuccess = res => {
     console.log("Success");
     console.log(res);
+	setUploadedImageSource(res.url);
   };
+
+  const [uploadedImageSource, setUploadedImageSource] = useState();
+  const [imageTr, setImageTr] = useState([{
+	"height": "200",
+	"width": "200"
+  }]);
 
   return (
     <div className="App">
@@ -34,11 +40,14 @@ function App() {
         <IKImage src={src} />
 
         <p>Transformation - height and width manipulation</p>
-        <IKImage src={src} transformation={[{
-          "height": "200",
-          "width": "200"
-        }]} />
-
+        <IKImage src={src} transformation={imageTr} />
+		<div>
+			<p>Click here to apply max radius on above image </p>
+			<button
+				onClick={() => setImageTr([{"radius" : "max", ...imageTr}])}
+			>Click to apply radius</button>
+		</div>
+		<br />
         <p>Chained transformation</p>
         <IKImage path={path} transformation={[{
           "height": "200",
@@ -100,6 +109,8 @@ function App() {
           onError={onError} onSuccess={onSuccess}
         />
 
+		<p>Your above uploaded file will appear here </p>
+		<IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} />
       </IKContext>
     </div>
   );
