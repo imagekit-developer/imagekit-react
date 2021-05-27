@@ -50,7 +50,7 @@ describe('ImageKit React SDK', () => {
 
       cy.get('.lqip')
         .should('have.attr', 'src')
-        .and('include', 'tr:h-200,w-200:q-20,bl-30/default-image.jpg');
+        .and('include', 'tr:h-200,w-200:q-20,bl-10/default-image.jpg');
     });
 
     it('should have actual src after image is loaded', () => {
@@ -65,4 +65,26 @@ describe('ImageKit React SDK', () => {
         .and('include', 'tr:h-200,w-200/default-image.jpg');
     });
   });
+
+  describe('State update check', () => {
+	it('should update image src when click on button', () => {
+		cy.visit(APP_HOST);
+
+		cy.get('.img-transformation').scrollIntoView();
+  
+		cy.wait(500);
+  
+		cy.get('.img-transformation')
+		  .should('have.attr', 'src')
+		  .and('include', 'tr:h-200,w-200/default-image.jpg');
+
+		cy.get('.btn-to-change-tr').click();
+		cy.wait(500);
+
+		cy.get('.img-transformation')
+		.should('have.attr', 'src')
+		.and('include', 'tr:h-200,w-200,r-max/default-image.jpg');
+	})
+  })
+  
 });

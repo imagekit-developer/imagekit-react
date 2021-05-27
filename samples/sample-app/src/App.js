@@ -40,11 +40,16 @@ function App() {
         <IKImage src={src} />
 
         <p>Transformation - height and width manipulation</p>
-        <IKImage src={src} transformation={imageTr} />
+        <IKImage className={'img-transformation'} path={path} transformation={imageTr} />
 		<div>
 			<p>Click here to apply max radius on above image </p>
 			<button
-				onClick={() => setImageTr([{"radius" : "max", ...imageTr}])}
+				className={'btn-to-change-tr'}
+				onClick={() => setImageTr([{
+					"height": "200",
+					"width": "200",
+					"radius" : "max"
+				}])}
 			>Click to apply radius</button>
 		</div>
 		<br />
