@@ -43,10 +43,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Setup module and build sample-app
+    - name: Setup module and build test-app
       run: |
         npm install
-        cd samples/sample-app
+        cd samples/test-app
         echo REACT_APP_URL_ENDPOINT = ${{ secrets.ik_url_endopint }} > .env;
         npm install
         npm run build
