@@ -54,7 +54,7 @@ jobs:
     - name: Run E2E tests
       uses: cypress-io/github-action@v2
       with:
-        start: npm run start:sample
+        start: npm run start:test-app
         wait-on: http://localhost:3001
       env:
         CI: true
