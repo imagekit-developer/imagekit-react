@@ -15,7 +15,7 @@ npm install
 
 ## Setting the enviroment variable
 
-Create a .env file by renaming the sample.env in `samples/test-app`
+Create a .env file by renaming the sample.env in `tests/test-app`
 
 Fill is the required parameters according to your imagekit account.
 
@@ -31,7 +31,7 @@ To run the upload component you also will have set up a backend server
 
 There is a sample server present in the sample app directory in server directory.
 
-It takes the `private key` from .env file, so create a .env file by renaming the sample.env in `samples/test-app/server`
+It takes the `private key` from .env file, so create a .env file by renaming the sample.env in `tests/test-app/server`
 
  To run this server, go to server directory `cd server`, then run:
 

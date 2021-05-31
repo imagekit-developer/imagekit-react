@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme';
-import IKImage from '../components/IKImage';
-import IKUpload from '../components/IKUpload';
-import IKContext from '../components/IKContext';
+import IKImage from '../../src/components/IKImage';
+import IKUpload from '../../src/components/IKUpload';
+import IKContext from '../../src/components/IKContext';
 
 const authenticationEndpoint = 'test_auth_endpoint';
 const relativePath = 'default-image.jpg';

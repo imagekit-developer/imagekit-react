@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import sinon from 'sinon';
-import IKImage from '../components/IKImage';
-import ErrorBoundary from '../components/ErrorBoundary';
+import IKImage from '../../src/components/IKImage';
+import ErrorBoundary from '../../src/components/ErrorBoundary';
 
 const urlEndpoint = 'http://ik.imagekit.io/test_imagekit_id';
 const relativePath = 'default-image.jpg';

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme';
-import ImageKitComponent from '../components/ImageKitComponent';
+import ImageKitComponent from '../../src/components/ImageKitComponent';
 
 describe('ImageKitComponent', () => {
   describe('Snapshots', () => {

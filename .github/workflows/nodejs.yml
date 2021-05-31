@@ -47,7 +47,7 @@ jobs:
       run: |
         npm install
         npm run build
-        cd samples/test-app
+        cd tests/test-app
         echo REACT_APP_URL_ENDPOINT = ${{ secrets.ik_url_endopint }} > .env;
         npm install
         npm run build

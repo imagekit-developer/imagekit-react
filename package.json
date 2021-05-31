@@ -7,10 +7,10 @@
     "test": "jest",
     "test:ci": "jest --coverage && codecov",
     "test:cov": "jest --coverage",
-    "test:e2e": "cypress open",
+    "test:e2e": "cypress open --project ./tests",
     "test:watch": "jest --watch",
     "start:sample": "export SKIP_PREFLIGHT_CHECK=true;npx serve -s samples/sample-app/build -p 3000",
-    "start:test-app": "export SKIP_PREFLIGHT_CHECK=true;npx serve -s samples/test-app/build -p 3001"
+    "start:test-app": "export SKIP_PREFLIGHT_CHECK=true;npx serve -s tests/test-app/build -p 3001"
   },
   "repository": {
     "type": "git",
@@ -27,13 +27,13 @@
   "jest": {
     "verbose": true,
     "setupFilesAfterEnv": [
-      "<rootDir>/src/test/setupTests.js"
+      "<rootDir>/tests/jest/setupTests.js"
     ],
     "coveragePathIgnorePatterns": [
-      "<rootDir>/src/test/mocks"
+      "<rootDir>/tests/jest/mocks"
     ],
     "modulePathIgnorePatterns": [
-      "<rootDir>/cypress/"
+      "<rootDir>/tests/cypress/"
     ]
   },
   "author": "ImageKit",
