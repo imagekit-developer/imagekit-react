@@ -1,13 +1,20 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-We will assume you are in the directory `samples\test-app` while following the further instructions 
-
 ## Installation
 
 Run the following commands from your shell.
 
+```bash
+npm install
+npm run build
+```
+
 ### Installing the test-app
 
+Change directory to `test-app`,
+```bash
+cd tests/test-app/
+```
 Inside `test-app`, run
 ```bash
 npm install
