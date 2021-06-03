@@ -8,6 +8,7 @@ const PROP_TYPES = {
   ...IK_IMAGE_PROPS
 };
 
+const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
 class IKImage extends ImageKitComponent {
   constructor(props, context) {
     super(props, context);
@@ -18,7 +19,8 @@ class IKImage extends ImageKitComponent {
       originalSrc: originalSrc,
       lqipSrc: lqipSrc,
       originalSrcLoaded: false,
-      intersected: false
+      intersected: false,
+	  contextOptions : {}
     };
   }
 
@@ -126,6 +128,8 @@ class IKImage extends ImageKitComponent {
 
   componentDidMount() {
     this.updateImageUrl();
+	this.setState({ contextOptions : this.getContext() });
+
     const image = this.imageRef.current;
     const { lqip, loading } = this.props;
 
@@ -163,6 +167,28 @@ class IKImage extends ImageKitComponent {
     const { observe } = this.state;
     if (observe) observe.disconnect();
   }
+
+  areObjectsDifferent(prevProps, newProps) {
+	for(var index=0; index<propsAffectingURL.length; index++){
+		if(prevProps[propsAffectingURL[index]] != newProps[propsAffectingURL[index]]) return true;
+	}
+	return false;
+  }
+
+	componentDidUpdate(prevProps, prevState) {
+		var contextOptions = this.getContext();
+
+		if (
+			this.areObjectsDifferent(prevProps, this.props) || 
+			this.areObjectsDifferent(prevState.contextOptions, contextOptions)
+		) {
+			const { originalSrc, lqipSrc } = this.getSrc();
+			this.setState({originalSrc, lqipSrc }, () => {
+				this.updateImageUrl();
+				this.setState({ contextOptions : this.getContext() });
+			});
+		}
+	}
 
   render() {
     let { currentUrl } = this.state;

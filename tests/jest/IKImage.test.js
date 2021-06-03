@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
-import IKImage from '../components/IKImage';
+import IKImage from '../../src/components/IKImage';
 import IntersectionObserverMock from './mocks/IntersectionObserverMock';
 
 const urlEndpoint = 'http://ik.imagekit.io/test_imagekit_id';
@@ -9,6 +9,12 @@ const relativePath = 'default-image.jpg';
 const absolutePath = `${urlEndpoint}/${relativePath}`;
 const absolutePathWithQuery = `${absolutePath}?foo=bar`
 const nestedImagePath = '/sample-folder/default-image.jpg';
+
+const differentImageRelativePath = 'different-image.jpg';
+const differentAbsolutePath = `${urlEndpoint}/${differentImageRelativePath}`;
+const differentUrlEndpoint = 'http://ik.imagekit.io/different_imagekit_id';
+
+const trArr = [{height : 300, width : 300}];
 
 describe('IKImage', () => {
   describe('Snapshots', () => {
@@ -257,6 +263,162 @@ describe('IKImage', () => {
   });
 
   describe('Component lifecycle', () => {
+	describe('state update on props', () => {
+		test("change path in props and <img /> src should change accordingly", () => {
+			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} />);
+			
+			expect(ikImage.props().path).toEqual(relativePath);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+
+			ikImage.setProps({ path: differentImageRelativePath });
+
+			expect(ikImage.props().path).toEqual(differentImageRelativePath);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${differentImageRelativePath}?${global.SDK_VERSION}`);
+			ikImage.update();
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${differentImageRelativePath}?${global.SDK_VERSION}`);
+
+			// trigger unmount
+			ikImage.unmount();
+		});
+
+		test("change src in props and <img /> src should change accordingly", () => {
+			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} src={absolutePath} />);
+			
+			expect(ikImage.props().src).toEqual(absolutePath);
+			expect(ikImage.state('currentUrl')).toEqual(`${absolutePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${absolutePath}?${global.SDK_VERSION}`);
+
+			ikImage.setProps({ src: differentAbsolutePath });
+
+			expect(ikImage.props().src).toEqual(differentAbsolutePath);
+			expect(ikImage.state('currentUrl')).toEqual(`${differentAbsolutePath}?${global.SDK_VERSION}`);
+			ikImage.update();
+			expect(ikImage.find('img').prop('src')).toEqual(`${differentAbsolutePath}?${global.SDK_VERSION}`);
+
+			// trigger unmount
+			ikImage.unmount();
+		});
+
+		test("change urlEndpoint in props and <img /> src should change accordingly", () => {
+			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} />);
+			
+			expect(ikImage.props().urlEndpoint).toEqual(urlEndpoint);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+
+			ikImage.setProps({ urlEndpoint: differentUrlEndpoint });
+
+			expect(ikImage.props().urlEndpoint).toEqual(differentUrlEndpoint);
+			expect(ikImage.state('currentUrl')).toEqual(`${differentUrlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			ikImage.update();
+			expect(ikImage.find('img').prop('src')).toEqual(`${differentUrlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+
+			// trigger unmount
+			ikImage.unmount();
+		});
+
+		test("adding transformation in props and <img /> src should change accordingly", () => {
+			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} />);
+			
+			expect(ikImage.props().transformation).toBeUndefined();
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+
+			ikImage.setProps({ transformation: trArr });
+
+			expect(ikImage.props().transformation).toEqual(trArr);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}?${global.SDK_VERSION}`);
+			ikImage.update();
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}?${global.SDK_VERSION}`);
+
+			// trigger unmount
+			ikImage.unmount();
+		});
+
+		test("changing transformationPosition in props and <img /> src should change accordingly", () => {
+			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} transformation={trArr} />);
+			
+			expect(ikImage.props().transformationPosition).toBeUndefined();
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}?${global.SDK_VERSION}`);
+
+			ikImage.setProps({ transformationPosition: "query" });
+
+			expect(ikImage.props().transformationPosition).toEqual("query");
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&tr=h-300%2Cw-300`);
+			ikImage.update();
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&tr=h-300%2Cw-300`);
+
+			// trigger unmount
+			ikImage.unmount();
+		});
+
+		test("changing queryParameters in props and <img /> src should change accordingly", () => {
+			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} />);
+			
+			expect(ikImage.props().queryParameters).toBeUndefined();
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+
+			ikImage.setProps({ queryParameters: { "v" : "1" } });
+
+			expect(ikImage.props().queryParameters).toEqual({ "v" : "1" });
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&v=1`);
+			ikImage.update();
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&v=1`);
+
+			// trigger unmount
+			ikImage.unmount();
+		});
+
+		test('adding loading=lazy param after component mount through props should not change <img /> src', () => {
+			const ikImage = mount(
+			  <IKImage
+				urlEndpoint={urlEndpoint}
+				path={relativePath}
+			  />
+			);
+
+			expect(ikImage.props().loading).toBeUndefined();
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+	
+			ikImage.setProps({ loading: "lazy" });
+			ikImage.update();
+
+			expect(ikImage.props().loading).toEqual("lazy");
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+	
+			// trigger unmount
+			ikImage.unmount();
+		});
+
+		test('adding lqip param after component mount through props should not change <img /> src', () => {
+			const ikImage = mount(
+			  <IKImage
+				urlEndpoint={urlEndpoint}
+				path={relativePath}
+			  />
+			);
+
+			expect(ikImage.props().lqip).toBeUndefined();
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+	
+			ikImage.setProps({ lqip: { active: true } });
+			ikImage.update();
+
+			expect(ikImage.props().lqip).toEqual({ active: true });
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+	
+			// trigger unmount
+			ikImage.unmount();
+		});
+	})
+	
     describe('Lazy loading', () => {
       // spies
       const observeSpy = sinon.spy();

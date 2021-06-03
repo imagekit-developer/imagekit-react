@@ -7,7 +7,10 @@
     "test": "jest",
     "test:ci": "jest --coverage && codecov",
     "test:cov": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:e2e": "cypress open --project ./tests",
+    "test:watch": "jest --watch",
+    "start:sample": "export SKIP_PREFLIGHT_CHECK=true;npx serve -s samples/sample-app/build -p 3000",
+    "start:test-app": "export SKIP_PREFLIGHT_CHECK=true;npx serve -s tests/test-app/build -p 3001"
   },
   "repository": {
     "type": "git",
@@ -24,10 +27,13 @@
   "jest": {
     "verbose": true,
     "setupFilesAfterEnv": [
-      "<rootDir>/src/test/setupTests.js"
+      "<rootDir>/tests/jest/setupTests.js"
     ],
     "coveragePathIgnorePatterns": [
-      "<rootDir>/src/test/mocks"
+      "<rootDir>/tests/jest/mocks"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/tests/cypress/"
     ]
   },
   "author": "ImageKit",
@@ -47,6 +53,7 @@
     "@rollup/plugin-replace": "^2.3.3",
     "babel-loader": "^8.0.6",
     "codecov": "^3.8.0",
+    "cypress": "^5.6.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "jest": "^26.5.2",
