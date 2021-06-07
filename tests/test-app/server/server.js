@@ -27,6 +27,6 @@ router.get("/auth", function(req, res) {
 
 app.use("/",router);
 
-app.listen(3002,function(){
-  console.log("Live at Port 3002");
+app.listen(4001,function(){
+  console.log("Live at Port 4001");
 });

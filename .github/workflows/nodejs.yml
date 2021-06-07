@@ -55,8 +55,8 @@ jobs:
     - name: Run E2E tests
       uses: cypress-io/github-action@v2
       with:
-        start: npm run start:test-app
-        wait-on: http://localhost:3001
+        start: npm run serve:test-app
+        wait-on: http://localhost:4000
       env:
         CI: true
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}

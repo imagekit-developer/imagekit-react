@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-We will assume you are in the directory `samples\sample-app` while following the further instructions 
+We will assume you are in the directory `samples/sample-app` while executing the following instructions. 
 
 ## Installation
 

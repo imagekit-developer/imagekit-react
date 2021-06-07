@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "imagekitio-react": "../../",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "imagekitio-react": "../../",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.4.0"
   },
   "scripts": {
-    "start": "export SKIP_PREFLIGHT_CHECK=true;PORT=3001 react-scripts start",
+    "start": "export SKIP_PREFLIGHT_CHECK=true;PORT=4000 react-scripts start",
     "build": "export SKIP_PREFLIGHT_CHECK=true;react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -27,7 +27,7 @@ describe('IKContext', () => {
           }]} />
         </IKContext>
       );
-      // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.7">
+      // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.x.x">
 
       const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}?${global.SDK_VERSION}`;
       expect(ikContext.find('img').prop('src')).toEqual(transformURL);
@@ -42,7 +42,7 @@ describe('IKContext', () => {
           }]} />
         </IKContext>
       );
-      // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.7">
+      // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.x.x">
 
       const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}?${global.SDK_VERSION}`;
       expect(ikContext.find('img').prop('src')).toEqual(transformURL);
@@ -74,7 +74,7 @@ describe('IKContext', () => {
           }]} />
         </IKContext>
       );
-      // <img alt="" src="https://www.custom-domain.com/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.0.7">
+      // <img alt="" src="https://www.custom-domain.com/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.x.x">
 
       const transformURL = 'https://www.custom-domain.com/tr:h-300,w-400/default-image.jpg';
       expect(ikContext.find('img').prop('src')).toEqual(`${transformURL}?${global.SDK_VERSION}`);

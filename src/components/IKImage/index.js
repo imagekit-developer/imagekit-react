@@ -20,7 +20,7 @@ class IKImage extends ImageKitComponent {
       lqipSrc: lqipSrc,
       originalSrcLoaded: false,
       intersected: false,
-	  contextOptions : {}
+	    contextOptions : {}
     };
   }
 
@@ -128,7 +128,7 @@ class IKImage extends ImageKitComponent {
 
   componentDidMount() {
     this.updateImageUrl();
-	this.setState({ contextOptions : this.getContext() });
+	  this.setState({ contextOptions : this.getContext() });
 
     const image = this.imageRef.current;
     const { lqip, loading } = this.props;
@@ -169,26 +169,28 @@ class IKImage extends ImageKitComponent {
   }
 
   areObjectsDifferent(prevProps, newProps) {
-	for(var index=0; index<propsAffectingURL.length; index++){
-		if(prevProps[propsAffectingURL[index]] != newProps[propsAffectingURL[index]]) return true;
-	}
-	return false;
+    for (let index = 0; index < propsAffectingURL.length; index++) {
+      if (prevProps[propsAffectingURL[index]] != newProps[propsAffectingURL[index]]) {
+        return true;
+      };
+    }
+    return false;
   }
 
-	componentDidUpdate(prevProps, prevState) {
-		var contextOptions = this.getContext();
+  componentDidUpdate(prevProps, prevState) {
+    let contextOptions = this.getContext();
 
-		if (
-			this.areObjectsDifferent(prevProps, this.props) || 
-			this.areObjectsDifferent(prevState.contextOptions, contextOptions)
-		) {
-			const { originalSrc, lqipSrc } = this.getSrc();
-			this.setState({originalSrc, lqipSrc }, () => {
-				this.updateImageUrl();
-				this.setState({ contextOptions : this.getContext() });
-			});
-		}
-	}
+    if (
+      this.areObjectsDifferent(prevProps, this.props) ||
+      this.areObjectsDifferent(prevState.contextOptions, contextOptions)
+    ) {
+      const { originalSrc, lqipSrc } = this.getSrc();
+      this.setState({ originalSrc, lqipSrc }, () => {
+        this.updateImageUrl();
+        this.setState({ contextOptions: this.getContext() });
+      });
+    }
+  }
 
   render() {
     let { currentUrl } = this.state;

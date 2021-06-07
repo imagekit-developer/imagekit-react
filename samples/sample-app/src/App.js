@@ -18,14 +18,10 @@ function App() {
   const onSuccess = res => {
     console.log("Success");
     console.log(res);
-	setUploadedImageSource(res.url);
+    setUploadedImageSource(res.url);
   };
 
   const [uploadedImageSource, setUploadedImageSource] = useState();
-  const [imageTr, setImageTr] = useState([{
-	"height": "200",
-	"width": "200"
-  }]);
 
   return (
     <div className="App">
@@ -40,19 +36,11 @@ function App() {
         <IKImage src={src} />
 
         <p>Transformation - height and width manipulation</p>
-        <IKImage className={'img-transformation'} path={path} transformation={imageTr} />
-		<div>
-			<p>Click here to apply max radius on above image </p>
-			<button
-				className={'btn-to-change-tr'}
-				onClick={() => setImageTr([{
-					"height": "200",
-					"width": "200",
-					"radius" : "max"
-				}])}
-			>Click to apply radius</button>
-		</div>
-		<br />
+        <IKImage className={'img-transformation'} path={path} transformation={[{
+          "height": "200",
+          "width": "200"
+        }]} />
+        <br />
         <p>Chained transformation</p>
         <IKImage path={path} transformation={[{
           "height": "200",
@@ -75,7 +63,7 @@ function App() {
 
         <p>Progressive image loading wihtout lazy loading</p>
         <IKImage
-        className={'lqip'}
+          className={'lqip'}
           path={path}
           transformation={[{
             "height": "200",
@@ -88,7 +76,7 @@ function App() {
 
         <p>Progressive image loading with lazy loading</p>
         <IKImage
-        className={'lazyload-lqip'}
+          className={'lazyload-lqip'}
           path={path}
           transformation={[{
             "height": "200",
@@ -99,12 +87,6 @@ function App() {
         />
 
 
-        <p>File upload - To use this funtionality please remember to setup the server</p>
-        <IKUpload
-          onError={onError}
-          onSuccess={onSuccess}
-        />
-
         <p>File upload along with upload API options - To use this funtionality please remember to setup the server</p>
         <IKUpload
           fileName="test.jpg"
@@ -114,11 +96,12 @@ function App() {
           useUniqueFileName={true}
           responseFields={["tags"]}
           folder={"/sample-folder"}
-          onError={onError} onSuccess={onSuccess}
+          onError={onError}
+          onSuccess={onSuccess}
         />
 
-		<p>Your above uploaded file will appear here </p>
-		<IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} />
+        <p>Your uploaded file will appear here </p>
+        <IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} />
       </IKContext>
     </div>
   );
