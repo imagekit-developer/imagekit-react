@@ -18,13 +18,17 @@ function App() {
   const onSuccess = res => {
     console.log("Success");
     console.log(res);
-	setUploadedImageSource(res.url);
+    setUploadedImageSource(res.url);
   };
 
   const [uploadedImageSource, setUploadedImageSource] = useState();
   const [imageTr, setImageTr] = useState([{
-	"height": "200",
-	"width": "200"
+    "height": "200",
+    "width": "200"
+  }]);
+  const [imageTrSansIKContext, setImageTrSansIKContext] = useState([{
+    "height": "300",
+    "width": "300"
   }]);
 
   return (
@@ -34,6 +38,37 @@ function App() {
       <p>Directly using <code>IkImage</code></p>
       <IKImage urlEndpoint={urlEndpoint} src={src} />
 
+      <p>Dynamic transformation update directly using IKImage</p>
+      <IKImage
+        publicKey={publicKey}
+        urlEndpoint={urlEndpoint}
+        authenticationEndpoint={authenticationEndpoint}
+        className={'img-transformation-direct'}
+        path={path}
+        transformation={imageTrSansIKContext}
+      />
+      <div>
+        <p>Click here to apply transformations on the above image</p>
+        <button
+          className={'btn-to-change-tr-direct'}
+          onClick={() => setImageTrSansIKContext([{
+            "height": "200",
+            "width": "600",
+            "radius": "max",
+          }, {
+            "height": "200",
+            "width": "200",
+            "rotate": 180,
+          }, {
+            "ot": "TEST",
+            "oy": 50,
+            "ox": 100,
+            "otc": "10C0F0"
+          }])}
+        >Click to apply transformations</button>
+      </div>
+      <br />
+
       <p>Using context <code>IKContext</code></p>
       <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
         <p>Let's add an Image</p>
@@ -41,18 +76,18 @@ function App() {
 
         <p>Transformation - height and width manipulation</p>
         <IKImage className={'img-transformation'} path={path} transformation={imageTr} />
-		<div>
-			<p>Click here to apply max radius on above image </p>
-			<button
-				className={'btn-to-change-tr'}
-				onClick={() => setImageTr([{
-					"height": "200",
-					"width": "200",
-					"radius" : "max"
-				}])}
-			>Click to apply radius</button>
-		</div>
-		<br />
+        <div>
+          <p>Click here to apply max radius on above image </p>
+          <button
+            className={'btn-to-change-tr'}
+            onClick={() => setImageTr([{
+              "height": "200",
+              "width": "200",
+              "radius": "max"
+            }])}
+          >Click to apply radius</button>
+        </div>
+        <br />
         <p>Chained transformation</p>
         <IKImage path={path} transformation={[{
           "height": "200",
@@ -75,7 +110,7 @@ function App() {
 
         <p>Progressive image loading wihtout lazy loading</p>
         <IKImage
-        className={'lqip'}
+          className={'lqip'}
           path={path}
           transformation={[{
             "height": "200",
@@ -88,7 +123,7 @@ function App() {
 
         <p>Progressive image loading with lazy loading</p>
         <IKImage
-        className={'lazyload-lqip'}
+          className={'lazyload-lqip'}
           path={path}
           transformation={[{
             "height": "200",
@@ -96,13 +131,6 @@ function App() {
           }]}
           loading="lazy"
           lqip={{ active: true, quality: 20, blur: 30 }}
-        />
-
-
-        <p>File upload - To use this funtionality please remember to setup the server</p>
-        <IKUpload
-          onError={onError}
-          onSuccess={onSuccess}
         />
 
         <p>File upload along with upload API options - To use this funtionality please remember to setup the server</p>
@@ -117,8 +145,8 @@ function App() {
           onError={onError} onSuccess={onSuccess}
         />
 
-		<p>Your above uploaded file will appear here </p>
-		<IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} />
+        <p>Your above uploaded file will appear here </p>
+        <IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} />
       </IKContext>
     </div>
   );

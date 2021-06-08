@@ -67,24 +67,42 @@ describe('ImageKit React SDK', () => {
   });
 
   describe('State update check', () => {
-	it('should update image src when click on button', () => {
-		cy.visit(APP_HOST);
+    it('should update image src with chained transformation outside IKContext dynamically', () => {
+      cy.visit(APP_HOST);
 
-		cy.get('.img-transformation').scrollIntoView();
-  
-		cy.wait(500);
-  
-		cy.get('.img-transformation')
-		  .should('have.attr', 'src')
-		  .and('include', 'tr:h-200,w-200/default-image.jpg');
+      cy.get('.img-transformation-direct').scrollIntoView();
 
-		cy.get('.btn-to-change-tr').click();
-		cy.wait(500);
+      cy.wait(500);
 
-		cy.get('.img-transformation')
-		.should('have.attr', 'src')
-		.and('include', 'tr:h-200,w-200,r-max/default-image.jpg');
-	})
-  })
-  
+      cy.get('.img-transformation-direct')
+        .should('have.attr', 'src')
+        .and('include', 'tr:h-300,w-300/default-image.jpg');
+
+      cy.get('.btn-to-change-tr-direct').click();
+      cy.wait(500);
+
+      cy.get('.img-transformation-direct')
+        .should('have.attr', 'src')
+        .and('include', 'tr:h-200,w-600,r-max:h-200,w-200,rt-180:ot-TEST,oy-50,ox-100,otc-10C0F0/default-image.jpg');
+    });
+    it('should update image src within IKContext when button is clicked', () => {
+      cy.visit(APP_HOST);
+
+      cy.get('.img-transformation').scrollIntoView();
+
+      cy.wait(500);
+
+      cy.get('.img-transformation')
+        .should('have.attr', 'src')
+        .and('include', 'tr:h-200,w-200/default-image.jpg');
+
+      cy.get('.btn-to-change-tr').click();
+      cy.wait(500);
+
+      cy.get('.img-transformation')
+        .should('have.attr', 'src')
+        .and('include', 'tr:h-200,w-200,r-max/default-image.jpg');
+    });
+  });
+
 });
