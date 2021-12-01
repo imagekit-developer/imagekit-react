@@ -173,6 +173,25 @@ describe('IKImage', () => {
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
         expect(ikImage.find('img').prop('id')).toEqual('lqip');
       });
+
+      test("lqip with raw transformation", () => {
+        const ikImage = shallow(
+          <IKImage
+            urlEndpoint={urlEndpoint}
+            lqip={{ active: true, quality: 50, blur: 25, raw: "n-lqip" }}
+            path={nestedImagePath}
+            transformation={[{
+              named: "thumbnail"
+            }]}
+            id="lqip"
+          />
+        );
+
+        const transformURL = `${urlEndpoint}/tr:n-thumbnail:n-lqip${nestedImagePath}?${global.SDK_VERSION}`;
+        expect(ikImage.find('img').prop('src')).toEqual(transformURL);
+        expect(ikImage.find('img').prop('id')).toEqual('lqip');
+      });
+
     });
 
     describe('Transformation', () => {

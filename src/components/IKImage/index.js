@@ -20,7 +20,7 @@ class IKImage extends ImageKitComponent {
       lqipSrc: lqipSrc,
       originalSrcLoaded: false,
       intersected: false,
-	    contextOptions : {}
+      contextOptions: {}
     };
   }
 
@@ -45,10 +45,16 @@ class IKImage extends ImageKitComponent {
       var quality = parseInt((lqip.quality || lqip.threshold), 10) || 20;
       var blur = parseInt((lqip.blur || lqip.blur), 10) || 6;
       var newTransformation = options.transformation ? [...options.transformation] : [];
-      newTransformation.push({
-        quality,
-        blur
-      })
+      if (lqip.raw && typeof lqip.raw === "string" && lqip.raw.trim() != "") {
+        newTransformation.push({
+          raw: lqip.raw.trim()
+        });
+      } else {
+        newTransformation.push({
+          quality,
+          blur
+        })
+      }
       result.lqipSrc = ikClient.url({
         ...options,
         transformation: newTransformation
@@ -128,7 +134,7 @@ class IKImage extends ImageKitComponent {
 
   componentDidMount() {
     this.updateImageUrl();
-	  this.setState({ contextOptions : this.getContext() });
+    this.setState({ contextOptions: this.getContext() });
 
     const image = this.imageRef.current;
     const { lqip, loading } = this.props;

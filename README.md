@@ -178,7 +178,7 @@ The `IKImage` component renders an `img` tag. It is used for rendering and manip
 | transformationPosition | String |Optional. The default value is `path` that places the transformation string as a URL path parameter. It can also be specified as `query`, which adds the transformation string as the URL's query parameter i.e.`tr`. If you use `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
 | queryParameters  | Object |Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and not necessarily related to ImageKit. Especially useful if you want to add some versioning parameter to your URLs. |
 | loading  | String |Optional. Pass `lazy` to lazy load images. Note: Component does not accept change in this value after it has mounted. |
-| lqip  | Object |Optional. You can use this to show a low-quality blurred placeholder while the original image is being loaded e.g. `{active:true, quality: 20, blur: 6`}. The default value of `quality` is `20` and `blur` is `6`. <br /> Note: Component does not accept change in this value after it has mounted.|
+| lqip  | Object |Optional. You can use this to show a low-quality blurred placeholder while the original image is being loaded e.g. `{active:true, quality: 20, blur: 6, raw: "n-lqip_named_transformation"`}. The default value of `quality` is `20`, and `blur` is `6`. If `raw` transformation is provided, SDK uses that and ignores the `quality` and `blur` parameters. <br /> Note: Component does not accept change in this value after it has mounted.|
 
 ### Basic resizing examples
 
@@ -292,6 +292,7 @@ See the complete list of transformations supported in ImageKit [here](https://do
 | effectContrast | e-contrast |
 | effectGray | e-grayscale |
 | original | orig |
+| raw | The string provided in raw will be added in the URL as it is. |
 
 </details>
 
@@ -363,6 +364,15 @@ By default, the SDK uses the `quality:20` and `blur:6`. You can change this. For
 <IKImage
   path="/default-image.jpg"
   lqip={{active:true, quality: 40, blur: 5}}
+/>
+```
+
+You can also specify a `raw` transformation if you want more control over the URL of the low-quality image placeholder. In this case, the SDK ignores `quality` and `blur` parameters.
+
+```js
+<IKImage
+  path="/default-image.jpg"
+  lqip={{active:true, raw: "n-lqip_named_transformation"}}
 />
 ```
 
