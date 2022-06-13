@@ -1,6 +1,6 @@
 {
   "name": "imagekitio-react",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "scripts": {
     "build": "rm -rf dist*;rollup -c",
@@ -71,7 +71,7 @@
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": "^16.13.1 || ^17.0.0",
-    "react-dom": "^16.13.1 || ^17.0.0"
+    "react": "^16.13.1 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.13.1 || ^17.0.0 || ^18.0.0"
   }
 }
