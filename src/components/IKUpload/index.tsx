@@ -1,15 +1,19 @@
 import React from 'react';
-import ImageKitComponent from "../ImageKitComponent/";
+import ImageKitComponent from "../ImageKitComponent";
 import COMMON_PROPS from "../IKContext/props"
 import IK_UPLOAD_PROPS from "./props"
 
-const PROP_TYPES = {
-  ...COMMON_PROPS,
-  ...IK_UPLOAD_PROPS
+interface PROP_TYPES extends COMMON_PROPS, IK_UPLOAD_PROPS {
+  useUniqueFileName: true,
+  isPrivateFile: false,
+  customCoordinates: "",
+  tags: [],
+  folder: "/",
+  responseFields: []
 };
 
 export default class IKUpload extends ImageKitComponent {
-  uploadFile(e) {
+  uploadFile(e: any) {
     const contextOptions = this.getContext();
 
     const {
@@ -22,7 +26,7 @@ export default class IKUpload extends ImageKitComponent {
       responseFields,
       onError,
       onSuccess
-    } = this.props;
+    }: any = this.props;
 
     const publicKey = this.props.publicKey || contextOptions.publicKey;
     const authenticationEndpoint = this.props.authenticationEndpoint || contextOptions.authenticationEndpoint;
@@ -70,7 +74,7 @@ export default class IKUpload extends ImageKitComponent {
       responseFields,
     }
 
-    ikClient.upload(params, (err, result) => {
+    ikClient.upload(params, (err: any, result: any) => {
       if (err) {
         if (onError && typeof onError === "function") {
           onError(err);
@@ -101,7 +105,7 @@ export default class IKUpload extends ImageKitComponent {
       onError,
       onSuccess,
       ...restProps
-    } = this.props;
+    }: any = this.props;
 
     return (
       <input
@@ -117,14 +121,3 @@ export default class IKUpload extends ImageKitComponent {
     )
   }
 }
-
-IKUpload.defaultProps = {
-  useUniqueFileName: true,
-  isPrivateFile: false,
-  customCoordinates: "",
-  tags: [],
-  folder: "/",
-  responseFields: []
-}
-
-IKUpload.propTypes = PROP_TYPES;

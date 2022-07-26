@@ -67,8 +67,14 @@
     "sinon": "^9.2.0"
   },
   "dependencies": {
+    "@types/jest": "^28.1.6",
+    "@types/node": "^18.6.1",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
     "imagekit-javascript": "^1.3.6",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "ts-transformer-keys": "^0.4.3",
+    "typescript": "^4.7.4"
   },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0",

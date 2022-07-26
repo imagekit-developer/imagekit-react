@@ -2,14 +2,13 @@ import React from 'react';
 import ImageKitComponent from "../ImageKitComponent";
 import { ImageKitContextType } from './ImageKitContextType';
 import ImageKit from 'imagekit-javascript';
+import { keys } from 'ts-transformer-keys';
+
 import COMMON_PROPS from "./props"
 import IK_IMAGE_PROPS from "../IKImage/props"
 import IK_UPLOAD_PROPS from "../IKUpload/props"
 
-const PROP_TYPES = {
-  ...COMMON_PROPS,
-  ...IK_IMAGE_PROPS,
-  ...IK_UPLOAD_PROPS
+interface PROP_TYPES extends COMMON_PROPS, IK_IMAGE_PROPS, IK_UPLOAD_PROPS {
 };
 
 /**
@@ -22,10 +21,11 @@ const PROP_TYPES = {
  *</IKContext>
  */
 class IKContext extends ImageKitComponent {
-  extractContextOptions(mergedOptions) {
-    var result = {};
 
-    const propKeys = Object.keys(PROP_TYPES);
+  extractContextOptions(mergedOptions: PROP_TYPES) {
+    var result: PROP_TYPES | any = {};
+
+    const propKeys = keys<PROP_TYPES>();
 
     for (var i = 0; i < propKeys.length; i++) {
       var key = propKeys[i];
@@ -37,7 +37,7 @@ class IKContext extends ImageKitComponent {
   }
 
   render() {
-    const { children } = this.props;
+    const { children }: any = this.props;
 
     const mergedOptions = { ...this.getContext(), ...this.props };
 
@@ -45,8 +45,7 @@ class IKContext extends ImageKitComponent {
 
     if (contextOptions.urlEndpoint && contextOptions.urlEndpoint.trim() !== "") {
       contextOptions.ikClient = new ImageKit({
-        sdkVersion: `react-${this.getVersion()}`,
-        urlEndpoint: contextOptions.urlEndpoint
+       urlEndpoint: contextOptions.urlEndpoint,
       });
     }
 
@@ -58,7 +57,6 @@ class IKContext extends ImageKitComponent {
   }
 }
 
-IKContext.propTypes = PROP_TYPES;
 IKContext.contextType = ImageKitContextType;
 
 export default IKContext;

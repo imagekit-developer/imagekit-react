@@ -1,18 +1,26 @@
 import React from 'react';
-import ImageKitComponent from "../ImageKitComponent/";
+import ImageKitComponent from "../ImageKitComponent";
 import COMMON_PROPS from "../IKContext/props"
 import IK_IMAGE_PROPS from "./props"
 
-const PROP_TYPES = {
-  ...COMMON_PROPS,
-  ...IK_IMAGE_PROPS
+interface PROP_TYPES extends COMMON_PROPS, IK_IMAGE_PROPS {
 };
+
+interface State {
+  currentUrl?: string,
+  originalSrc: any,
+  lqipSrc: any,
+  originalSrcLoaded: boolean,
+  intersected: boolean,
+  contextOptions: any
+}
 
 const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
 class IKImage extends ImageKitComponent {
-  constructor(props, context) {
+  imageRef: any = React.createRef();
+
+  constructor(props: any, context: any) {
     super(props, context);
-    this.imageRef = React.createRef();
     const { originalSrc, lqipSrc } = this.getSrc();
     this.state = {
       currentUrl: undefined,
@@ -25,8 +33,8 @@ class IKImage extends ImageKitComponent {
   }
 
   getSrc() {
-    const result = {};
-    const { lqip, src, path, transformation, transformationPosition, queryParameters } = this.props;
+    const result: any = {};
+    const { lqip, src, path, transformation, transformationPosition, queryParameters }: any = this.props;
     var ikClient = this.getIKClient();
     const contextOptions = this.getContext();
 
@@ -92,12 +100,12 @@ class IKImage extends ImageKitComponent {
     const {
       intersected,
       originalSrcLoaded,
-    } = this.state;
+    }: any = this.state;
 
     const {
       lqip = null,
       loading
-    } = this.props;
+    }: any = this.props;
 
     if (loading !== "lazy" && lqip === null) {
       this.setState({ currentUrl: this.state.originalSrc })
@@ -137,7 +145,7 @@ class IKImage extends ImageKitComponent {
     this.setState({ contextOptions: this.getContext() });
 
     const image = this.imageRef.current;
-    const { lqip, loading } = this.props;
+    const { lqip, loading }: any = this.props;
 
     if (window && 'IntersectionObserver' in window && loading === "lazy") {
       var connectionType = this.getEffectiveConnection();
@@ -170,11 +178,11 @@ class IKImage extends ImageKitComponent {
   }
 
   componentWillUnmount() {
-    const { observe } = this.state;
+    const { observe }: any = this.state;
     if (observe) observe.disconnect();
   }
 
-  areObjectsDifferent(prevProps, newProps) {
+  areObjectsDifferent(prevProps: any, newProps: any) {
     for (let index = 0; index < propsAffectingURL.length; index++) {
       if (prevProps[propsAffectingURL[index]] != newProps[propsAffectingURL[index]]) {
         return true;
@@ -183,7 +191,7 @@ class IKImage extends ImageKitComponent {
     return false;
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: any, prevState: any) {
     let contextOptions = this.getContext();
 
     if (
@@ -199,8 +207,8 @@ class IKImage extends ImageKitComponent {
   }
 
   render() {
-    let { currentUrl } = this.state;
-    const { urlEndpoint, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = this.props;
+    let { currentUrl }: any = this.state;
+    const { urlEndpoint, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps }: any = this.props;
     return <img
       alt={this.props.alt || ""}
       src={currentUrl}
@@ -209,7 +217,5 @@ class IKImage extends ImageKitComponent {
     />;
   }
 }
-
-IKImage.propTypes = PROP_TYPES;
 
 export default IKImage;

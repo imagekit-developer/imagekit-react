@@ -1,20 +1,20 @@
 import { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { any } from 'prop-types';
 import ImageKit from 'imagekit-javascript';
 import { ImageKitContextType } from '../IKContext/ImageKitContextType';
-import pkg from '../../../package.json';
+// import pkg from '../../../package.json';
 
-class ImageKitComponent extends PureComponent {
-  constructor(props, context) {
+class ImageKitComponent extends PureComponent<any, any> {
+  constructor(props: any, context: any) {
     super(props, context);
     this.getContext = this.getContext.bind(this);
   }
 
-  getVersion() {
-    return pkg.version;
-  }
+  // getVersion(): string {
+  //   return pkg.version;
+  // }
 
-  getContext() {
+  getContext(): any {
     return this.context || {};
   }
 
@@ -23,21 +23,16 @@ class ImageKitComponent extends PureComponent {
     if (contextOptions.ikClient) {
       return contextOptions.ikClient;
     }
-    var { urlEndpoint } = this.props;
+    var { urlEndpoint }: any = this.props;
     urlEndpoint = urlEndpoint || contextOptions.urlEndpoint;
 
     if(!urlEndpoint || urlEndpoint.trim() === "") {
       throw new Error("Missing urlEndpoint during initialization");
     }
     var ikClient = new ImageKit({
-      sdkVersion: `react-${this.getVersion()}`,
       urlEndpoint: urlEndpoint
     });
     return ikClient;
-  }
-
-  render() {
-    return null;
   }
 }
 
