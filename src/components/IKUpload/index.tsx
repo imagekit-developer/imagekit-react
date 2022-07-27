@@ -1,7 +1,11 @@
 import React from 'react';
+import ImageKit from 'imagekit-javascript';
+
 import ImageKitComponent from "../ImageKitComponent";
-import COMMON_PROPS from "../IKContext/props"
-import IK_UPLOAD_PROPS from "./props"
+import COMMON_PROPS from "../IKContext/props";
+import IK_UPLOAD_PROPS from "./props";
+import IKResponse from '../../interfaces/IKResponse';
+import { UploadResponse } from '../../interfaces/ImgUploadResponse';
 
 interface PROP_TYPES extends COMMON_PROPS, IK_UPLOAD_PROPS {
   useUniqueFileName: true,
@@ -59,7 +63,7 @@ export default class IKUpload extends ImageKitComponent {
       return;
     }
 
-    var ikClient = this.getIKClient();
+    var ikClient: ImageKit = this.getIKClient();
 
     const file = e.target.files[0];
 
@@ -74,7 +78,7 @@ export default class IKUpload extends ImageKitComponent {
       responseFields,
     }
 
-    ikClient.upload(params, (err: any, result: any) => {
+    ikClient.upload(params, (err: Error | null, result: IKResponse<UploadResponse> | null) => {
       if (err) {
         if (onError && typeof onError === "function") {
           onError(err);

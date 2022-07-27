@@ -1,4 +1,4 @@
-export type TransformationPosition = "path" | "query";
+import { TransformationPosition } from '../../interfaces/TransformationPosition';
 
 export type LoadingType = "lazy"
 

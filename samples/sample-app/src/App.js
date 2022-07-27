@@ -18,6 +18,11 @@ function App() {
   const onSuccess = res => {
     console.log("Success");
     console.log(res);
+
+    // console.log(res.$ResponseMetadata.statusCode); // 200
+
+    // { 'content-length': "300", 'content-type': 'application/json', 'x-request-id': 'ee560df4-d44f-455e-a48e-29dfda49aec5'}
+    // console.log(res.$ResponseMetadata.headers);
     setUploadedImageSource(res.url);
   };
 

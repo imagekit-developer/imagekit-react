@@ -1,3 +1,6 @@
+import { UploadResponse } from '../../interfaces/ImgUploadResponse';
+import IKResponse from '../../interfaces/IKResponse';
+
 type func = () => void
 
 export default interface Props {
@@ -8,6 +11,6 @@ export default interface Props {
     isPrivateFile: boolean,
     folder: string,
     customCoordinates: string,
-    onError: func;
-    onSuccess: func;
+    onError: (error: Error | null) => void;
+    onSuccess: (response: IKResponse<UploadResponse> | null) => void;
 }
