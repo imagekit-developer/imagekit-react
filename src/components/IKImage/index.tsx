@@ -74,7 +74,8 @@ class IKImage extends ImageKitComponent {
 
   getEffectiveConnection() {
     try {
-      return navigator.connection.effectiveType;
+      // return navigator.connection.effectiveType;
+      return undefined
     } catch (ex) {
       return "4g";
     }

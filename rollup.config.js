@@ -11,7 +11,7 @@ const PLUGINS = [
 	peerDepsExternal(),
 	resolve(),
 	babel({
-		extensions: ['.js'],
+		extensions: ['.ts', '.tsx'],
 	}),
 	json(),
 	replace({
@@ -22,7 +22,7 @@ const PLUGINS = [
 
 export default [
 	{
-		input: 'src/index.js',
+		input: 'src/index.tsx',
 		external: ['react', 'prop-types'],
 		output: [
 			{ file: pkg.main, format: 'cjs' },
@@ -32,7 +32,7 @@ export default [
 	},
 	// UMD build with inline PropTypes
 	{
-		input: 'src/index.js',
+		input: 'src/index.tsx',
 		external: ['react'],
 		output: [
 			{
@@ -48,7 +48,7 @@ export default [
 	},
 	// Minified UMD Build With PropTypes
 	{
-		input: 'src/index.js',
+		input: 'src/index.tsx',
 		output: [
 			{
 				name: 'ImageKitReact',

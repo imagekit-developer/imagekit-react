@@ -36,7 +36,7 @@ function App() {
       <IKImage urlEndpoint={urlEndpoint} src={src} />
 
       <p>Using context <code>IKContext</code></p>
-      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint}>
         <p>Let's add an Image</p>
         <IKImage src={src} />
 

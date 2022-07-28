@@ -2,21 +2,15 @@ import React from 'react';
 import ImageKit from 'imagekit-javascript';
 
 import ImageKitComponent from "../ImageKitComponent";
-import COMMON_PROPS from "../IKContext/props";
-import IK_UPLOAD_PROPS from "./props";
+import CommonProps from "../IKContext/props";
+import IKUploadProps from "./props";
 import IKResponse from '../../interfaces/IKResponse';
 import { UploadResponse } from '../../interfaces/ImgUploadResponse';
 
-interface PROP_TYPES extends COMMON_PROPS, IK_UPLOAD_PROPS {
-  useUniqueFileName: true,
-  isPrivateFile: false,
-  customCoordinates: "",
-  tags: [],
-  folder: "/",
-  responseFields: []
+interface IProps extends CommonProps, IKUploadProps {
 };
 
-export default class IKUpload extends ImageKitComponent {
+class IKUpload extends ImageKitComponent {
   uploadFile(e: any) {
     const contextOptions = this.getContext();
 
@@ -108,11 +102,13 @@ export default class IKUpload extends ImageKitComponent {
       responseFields,
       onError,
       onSuccess,
+      innerRef,
       ...restProps
     }: any = this.props;
 
     return (
       <input
+        ref={innerRef}
         type="file"
         {...restProps}
         onChange={(e) => {
@@ -125,3 +121,5 @@ export default class IKUpload extends ImageKitComponent {
     )
   }
 }
+
+export default React.forwardRef((props, ref) => <IKUpload innerRef={ref} {...props} />);
