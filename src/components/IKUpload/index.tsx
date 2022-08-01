@@ -8,6 +8,7 @@ import IKResponse from '../../interfaces/IKResponse';
 import { UploadResponse } from '../../interfaces/ImgUploadResponse';
 
 interface IProps extends CommonProps, IKUploadProps {
+  onUploadStart?: (isStart: boolean) => void
 };
 
 class IKUpload extends ImageKitComponent {
@@ -23,8 +24,11 @@ class IKUpload extends ImageKitComponent {
       customCoordinates,
       responseFields,
       onError,
-      onSuccess
+      onSuccess,
+      onUploadStart
     }: any = this.props;
+
+    onUploadStart(true);
 
     const publicKey = this.props.publicKey || contextOptions.publicKey;
     const authenticationEndpoint = this.props.authenticationEndpoint || contextOptions.authenticationEndpoint;
@@ -32,6 +36,7 @@ class IKUpload extends ImageKitComponent {
 
     if (!publicKey || publicKey.trim() === "") {
       if (onError && typeof onError === "function") {
+        onUploadStart(false);
         onError({
           message: "Missing publicKey"
         });
@@ -41,6 +46,7 @@ class IKUpload extends ImageKitComponent {
 
     if (!authenticationEndpoint || authenticationEndpoint.trim() === "") {
       if (onError && typeof onError === "function") {
+        onUploadStart(false);
         onError({
           message: "Missing authenticationEndpoint"
         });
@@ -50,6 +56,7 @@ class IKUpload extends ImageKitComponent {
 
     if (!urlEndpoint || urlEndpoint.trim() === "") {
       if (onError && typeof onError === "function") {
+        onUploadStart(false);
         onError({
           message: "Missing urlEndpoint"
         });
@@ -75,10 +82,12 @@ class IKUpload extends ImageKitComponent {
     ikClient.upload(params, (err: Error | null, result: IKResponse<UploadResponse> | null) => {
       if (err) {
         if (onError && typeof onError === "function") {
+          onUploadStart(false);
           onError(err);
         }
       } else {
         if (onSuccess && typeof onSuccess === "function") {
+          onUploadStart(false);
           onSuccess(result);
         }
       }

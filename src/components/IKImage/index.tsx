@@ -67,6 +67,11 @@ class IKImage extends ImageKitComponent {
         ...options,
         transformation: newTransformation
       });
+    }else {
+      // TODO for lqipSrc
+      result.lqipSrc = ikClient.url({
+        ...options
+      });
     }
 
     return result;
