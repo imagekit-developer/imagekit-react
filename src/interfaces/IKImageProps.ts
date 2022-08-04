@@ -1,8 +1,8 @@
-import { TransformationPosition } from '../../interfaces/TransformationPosition';
+import { TransformationPosition } from './TransformationPosition';
 
 export type LoadingType = "lazy"
 
-export default interface Props {
+export default interface IKImageProps {
     loading: LoadingType,
     lqip: any,
     path: string,

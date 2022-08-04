@@ -2,13 +2,13 @@ import React from 'react';
 import ImageKit from 'imagekit-javascript';
 
 import ImageKitComponent from "../ImageKitComponent";
-import CommonProps from "../IKContext/props";
-import IKUploadProps from "./props";
+import CommonProps from "../../interfaces/CommonProps";
+import IKUploadProps from "../../interfaces/IKUploadProps";
 import IKResponse from '../../interfaces/IKResponse';
 import { UploadResponse } from '../../interfaces/ImgUploadResponse';
 
 interface IProps extends CommonProps, IKUploadProps {
-  onUploadStart?: (isStart: boolean) => void
+  onUploadStart?: () => void
 };
 
 class IKUpload extends ImageKitComponent {
@@ -28,15 +28,12 @@ class IKUpload extends ImageKitComponent {
       onUploadStart
     }: any = this.props;
 
-    onUploadStart(true);
-
     const publicKey = this.props.publicKey || contextOptions.publicKey;
     const authenticationEndpoint = this.props.authenticationEndpoint || contextOptions.authenticationEndpoint;
     const urlEndpoint = this.props.urlEndpoint || contextOptions.urlEndpoint;
 
     if (!publicKey || publicKey.trim() === "") {
       if (onError && typeof onError === "function") {
-        onUploadStart(false);
         onError({
           message: "Missing publicKey"
         });
@@ -46,7 +43,6 @@ class IKUpload extends ImageKitComponent {
 
     if (!authenticationEndpoint || authenticationEndpoint.trim() === "") {
       if (onError && typeof onError === "function") {
-        onUploadStart(false);
         onError({
           message: "Missing authenticationEndpoint"
         });
@@ -56,7 +52,6 @@ class IKUpload extends ImageKitComponent {
 
     if (!urlEndpoint || urlEndpoint.trim() === "") {
       if (onError && typeof onError === "function") {
-        onUploadStart(false);
         onError({
           message: "Missing urlEndpoint"
         });
@@ -64,11 +59,11 @@ class IKUpload extends ImageKitComponent {
       return;
     }
 
-    var ikClient: ImageKit = this.getIKClient();
+    const ikClient: ImageKit = this.getIKClient();
 
     const file = e.target.files[0];
 
-    var params = {
+    const params = {
       file: file,
       fileName: fileName || file.name,
       useUniqueFileName,
@@ -79,15 +74,15 @@ class IKUpload extends ImageKitComponent {
       responseFields,
     }
 
+    onUploadStart()
+
     ikClient.upload(params, (err: Error | null, result: IKResponse<UploadResponse> | null) => {
       if (err) {
         if (onError && typeof onError === "function") {
-          onUploadStart(false);
           onError(err);
         }
       } else {
         if (onSuccess && typeof onSuccess === "function") {
-          onUploadStart(false);
           onSuccess(result);
         }
       }
@@ -131,4 +126,5 @@ class IKUpload extends ImageKitComponent {
   }
 }
 
-export default React.forwardRef((props, ref) => <IKUpload innerRef={ref} {...props} />);
+export default IKUpload;
+// React.forwardRef((props, ref) => <IKUpload innerRef={ref} {...props} />);

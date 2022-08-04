@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
+import { IKImage, IKContext, IKUpload } from 'imagekitio-react';
+
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
@@ -19,7 +20,7 @@ function App() {
     console.log("Success");
     console.log(res);
 
-    // console.log(res.$ResponseMetadata.statusCode); // 200
+    console.log(res.$ResponseMetadata.statusCode); // 200
 
     // { 'content-length': "300", 'content-type': 'application/json', 'x-request-id': 'ee560df4-d44f-455e-a48e-29dfda49aec5'}
     // console.log(res.$ResponseMetadata.headers);

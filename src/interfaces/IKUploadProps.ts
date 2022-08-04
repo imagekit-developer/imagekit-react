@@ -1,9 +1,9 @@
-import { UploadResponse } from '../../interfaces/ImgUploadResponse';
-import IKResponse from '../../interfaces/IKResponse';
+import { UploadResponse } from './ImgUploadResponse';
+import IKResponse from './IKResponse';
 
 type func = () => void
 
-export default interface Props {
+export default interface IKUploadProps {
     fileName: string;
     tags: Array<any>;
     useUniqueFileName: boolean;

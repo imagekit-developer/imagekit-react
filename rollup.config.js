@@ -4,15 +4,24 @@ import json from '@rollup/plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import replace from '@rollup/plugin-replace';
+import typescript from '@rollup/plugin-typescript';
+
 import pkg from './package.json';
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
+
+const extensions = ['.js', '.ts', '.jsx', '.tsx'];
 
 const PLUGINS = [
 	peerDepsExternal(),
 	resolve(),
 	babel({
-		extensions: ['.ts', '.tsx'],
+		extensions: extensions,
 	}),
+	typescript({
+		tsconfig: './tsconfig.build.json',
+		declaration: true,
+		declarationDir: 'dist',
+	  }),
 	json(),
 	replace({
 		'process.env.NODE_ENV': JSON.stringify('production'),

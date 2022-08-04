@@ -1,10 +1,5 @@
 import React from 'react';
 import ImageKitComponent from "../ImageKitComponent";
-import CommonProps from "../../interfaces/CommonProps"
-import IKImageProps from "../../interfaces/IKImageProps"
-
-interface PROP_TYPES extends CommonProps, IKImageProps {
-};
 
 interface State {
   currentUrl?: string,
@@ -16,8 +11,8 @@ interface State {
 }
 
 const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
-class IKImage extends ImageKitComponent {
-  imageRef: any = React.createRef();
+class IKVideo extends ImageKitComponent {
+  videoRef: any = React.createRef();
 
   constructor(props: any, context: any) {
     super(props, context);
@@ -50,9 +45,9 @@ class IKImage extends ImageKitComponent {
     result.originalSrc = ikClient.url(options);
 
     if (lqip && lqip.active) {
-      const quality = parseInt((lqip.quality || lqip.threshold), 10) || 20;
-      const blur = parseInt((lqip.blur || lqip.blur), 10) || 6;
-      const newTransformation = options.transformation ? [...options.transformation] : [];
+      let quality = parseInt((lqip.quality || lqip.threshold), 10) || 20;
+      let blur = parseInt((lqip.blur || lqip.blur), 10) || 6;
+      let newTransformation = options.transformation ? [...options.transformation] : [];
       if (lqip.raw && typeof lqip.raw === "string" && lqip.raw.trim() != "") {
         newTransformation.push({
           raw: lqip.raw.trim()
@@ -67,7 +62,7 @@ class IKImage extends ImageKitComponent {
         ...options,
         transformation: newTransformation
       });
-    }else {
+    } else {
       // TODO for lqipSrc
       result.lqipSrc = ikClient.url({
         ...options
@@ -86,7 +81,7 @@ class IKImage extends ImageKitComponent {
     }
   }
 
-  updateImageUrl() {
+  updateVideoUrl() {
     /*
       No lazy loading no lqip
         src=originalImage
@@ -136,21 +131,21 @@ class IKImage extends ImageKitComponent {
     }
   }
 
-  triggerOriginalImageLoad() {
-    const img = new Image();
-    img.onload = () => {
+  triggerOriginalVideoLoad() {
+    const video = new HTMLVideoElement();
+    video.onload = () => {
       this.setState({ originalSrcLoaded: true }, () => {
-        this.updateImageUrl();
+        this.updateVideoUrl();
       });
     }
-    img.src = this.state.originalSrc;
+    video.src = this.state.originalSrc;
   }
 
   componentDidMount() {
-    this.updateImageUrl();
+    this.updateVideoUrl();
     this.setState({ contextOptions: this.getContext() });
 
-    const image = this.imageRef.current;
+    const video = this.videoRef.current;
     const { lqip, loading }: any = this.props;
 
     if (window && 'IntersectionObserver' in window && loading === "lazy") {
@@ -158,27 +153,27 @@ class IKImage extends ImageKitComponent {
       // Values based on native lazy loading in Chrome - https://web.dev/native-lazy-loading/#improved-data-savings-and-distance-from-viewport-thresholds
       let rootMargin = "1250px";
       if (connectionType !== "4g") rootMargin = "2500px";
-      const imageObserver = new IntersectionObserver(entries => {
+      const videoObserver = new IntersectionObserver(entries => {
         const el = entries[0];
         if (el && el.isIntersecting) {
           this.setState({ intersected: true }, () => {
-            if (lqip && lqip.active) this.triggerOriginalImageLoad();
-            imageObserver.disconnect();
-            this.updateImageUrl();
+            if (lqip && lqip.active) this.triggerOriginalVideoLoad();
+            videoObserver.disconnect();
+            this.updateVideoUrl();
           });
         }
       }, {
         rootMargin: `${rootMargin} 0px ${rootMargin} 0px`
       });
-      imageObserver.observe(image);
+      videoObserver.observe(video);
       this.setState({
-        observe: imageObserver
+        observe: videoObserver
       })
     } else {
       // Load original image right away
       this.setState({ intersected: true }, () => {
-        if (lqip && lqip.active) this.triggerOriginalImageLoad();
-        this.updateImageUrl();
+        if (lqip && lqip.active) this.triggerOriginalVideoLoad();
+        this.updateVideoUrl();
       });
     }
   }
@@ -206,7 +201,7 @@ class IKImage extends ImageKitComponent {
     ) {
       const { originalSrc, lqipSrc } = this.getSrc();
       this.setState({ originalSrc, lqipSrc }, () => {
-        this.updateImageUrl();
+        this.updateVideoUrl();
         this.setState({ contextOptions: this.getContext() });
       });
     }
@@ -215,13 +210,11 @@ class IKImage extends ImageKitComponent {
   render() {
     let { currentUrl }: any = this.state;
     const { urlEndpoint, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps }: any = this.props;
-    return <img
-      alt={this.props.alt || ""}
-      src={currentUrl}
-      ref={this.imageRef}
-      {...restProps}
-    />;
+
+    return <video alt={this.props.alt || ""} controls width={transformation?.width} height={transformation?.height} ref={this.videoRef} {...restProps}>
+      <source src={currentUrl} type="video/mp4" />
+    </video>;
   }
 }
 
-export default IKImage;
+export default IKVideo;

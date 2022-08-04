@@ -1,8 +1,5 @@
 import { PureComponent } from 'react';
-import PropTypes, { any } from 'prop-types';
 import ImageKit from 'imagekit-javascript';
-import { ImageKitContextType } from '../IKContext/ImageKitContextType';
-// import pkg from '../../../package.json';
 
 class ImageKitComponent extends PureComponent<any, any> {
   constructor(props: any, context: any) {
@@ -23,19 +20,17 @@ class ImageKitComponent extends PureComponent<any, any> {
     if (contextOptions.ikClient) {
       return contextOptions.ikClient;
     }
-    var { urlEndpoint }: any = this.props;
+    let { urlEndpoint }: any = this.props;
     urlEndpoint = urlEndpoint || contextOptions.urlEndpoint;
 
     if(!urlEndpoint || urlEndpoint.trim() === "") {
       throw new Error("Missing urlEndpoint during initialization");
     }
-    var ikClient = new ImageKit({
+    const ikClient = new ImageKit({
       urlEndpoint: urlEndpoint
     });
     return ikClient;
   }
 }
-
-ImageKitComponent.contextType = ImageKitContextType;
 
 export default ImageKitComponent;

@@ -2,19 +2,19 @@ import React from 'react';
 import ImageKitComponent from "../ImageKitComponent";
 import { ImageKitContextType } from './ImageKitContextType';
 import ImageKit from 'imagekit-javascript';
-import { keys } from 'ts-transformer-keys';
 
-import COMMON_PROPS from "./props"
-import IK_IMAGE_PROPS from "../IKImage/props"
-import IK_UPLOAD_PROPS from "../IKUpload/props"
+import CommonProps from "../../interfaces/CommonProps"
+import IKImageProps from "../../interfaces/IKImageProps"
+import IKUploadProps from "../../interfaces/IKUploadProps"
+import Keys from "../../utils";
 
-interface PROP_TYPES extends COMMON_PROPS, IK_IMAGE_PROPS, IK_UPLOAD_PROPS {
+interface IProps extends CommonProps, IKImageProps, IKUploadProps {
 };
 
 /**
  * Provides a container for ImageKit components. Any option set in IKContext will be passed to the children.
  *
- * @example
+* @example
  *<IKContext  publicKey="<public key>" urlEndpoint="url link">
  *    <!-- other tags -->
  *    <Image src={link}/>
@@ -22,13 +22,13 @@ interface PROP_TYPES extends COMMON_PROPS, IK_IMAGE_PROPS, IK_UPLOAD_PROPS {
  */
 class IKContext extends ImageKitComponent {
 
-  extractContextOptions(mergedOptions: PROP_TYPES) {
-    var result: PROP_TYPES | any = {};
+  extractContextOptions(mergedOptions: any) {
+    let result: IProps | any = {};
 
-    const propKeys = keys<PROP_TYPES>();
+    const propKeys = [...Keys("CommonProps"), ...Keys("IKImageProps"), ...Keys("IKUploadProps")]
 
-    for (var i = 0; i < propKeys.length; i++) {
-      var key = propKeys[i];
+    for (let i = 0; i < propKeys.length; i++) {
+      let key = propKeys[i];
       const value = mergedOptions[key];
       if (value) result[key] = value;
     }
@@ -56,7 +56,5 @@ class IKContext extends ImageKitComponent {
     )
   }
 }
-
-IKContext.contextType = ImageKitContextType;
 
 export default IKContext;
