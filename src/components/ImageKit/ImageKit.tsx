@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 import ImageKit from 'imagekit-javascript';
 
-class ImageKitComponent extends PureComponent<any, any> {
+export class ImageKitComponent extends PureComponent<any, any> {
   constructor(props: any, context: any) {
     super(props, context);
     this.getContext = this.getContext.bind(this);
@@ -32,5 +32,3 @@ class ImageKitComponent extends PureComponent<any, any> {
     return ikClient;
   }
 }
-
-export default ImageKitComponent;

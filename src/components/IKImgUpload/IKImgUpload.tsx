@@ -1,17 +1,11 @@
 import React from 'react';
 import ImageKit from 'imagekit-javascript';
+import { ImageKitComponent } from "../ImageKit";
 
-import ImageKitComponent from "../ImageKitComponent";
-import CommonProps from "../../interfaces/CommonProps";
-import IKUploadProps from "../../interfaces/IKUploadProps";
 import IKResponse from '../../interfaces/IKResponse';
 import { UploadResponse } from '../../interfaces/ImgUploadResponse';
 
-interface IProps extends CommonProps, IKUploadProps {
-  onUploadStart?: () => void
-};
-
-class IKUpload extends ImageKitComponent {
+export class IKImgUpload extends ImageKitComponent {
   uploadFile(e: any) {
     const contextOptions = this.getContext();
 
@@ -24,8 +18,7 @@ class IKUpload extends ImageKitComponent {
       customCoordinates,
       responseFields,
       onError,
-      onSuccess,
-      onUploadStart
+      onSuccess
     }: any = this.props;
 
     const publicKey = this.props.publicKey || contextOptions.publicKey;
@@ -73,8 +66,6 @@ class IKUpload extends ImageKitComponent {
       customCoordinates,
       responseFields,
     }
-
-    onUploadStart()
 
     ikClient.upload(params, (err: Error | null, result: IKResponse<UploadResponse> | null) => {
       if (err) {
@@ -125,6 +116,3 @@ class IKUpload extends ImageKitComponent {
     )
   }
 }
-
-export default IKUpload;
-// React.forwardRef((props, ref) => <IKUpload innerRef={ref} {...props} />);
