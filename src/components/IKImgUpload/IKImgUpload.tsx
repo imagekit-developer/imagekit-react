@@ -4,9 +4,10 @@ import { ImageKitComponent } from "../ImageKit";
 
 import IKResponse from '../../interfaces/IKResponse';
 import { UploadResponse } from '../../interfaces/ImgUploadResponse';
+import { ImageKitContext } from "../IKContext";
 
 export class IKImgUpload extends ImageKitComponent {
-  uploadFile(e: any) {
+  uploadFile(e: React.ChangeEvent<HTMLInputElement>) {
     const contextOptions = this.getContext();
 
     const {
@@ -19,7 +20,7 @@ export class IKImgUpload extends ImageKitComponent {
       responseFields,
       onError,
       onSuccess
-    }: any = this.props;
+    } = this.props;
 
     const publicKey = this.props.publicKey || contextOptions.publicKey;
     const authenticationEndpoint = this.props.authenticationEndpoint || contextOptions.authenticationEndpoint;
@@ -54,33 +55,35 @@ export class IKImgUpload extends ImageKitComponent {
 
     const ikClient: ImageKit = this.getIKClient();
 
-    const file = e.target.files[0];
-
-    const params = {
-      file: file,
-      fileName: fileName || file.name,
-      useUniqueFileName,
-      tags,
-      folder,
-      isPrivateFile,
-      customCoordinates,
-      responseFields,
-    }
-
-    ikClient.upload(params, (err: Error | null, result: IKResponse<UploadResponse> | null) => {
-      if (err) {
-        if (onError && typeof onError === "function") {
-          onError(err);
-        }
-      } else {
-        if (onSuccess && typeof onSuccess === "function") {
-          onSuccess(result);
-        }
+    if (e.target.files?.length) {
+      const file = e.target.files[0];
+  
+      const params = {
+        file: file,
+        fileName: fileName || file.name,
+        useUniqueFileName,
+        tags,
+        folder,
+        isPrivateFile,
+        customCoordinates,
+        responseFields,
       }
-    }, {
-      publicKey,
-      authenticationEndpoint
-    })
+  
+      ikClient.upload(params, (err: Error | null, result: IKResponse<UploadResponse> | null) => {
+        if (err) {
+          if (onError && typeof onError === "function") {
+            onError(err);
+          }
+        } else {
+          if (onSuccess && typeof onSuccess === "function") {
+            onSuccess(result);
+          }
+        }
+      }, {
+        publicKey,
+        authenticationEndpoint
+      })
+    }
   }
 
   render() {
@@ -99,14 +102,14 @@ export class IKImgUpload extends ImageKitComponent {
       onSuccess,
       innerRef,
       ...restProps
-    }: any = this.props;
+    } = this.props;
 
     return (
       <input
         ref={innerRef}
         type="file"
         {...restProps}
-        onChange={(e) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           if (this.props.onChange && typeof this.props.onChange === "function") {
             this.props.onChange(e);
           }
@@ -116,3 +119,5 @@ export class IKImgUpload extends ImageKitComponent {
     )
   }
 }
+
+IKImgUpload.contextType = ImageKitContext;

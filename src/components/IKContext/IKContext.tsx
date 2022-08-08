@@ -2,27 +2,32 @@ import React from 'react';
 import { ImageKitComponent } from "../ImageKit";
 import ImageKit from 'imagekit-javascript';
 import { createContext } from 'react';
+import { ImageKitContextType } from '../../interfaces/IKContextType';
 
-const ImageKitContextType = createContext<null>(null);
+export const ImageKitContext = createContext<ImageKitContextType | null>(null);
 
 export class IKContext extends ImageKitComponent {
 
   extractContextOptions(mergedOptions: any) {
-    let result: any = {};
+    let result: ImageKitContextType = {
+      publicKey: '',
+      urlEndpoint: '',
+      authenticationEndpoint: ''
+    };
 
     const propKeys = ["publicKey", "urlEndpoint", "authenticationEndpoint", "loading", "lqip", "path", "src", "queryParameters", "transformation", "transformationPosition", "fileName", "tags", "useUniqueFileName", "responseFields", "isPrivateFile", "folder", "customCoordinates", "onError", "onSuccess"]
 
     for (let i = 0; i < propKeys.length; i++) {
       let key = propKeys[i];
       const value = mergedOptions[key];
-      if (value) result[key] = value;
+      if (value) result[key as keyof ImageKitContextType] = value;
     }
 
     return result;
   }
 
   render() {
-    const { children }: any = this.props;
+    const { children } = this.props;
 
     const mergedOptions = { ...this.getContext(), ...this.props };
 
@@ -35,9 +40,9 @@ export class IKContext extends ImageKitComponent {
     }
 
     return (
-      <ImageKitContextType.Provider value={contextOptions}>
+      <ImageKitContext.Provider value={contextOptions}>
         {children}
-      </ImageKitContextType.Provider>
+      </ImageKitContext.Provider>
     )
   }
 }

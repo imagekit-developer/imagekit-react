@@ -1,17 +1,21 @@
 import { PureComponent } from 'react';
 import ImageKit from 'imagekit-javascript';
+import { ImageKitContextType } from '../../interfaces/IKContextType';
 
-export class ImageKitComponent extends PureComponent<any, any> {
-  constructor(props: any, context: any) {
+type IKProps = ImageKitContextType & {
+  loading?: string,
+  alt?: string,
+  innerRef?: React.LegacyRef<HTMLInputElement>,
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export class ImageKitComponent extends PureComponent<IKProps, any> {
+  constructor(props: IKProps, context: ImageKitContextType) {
     super(props, context);
     this.getContext = this.getContext.bind(this);
   }
 
-  // getVersion(): string {
-  //   return pkg.version;
-  // }
-
-  getContext(): any {
+  getContext() {
     return this.context || {};
   }
 
@@ -20,7 +24,7 @@ export class ImageKitComponent extends PureComponent<any, any> {
     if (contextOptions.ikClient) {
       return contextOptions.ikClient;
     }
-    let { urlEndpoint }: any = this.props;
+    let { urlEndpoint } = this.props;
     urlEndpoint = urlEndpoint || contextOptions.urlEndpoint;
 
     if(!urlEndpoint || urlEndpoint.trim() === "") {

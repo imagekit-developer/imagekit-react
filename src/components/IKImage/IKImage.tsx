@@ -1,27 +1,61 @@
 import React from 'react';
 import { ImageKitComponent } from "../ImageKit";
+import { ImageKitContext } from "../IKContext";
 
 const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
 
-export class IKImage extends ImageKitComponent {
-    imageRef: any = React.createRef();
+type GetSrcReturnType = {
+    originalSrc: string,
+    lqipSrc: string
+}
 
-    constructor(props: any, context: any) {
+type IKState = {
+    currentUrl?: string,
+    originalSrc?: string,
+    lqipSrc?: string,
+    originalSrcLoaded: boolean,
+    intersected: boolean,
+    contextOptions: any
+    observe?: IntersectionObserver
+}
+
+type IKProps = {
+    lqip?: any,
+    src?: string,
+    path?: string,
+    transformation?: string,
+    transformationPosition?: string,
+    queryParameters?: { [key: string]: string | number },
+    loading?: string,
+    alt?: string
+}
+
+export class IKImage extends ImageKitComponent {
+    imageRef: React.RefObject<HTMLImageElement> = React.createRef();
+
+    state: IKState = {
+        currentUrl: undefined,
+        originalSrcLoaded: false,
+        intersected: false,
+        contextOptions: {}
+    };
+
+    constructor(props: IKProps, context: any) {
         super(props, context);
         const { originalSrc, lqipSrc } = this.getSrc();
         this.state = {
-            currentUrl: undefined,
+            ...this.state,
             originalSrc: originalSrc,
             lqipSrc: lqipSrc,
-            originalSrcLoaded: false,
-            intersected: false,
-            contextOptions: {}
-        };
+        }
     }
 
-    getSrc() {
-        const result: any = {};
-        const { lqip, src, path, transformation, transformationPosition, queryParameters }: any = this.props;
+    getSrc(): GetSrcReturnType {
+        const result: GetSrcReturnType = {
+            originalSrc: '',
+            lqipSrc: ''
+        };
+        const { lqip, src, path, transformation, transformationPosition, queryParameters } = this.props;
         const ikClient = this.getIKClient();
         const contextOptions = this.getContext();
 
@@ -72,12 +106,12 @@ export class IKImage extends ImageKitComponent {
         const {
             intersected,
             originalSrcLoaded,
-        }: any = this.state;
+        } = this.state;
 
         const {
             lqip = null,
             loading
-        }: any = this.props;
+        } = this.props;
 
         if (loading !== "lazy" && lqip === null) {
             this.setState({ currentUrl: this.state.originalSrc })
@@ -113,7 +147,7 @@ export class IKImage extends ImageKitComponent {
                 this.updateImageUrl();
             });
         }
-        img.src = this.state.originalSrc;
+        img.src = this.state.originalSrc ? this.state.originalSrc : '';
     }
 
     componentDidMount() {
@@ -121,7 +155,7 @@ export class IKImage extends ImageKitComponent {
         this.setState({ contextOptions: this.getContext() });
 
         const image = this.imageRef.current;
-        const { lqip, loading }: any = this.props;
+        const { lqip, loading } = this.props;
 
         if (window && 'IntersectionObserver' in window && loading === "lazy") {
             let connectionType = this.getEffectiveConnection();
@@ -140,7 +174,9 @@ export class IKImage extends ImageKitComponent {
             }, {
                 rootMargin: `${rootMargin} 0px ${rootMargin} 0px`
             });
-            imageObserver.observe(image);
+
+            if (image) imageObserver.observe(image);
+
             this.setState({
                 observe: imageObserver
             })
@@ -154,24 +190,24 @@ export class IKImage extends ImageKitComponent {
     }
 
     componentWillUnmount() {
-        const { observe }: any = this.state;
+        const { observe } = this.state;
         if (observe) observe.disconnect();
     }
 
-    areObjectsDifferent(prevProps: any, newProps: any) {
+    areObjectsDifferent(prevProps: IKProps, newProps: IKProps) {
         for (let index = 0; index < propsAffectingURL.length; index++) {
-            if (prevProps[propsAffectingURL[index]] != newProps[propsAffectingURL[index]]) {
+            if (prevProps[propsAffectingURL[index] as keyof IKProps] != newProps[propsAffectingURL[index] as keyof IKProps]) {
                 return true;
             };
         }
         return false;
     }
 
-    componentDidUpdate(prevProps: any, prevState: any) {
+    componentDidUpdate(prevProps: IKProps, prevState: IKState) {
         let contextOptions = this.getContext();
 
         if (
-            this.areObjectsDifferent(prevProps, this.props) ||
+            this.areObjectsDifferent(prevProps, this.props as IKProps) ||
             this.areObjectsDifferent(prevState.contextOptions, contextOptions)
         ) {
             const { originalSrc, lqipSrc } = this.getSrc();
@@ -183,13 +219,15 @@ export class IKImage extends ImageKitComponent {
     }
 
     render() {
-        let { currentUrl }: any = this.state;
-        const { urlEndpoint, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps }: any = this.props;
+        let { currentUrl } = this.state;
+        const { urlEndpoint, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = this.props;
+        
         return <img
             alt={this.props.alt || ""}
             src={currentUrl}
             ref={this.imageRef}
-            {...restProps}
         />;
     }
 }
+
+IKImage.contextType = ImageKitContext;
