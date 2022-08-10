@@ -27,7 +27,8 @@ type IKProps = {
     transformationPosition?: string,
     queryParameters?: { [key: string]: string | number },
     loading?: string,
-    alt?: string
+    alt?: string,
+    className?: string
 }
 
 export class IKImage extends ImageKitComponent {
@@ -219,13 +220,12 @@ export class IKImage extends ImageKitComponent {
     }
 
     render() {
-        let { currentUrl } = this.state;
-        const { urlEndpoint, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = this.props;
-        
+        let { currentUrl } = this.state;        
         return <img
             alt={this.props.alt || ""}
             src={currentUrl}
             ref={this.imageRef}
+            className={this.props.className}
         />;
     }
 }

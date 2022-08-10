@@ -6,7 +6,7 @@ import IKResponse from '../../interfaces/IKResponse';
 import { UploadResponse } from '../../interfaces/ImgUploadResponse';
 import { ImageKitContext } from "../IKContext";
 
-export class IKImgUpload extends ImageKitComponent {
+export class IKUpload extends ImageKitComponent {
   uploadFile(e: React.ChangeEvent<HTMLInputElement>) {
     const contextOptions = this.getContext();
 
@@ -120,4 +120,4 @@ export class IKImgUpload extends ImageKitComponent {
   }
 }
 
-IKImgUpload.contextType = ImageKitContext;
+IKUpload.contextType = ImageKitContext;

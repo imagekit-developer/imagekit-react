@@ -3,6 +3,7 @@ import ImageKit from 'imagekit-javascript';
 import { ImageKitContextType } from '../../interfaces/IKContextType';
 
 type IKProps = ImageKitContextType & {
+  className?: string
   loading?: string,
   alt?: string,
   innerRef?: React.LegacyRef<HTMLInputElement>,
