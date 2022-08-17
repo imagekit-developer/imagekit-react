@@ -5,5 +5,9 @@ import { IKUpload } from './components/IKUpload';
 import { IKVideo } from './components/IKVideo';
 
 export {
-    IKContext, IKImage, IKVideo, IKUpload, ImageKit as IKCore
-};
+    IKContext, 
+    IKImage, 
+    IKVideo, 
+    IKUpload, 
+    ImageKit as IKCore
+}
