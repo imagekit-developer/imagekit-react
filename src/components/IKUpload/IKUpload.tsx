@@ -100,13 +100,13 @@ export class IKUpload extends ImageKitComponent {
       responseFields,
       onError,
       onSuccess,
-      innerRef,
+      inputRef,
       ...restProps
     } = this.props;
 
     return (
       <input
-        ref={innerRef}
+        ref={inputRef}
         type="file"
         {...restProps}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

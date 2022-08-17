@@ -6,8 +6,14 @@ type IKProps = ImageKitContextType & {
   className?: string
   loading?: string,
   alt?: string,
-  innerRef?: React.LegacyRef<HTMLInputElement>,
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  inputRef?: React.LegacyRef<HTMLInputElement>,
+  width?: string,
+  height?: string,
+  controls?: boolean,
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  enabledGif?: boolean,
+  thumbnailTransformation?: any,
+  onThumbnailLoad?: (thumbnail: string) => void
 }
 
 export class ImageKitComponent extends PureComponent<IKProps, any> {
