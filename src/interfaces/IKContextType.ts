@@ -1,6 +1,6 @@
 import ImageKit from 'imagekit-javascript';
 
-export interface ImageKitContextType {
+export interface IKContextType {
     publicKey?: string;
     urlEndpoint?: string;
     authenticationEndpoint?: string;

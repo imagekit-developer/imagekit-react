@@ -1,8 +1,8 @@
 import { PureComponent } from 'react';
 import ImageKit from 'imagekit-javascript';
-import { ImageKitContextType } from '../../interfaces/IKContextType';
+import { IKContextType } from '../../interfaces/IKContextType';
 
-type IKProps = ImageKitContextType & {
+type IKProps = IKContextType & {
   className?: string
   loading?: string,
   alt?: string,
@@ -13,11 +13,12 @@ type IKProps = ImageKitContextType & {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
   enabledGif?: boolean,
   thumbnailTransformation?: any,
-  onThumbnailLoad?: (thumbnail: string) => void
+  onThumbnailLoad?: (thumbnail: string) => void,
+  onUpload?: () => void
 }
 
 export class ImageKitComponent extends PureComponent<IKProps, any> {
-  constructor(props: IKProps, context: ImageKitContextType) {
+  constructor(props: IKProps, context: IKContextType) {
     super(props, context);
     this.getContext = this.getContext.bind(this);
   }

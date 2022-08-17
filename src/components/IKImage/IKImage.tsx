@@ -1,47 +1,23 @@
 import React from 'react';
 import { ImageKitComponent } from "../ImageKit";
 import { ImageKitContext } from "../IKContext";
+import { IKPropsType } from "../../interfaces/types/IKPropsType";
+import { IKStateType } from "../../interfaces/types/IKStateType";
+import { GetSrcReturnType } from "../../interfaces/types/GetSrcReturnType";
 
 const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
-
-type GetSrcReturnType = {
-    originalSrc: string,
-    lqipSrc: string
-}
-
-type IKState = {
-    currentUrl?: string,
-    originalSrc?: string,
-    lqipSrc?: string,
-    originalSrcLoaded: boolean,
-    intersected: boolean,
-    contextOptions: any
-    observe?: IntersectionObserver
-}
-
-type IKProps = {
-    lqip?: any,
-    src?: string,
-    path?: string,
-    transformation?: string,
-    transformationPosition?: string,
-    queryParameters?: { [key: string]: string | number },
-    loading?: string,
-    alt?: string,
-    className?: string
-}
 
 export class IKImage extends ImageKitComponent {
     imageRef: React.RefObject<HTMLImageElement> = React.createRef();
 
-    state: IKState = {
+    state: IKStateType = {
         currentUrl: undefined,
         originalSrcLoaded: false,
         intersected: false,
         contextOptions: {}
     };
 
-    constructor(props: IKProps, context: any) {
+    constructor(props: IKPropsType, context: any) {
         super(props, context);
         const { originalSrc, lqipSrc } = this.getSrc();
         this.state = {
@@ -195,20 +171,20 @@ export class IKImage extends ImageKitComponent {
         if (observe) observe.disconnect();
     }
 
-    areObjectsDifferent(prevProps: IKProps, newProps: IKProps) {
+    areObjectsDifferent(prevProps: IKPropsType, newProps: IKPropsType) {
         for (let index = 0; index < propsAffectingURL.length; index++) {
-            if (prevProps[propsAffectingURL[index] as keyof IKProps] != newProps[propsAffectingURL[index] as keyof IKProps]) {
+            if (prevProps[propsAffectingURL[index] as keyof IKPropsType] != newProps[propsAffectingURL[index] as keyof IKPropsType]) {
                 return true;
             };
         }
         return false;
     }
 
-    componentDidUpdate(prevProps: IKProps, prevState: IKState) {
+    componentDidUpdate(prevProps: IKPropsType, prevState: IKStateType) {
         let contextOptions = this.getContext();
 
         if (
-            this.areObjectsDifferent(prevProps, this.props as IKProps) ||
+            this.areObjectsDifferent(prevProps, this.props as IKPropsType) ||
             this.areObjectsDifferent(prevState.contextOptions, contextOptions)
         ) {
             const { originalSrc, lqipSrc } = this.getSrc();

@@ -1,37 +1,22 @@
 import React from 'react';
 import { ImageKitComponent } from "../ImageKit";
 import { ImageKitContext } from "../IKContext";
+import { IKPropsType } from "../../interfaces/types/IKPropsType";
+import { IKStateType } from "../../interfaces/types/IKStateType";
+import { GetSrcReturnType } from "../../interfaces/types/GetSrcReturnType";
 
 const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
 
-type GetSrcReturnType = {
-    originalSrc: string,
-    lqipSrc: string,
+type GetSrcType = GetSrcReturnType & {
     thumbnailSrc?: string
 }
 
-type IKState = {
-    currentUrl?: string,
-    originalSrc?: string,
-    lqipSrc?: string,
+type IKState = IKStateType & {
     thumbnailSrc?: string,
-    originalSrcLoaded: boolean,
-    intersected: boolean,
-    contextOptions: any
-    observe?: IntersectionObserver
 }
 
-type IKProps = {
-    lqip?: any,
-    src?: string,
-    path?: string,
-    transformation?: any,
-    transformationPosition?: string,
-    queryParameters?: { [key: string]: string | number },
-    loading?: string,
-    alt?: string,
-    className?: string,
-    enabledGif?: boolean,
+type IKProps = IKPropsType & {
+    enabledGif?: boolean
     thumbnailTransformation?: any
     onThumbnailLoad?: (thumbnail: string) => void
 }
@@ -57,16 +42,18 @@ export class IKVideo extends ImageKitComponent {
         }
     }
 
-    removeQueryParams (url: string) {
+    divideUrlAndQueryParams (url: string) {
         let queryIndex = url.indexOf("?");
 
-        url = url.slice(0, queryIndex);
+        let urlStr = url.slice(0, queryIndex);
 
-        return url
+        let queryParamsStr = url.slice(queryIndex, url.length)
+
+        return { urlStr, queryParamsStr }
     }
 
-    getSrc(): GetSrcReturnType {
-        const result: GetSrcReturnType = {
+    getSrc(): GetSrcType {
+        const result: GetSrcType = {
             originalSrc: '',
             lqipSrc: ''
         };
@@ -84,9 +71,9 @@ export class IKVideo extends ImageKitComponent {
         };
 
         result.originalSrc = ikClient.url(options);
-        result.originalSrc = this.removeQueryParams(result.originalSrc);
+        const urlInfoObj = this.divideUrlAndQueryParams(result.originalSrc);
         if (this.props.enabledGif) {
-            result.originalSrc = result.originalSrc + '/ik-gif-video.mp4';
+            result.originalSrc = urlInfoObj.urlStr + '/ik-gif-video.mp4' + urlInfoObj.queryParamsStr;
         }
 
         if (lqip && lqip.active) {
@@ -107,9 +94,9 @@ export class IKVideo extends ImageKitComponent {
                 ...options,
                 transformation: newTransformation
             });
-            result.lqipSrc = this.removeQueryParams(result.lqipSrc);
+            const urlInfoObj = this.divideUrlAndQueryParams(result.lqipSrc);
             if (this.props.enabledGif) {
-                result.lqipSrc = result.lqipSrc + '/ik-gif-video.mp4';
+                result.lqipSrc = urlInfoObj.urlStr + '/ik-gif-video.mp4' + urlInfoObj.queryParamsStr;
             }
         }
 
@@ -123,8 +110,8 @@ export class IKVideo extends ImageKitComponent {
 
             if (result.thumbnailSrc) {
                 //Remove extra query parameters
-                result.thumbnailSrc = this.removeQueryParams(result.thumbnailSrc);
-                result.thumbnailSrc = result.thumbnailSrc + '/ik-thumbnail.jpg';
+                const urlInfoObj = this.divideUrlAndQueryParams(result.thumbnailSrc);
+                result.thumbnailSrc = urlInfoObj.urlStr + '/ik-thumbnail.jpg' + urlInfoObj.queryParamsStr;
             }
         }
 

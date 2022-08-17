@@ -29,7 +29,7 @@ yarn add imagekitio-react
 Import components in your code:
 
 ```js
-import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
+import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
 ```
 
 ### Quick examples
@@ -103,6 +103,22 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
     loading="lazy"
     lqip={{ active: true }}
   />
+
+  // Video element with basic transaformation, reduced quality by 50% using q:50
+  <IKVideo
+    path={'/default-video.mp4'}
+    transformation={[{ height: 200, width: 200, q: 50 }]}
+    controls={true}
+  />
+
+  // Fetch Video thumbnail url and render accordingly, apply transformation to thumbnail separately
+  <IKVideo
+    path={'/default-video.mp4'}
+    transformation={[{ height: 200, width: 400 }]}
+    controls={true}
+    thumbnailTransformation={[{ height: 200, width: 400 }]}
+    onThumbnailLoad={(url) => console.log("Thumbnail Url", url)}
+  />
 </IKContext>
 
 <IKContext publicKey="your_public_api_key" authenticationEndpoint="https://www.your-server.com/auth">
@@ -133,15 +149,39 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 
 ## Components
 
-The library includes 3 Components:
+The library includes 4 Components:
 
 * [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticationEndpoint` to all children elements. This component does not render anything.
 * `IKImage` for [image resizing](#image-resizing). This renders a `<img>` tag.
+* `IKVideo` for [video resizing](#video-resizing). This renders a `<video>` tag.
 * `IKUpload`for client-side [file uploading](#file-upload). This renders a `<input type="file">` tag.
+
+If you want to do anything custom, access the [ImageKit core JS SDK](https://github.com/imagekit-developer/imagekit-javascript) using `IKCore` module. For example:
+
+```js
+import { IKCore } from "imagekitio-react"
+
+// Generate image URL
+var imagekit = new IKCore({
+    publicKey: "your_public_api_key",
+    urlEndpoint: "https://ik.imagekit.io/your_imagekit_id",
+    authenticationEndpoint: "http://www.yourserver.com/auth",
+});
+
+//https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jpg
+var imageURL = imagekit.url({
+    path: "/default-image.jpg",
+    urlEndpoint: "https://ik.imagekit.io/your_imagekit_id/endpoint/",
+    transformation: [{
+        "height": "300",
+        "width": "400"
+    }]
+});
+```
 
 ## IKContext
 
-In order to use the SDK, you need to provide it with a few configuration parameters. You can use a parent `IKContext` component to define common options for all children `IKImage` or `IKupload` compoents. For example:
+In order to use the SDK, you need to provide it with a few configuration parameters. You can use a parent `IKContext` component to define common options for all children `IKImage`, `IKVideo` or `IKupload` compoents. For example:
 
 ```js
 <IKContext
@@ -402,6 +442,231 @@ You can use `urlEndpoint` prop in an individual `IKImage` to change url for that
   <IKImage urlEndpoint="https://www.custom-domain.com" path="/default-image.jpg" />
 </IKContext>
 ```
+
+## Video resizing
+
+The `IKVideo` component renders an `video` tag. It is used for rendering and manipulating videos in real-time. `IKVideo` component accepts the following props:
+
+| Prop             | Type | Description                    |
+| :----------------| :----|:----------------------------- |
+| urlEndpoint      | String | Optional. The base URL to be appended before the path of the video. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
+| path             | String |Conditional. This is the path at which the video exists. For example, `/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation. |
+| src              | String |Conditional. This is the complete URL of an video already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation. |
+| transformation   | Array of objects |Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as the Array's different objects. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it is applied in the URL as it is. |
+| transformationPosition | String |Optional. The default value is `path` that places the transformation string as a URL path parameter. It can also be specified as `query`, which adds the transformation string as the URL's query parameter i.e.`tr`. If you use `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
+| queryParameters  | Object |Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and not necessarily related to ImageKit. Especially useful if you want to add some versioning parameter to your URLs. |
+| loading  | String |Optional. Pass `lazy` to lazy load videos. Note: Component does not accept change in this value after it has mounted. |
+| lqip  | Object |Optional. You can use this to show a low-quality blurred placeholder while the original video is being loaded e.g. `{active:true, quality: 20, blur: 6, raw: "n-lqip_named_transformation"`}. The default value of `quality` is `20`, and `blur` is `6`. If `raw` transformation is provided, SDK uses that and ignores the `quality` and `blur` parameters. <br /> Note: Component does not accept change in this value after it has mounted.|
+
+### Basic resizing examples
+
+```js
+<IKContext urlEndpoint="https://ik.imagekit.io/your_imagekit_id">
+  // Video from related file path with no transformations - https://ik.imagekit.io/your_imagekit_id/default-video.mp4
+  <IKVideo
+    path="/default-video.mp4"
+  />
+
+  // Video resizing - https://ik.imagekit.io/your_imagekit_id/tr:w-h-300,w-400/default-video.mp4
+  <IKVideo
+    path="/default-video.mp4"
+    transformation={[{
+      height:300,
+      width:400
+    }]}
+  />
+
+  // Loading video from an absolute file path with no transformations - https://www.custom-domain.com/default-video.mp4
+  <IKVideo
+    src="https://www.custom-domain.com/default-video.mp4"
+  />
+
+  // Using a new tranformation parameter which is not there in this SDK yet - https://ik.imagekit.io/your_imagekit_id/tr:custom-value/default-video.mp4
+  <IKVideo
+    path="/default-video.mp4"
+    transformation={[{
+      custom: 'value'
+    }]}
+  />
+</IKContext>
+```
+
+The `transformation` prop is an array of objects. Each object can have the following properties.
+
+```js
+// It means first resize the video to 400x400 and then rotate 90 degree
+transformation = [
+  {
+    height: 400,
+    width: 400,
+    rt: 90
+  }
+]
+```
+
+See the complete list of transformations supported in ImageKit [here](https://docs.imagekit.io/features/video-transformation). The SDK gives a name to each transformation parameter e.g. `height` for `h` and `width` for `w` parameter. It makes your code more readable. If the property does not match any of the following supported options, it is added as it is.
+
+### List of supported transformations
+<details>
+<summary>Expand</summary>
+
+| Supported Transformation Name | Translates to parameter |
+|-------------------------------|-------------------------|
+| height | h |
+| width | w |
+| aspectRatio | ar |
+| quality | q |
+| crop | c |
+| cropMode | cm |
+| focus | fo |
+| format | f |
+| radius | r |
+| background | bg |
+| border | b |
+| rotation | rt |
+| blur | bl |
+| named | n |
+| trimmingStartOffset | so |
+| trimmingEndOffset | eo |
+| trimmingDuration | du |
+| layering | l |
+| layerInfo | i |
+| layerXPosition | lx |
+| layerYPosition | ly |
+| layerRelativePosition | lfo |
+| layerStartTime | lso |
+| layerDuration | ldu |
+| layerEndtime | leo |
+| imageOverlayWidth | w |
+| imageOverlayHeight | h |
+| imageOverlayAspectRatio | ar |
+| imageOverlayCropMethod | c |
+| imageOverlayCromMode | cm |
+| imageOverlayRelativeFocus | fo |
+| imageOverlayBorder | b |
+| imageOverlayBGColor | bg |
+| imageOverlayRadius | r |
+| imageOverlayRotationDegree | rt |
+| layerTextWidth | w |
+| layerTextFontSize | fs |
+| layerTextFontFamily | ff |
+| layerTextColor | co |
+| layerTextInnerAlignment | ia |
+| layerTextPadding | pa |
+| layerTextAlpha | al |
+| layerTextTypography | tg |
+| layerTextBGColor | bg |
+| layerTextRadius | r |
+</details>
+
+### Lazy loading videos
+
+You can lazy load videos using the `loading` prop. When you use `loading="lazy"`, all videos that are immediately viewable without scrolling load normally. Those that are far below the device viewport are only fetched when the user scrolls near them.
+
+The SDK uses a fixed threshold based on the effective connection type to ensure that videos are loaded early enough so that they have finished loading once the user scrolls near to them.
+
+On fast connections (e.g 4G), the value of threshold is `1250px` and on slower connections (e.g 3G), it is `2500px`.
+
+> You should always set the `height` and `width` of video element to avoid [layout shift](https://www.youtube.com/watch?v=4-d_SoCHeWE) when lazy-loading videos.
+
+Example usage:
+
+```js
+// Lazy loading videos
+<IKVideo
+  path="/default-video.mp4"
+  transformation={[
+    {
+      height:300,
+      width:400
+    }
+  ]}
+  loading="lazy"
+  height="300"
+  width="400"
+/>
+```
+
+### Low-quality video placeholders (LQIP)
+To improve user experience, you can use a low-quality blurred variant of the original video as a placeholder while the original video is being loaded in the background. Once the loading of the original video is finished, the placeholder is replaced with the original video.
+
+```js
+// Loading a blurred low quality video placeholder while the original video is being loaded
+<IKVideo
+  path="/default-video.mp4"
+  lqip={{active:true}}
+/>
+```
+
+By default, the SDK uses the `quality:20` and `blur:6`. You can change this. For example:
+
+```js
+<IKVideo
+  path="/default-video.mp4"
+  lqip={{active:true, quality: 40, blur: 5}}
+/>
+```
+
+You can also specify a `raw` transformation if you want more control over the URL of the low-quality video placeholder. In this case, the SDK ignores `quality` and `blur` parameters.
+
+```js
+<IKVideo
+  path="/default-video.mp4"
+  lqip={{active:true, raw: "n-lqip_named_transformation"}}
+/>
+```
+
+### Combining lazy loading with low-quality placeholders
+You have the option to lazy-load the original video only when the user scrolls near them. Until then, only a low-quality placeholder is loaded. This saves a lot of network bandwidth if the user never scrolls further down.
+
+```js
+// Loading a blurred low quality video placeholder and lazy-loading original when user scrolls near them
+<IKVideo
+  path="/default-video.mp4"
+  transformation={[{height:300,width:400}]}
+  lqip={{active:true}}
+  loading="lazy"
+  height="300"
+  width="400"
+/>
+```
+
+### Overriding urlEndpoint for a particular video
+You can use `urlEndpoint` prop in an individual `IKVideo` to change url for that video. For example:
+```js
+<IKContext urlEndpoint="https://ik.imagekit.io/your_imagekit_id">
+  // Render an video using parent IKContext urlEndpont - https://ik.imagekit.io/your_imagekit_id/default-video.mp4
+  <IKVideo path="/default-video.mp4" />
+
+  // Overriding urlEndpoint defined in parent IkContext - https://www.custom-domain.com/default-video.mp4
+  <IKVideo urlEndpoint="https://www.custom-domain.com" path="/default-video.mp4" />
+</IKContext>
+```
+
+### Get Thumbnail from video
+You can use `onThumbnailLoad` prop to get thumbnail url and render it according to your use, to transform thumbnail you can use `thumbnailTransformation` prop. For example.
+
+```js
+<IKVideo
+  path={'/default-video.mp4'}
+  transformation={[{ height: 200, width: 200 }]}
+  controls={true}
+  thumbnailTransformation={[{ height: 200, width: 200 }]}
+  onThumbnailLoad={(url) => console.log("Thumbnail Url", url)}
+/>
+```
+
+### GIF to MP4
+You can use `enabledGif` prop to give support for GIF files, internally it will convert GIF file to MP4 and render it as normal video. For example.
+
+```js
+<IKVideo
+  path={'/default-gif.gif'}
+  controls={true}
+  enabledGif={true}
+/>
+```
+
 
 ## File upload
 

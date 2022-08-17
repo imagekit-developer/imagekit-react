@@ -19,7 +19,8 @@ export class IKUpload extends ImageKitComponent {
       customCoordinates,
       responseFields,
       onError,
-      onSuccess
+      onSuccess,
+      onUpload
     } = this.props;
 
     const publicKey = this.props.publicKey || contextOptions.publicKey;
@@ -68,6 +69,9 @@ export class IKUpload extends ImageKitComponent {
         customCoordinates,
         responseFields,
       }
+
+      // Trigger when upload starts.
+      if (onUpload) onUpload();
   
       ikClient.upload(params, (err: Error | null, result: IKResponse<UploadResponse> | null) => {
         if (err) {

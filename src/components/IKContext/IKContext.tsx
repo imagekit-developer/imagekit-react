@@ -2,14 +2,14 @@ import React from 'react';
 import { ImageKitComponent } from "../ImageKit";
 import ImageKit from 'imagekit-javascript';
 import { createContext } from 'react';
-import { ImageKitContextType } from '../../interfaces/IKContextType';
+import { IKContextType } from '../../interfaces/IKContextType';
 
-export const ImageKitContext = createContext<ImageKitContextType | null>(null);
+export const ImageKitContext = createContext<IKContextType | null>(null);
 
 export class IKContext extends ImageKitComponent {
 
   extractContextOptions(mergedOptions: any) {
-    let result: ImageKitContextType = {
+    let result: IKContextType = {
       publicKey: '',
       urlEndpoint: '',
       authenticationEndpoint: ''
@@ -20,7 +20,7 @@ export class IKContext extends ImageKitComponent {
     for (let i = 0; i < propKeys.length; i++) {
       let key = propKeys[i];
       const value = mergedOptions[key];
-      if (value) result[key as keyof ImageKitContextType] = value;
+      if (value) result[key as keyof IKContextType] = value;
     }
 
     return result;
