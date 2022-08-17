@@ -67,4 +67,17 @@ describe('IKImage Element', () => {
     });
   });
 
+  describe('IKCore Image Test Case', () => {
+    it('should update image src, after little delay in page load', () => {
+      cy.visit(APP_HOST);
+
+      cy.contains('Render Image Using IKCore Sdk').scrollIntoView();
+
+      cy.wait(2000);
+
+      cy.get('.image-ikcore')
+        .should('have.attr', 'src')
+    });
+  });
+
 });
