@@ -149,12 +149,13 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
 
 ## Components
 
-The library includes 4 Components:
+The library includes 5 Components:
 
 * [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticationEndpoint` to all children elements. This component does not render anything.
 * `IKImage` for [image resizing](#image-resizing). This renders a `<img>` tag.
 * `IKVideo` for [video resizing](#video-resizing). This renders a `<video>` tag.
 * `IKUpload`for client-side [file uploading](#file-upload). This renders a `<input type="file">` tag.
+* `IKCore` for [Core SDK](#ikcore), It's exposes core methods url and upload.
 
 If you want to do anything custom, access the [ImageKit core JS SDK](https://github.com/imagekit-developer/imagekit-javascript) using `IKCore` module. For example:
 
