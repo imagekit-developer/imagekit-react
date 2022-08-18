@@ -686,6 +686,7 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 | isPrivateFile | Boolean | Optional. Accepts `true` of `false`. The default value is `false`. Specify whether to mark the file as private or not. This is only relevant for image type files|
 | customCoordinates   | String | Optional. Define an important area in the image. This is only relevant for image type files. To be passed as a string with the `x` and `y` coordinates of the top-left corner, and `width` and `height` of the area of interest in format `x,y,width,height`. For example - `10,10,100,100` |
 | responseFields   | Array of string | Optional. Values of the fields that you want upload API to return in the response. For example, set the value of this field to `["tags", "customCoordinates", "isPrivateFile"]` to get value of `tags`, `customCoordinates`, and `isPrivateFile` in the response. |
+| onUpload   | Function callback | Optional. Called if the upload is started.|
 | onSuccess   | Function callback | Optional. Called if the upload is successful. The first and only argument is the response JOSN from the upload API |
 | onError   | Function callback | Optional. Called if upload results in an error. The first and only argument is the error received from the upload API |
 | urlEndpoint      | String | Optional. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
@@ -697,6 +698,11 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 Sample Usage
 
 ```js
+const onUpload = () => {
+    // Triggered when image/video get start's uploading
+    console.log("Uploading start")
+}
+
 const onError = (err) => {
   console.log('Error');
   console.log(err);
@@ -715,6 +721,7 @@ const onSuccess = (res) => {
   <IKUpload
     onError={onError}
     onSuccess={onSuccess}
+    onUpload={onUpload}
   />
 </IKContext>;
 ```
