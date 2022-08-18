@@ -1,24 +1,10 @@
 import { PureComponent } from 'react';
 import ImageKit from 'imagekit-javascript';
-import { IKContextType } from '../../interfaces/IKContextType';
+import { IKContextType } from '../../interfaces/IKContextType'
+import { IKPropsType } from '../../interfaces/types/IKPropsType';
 
-type IKProps = IKContextType & {
-  className?: string
-  loading?: string,
-  alt?: string,
-  inputRef?: React.LegacyRef<HTMLInputElement>,
-  width?: string,
-  height?: string,
-  controls?: boolean,
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  enabledGif?: boolean,
-  thumbnailTransformation?: any,
-  onThumbnailLoad?: (thumbnail: string) => void,
-  onUpload?: () => void
-}
-
-export class ImageKitComponent extends PureComponent<IKProps, any> {
-  constructor(props: IKProps, context: IKContextType) {
+export class ImageKitComponent extends PureComponent<IKPropsType, any> {
+  constructor(props: IKPropsType, context: IKContextType) {
     super(props, context);
     this.getContext = this.getContext.bind(this);
   }

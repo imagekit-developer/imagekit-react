@@ -4,6 +4,12 @@ import { ImageKitContext } from "../IKContext";
 import { IKPropsType } from "../../interfaces/types/IKPropsType";
 import { IKStateType } from "../../interfaces/types/IKStateType";
 import { GetSrcReturnType } from "../../interfaces/types/GetSrcReturnType";
+import { divideUrlAndQueryParams } from "../Utils/Utility";
+import { fetchEffectiveConnection, 
+    getIKElementsCommonOptions, 
+    getLqipUrl,
+    getIKElementsUrl 
+} from "../Utils/Utility";
 
 const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
 
@@ -13,12 +19,6 @@ type GetSrcType = GetSrcReturnType & {
 
 type IKState = IKStateType & {
     thumbnailSrc?: string,
-}
-
-type IKProps = IKPropsType & {
-    enabledGif?: boolean
-    thumbnailTransformation?: any
-    onThumbnailLoad?: (thumbnail: string) => void
 }
 
 export class IKVideo extends ImageKitComponent {
@@ -31,7 +31,7 @@ export class IKVideo extends ImageKitComponent {
         contextOptions: {}
     };
 
-    constructor(props: IKProps, context: any) {
+    constructor(props: IKPropsType, context: any) {
         super(props, context);
         const { originalSrc, lqipSrc, thumbnailSrc } = this.getSrc();
         this.state = {
@@ -42,59 +42,29 @@ export class IKVideo extends ImageKitComponent {
         }
     }
 
-    divideUrlAndQueryParams (url: string) {
-        let queryIndex = url.indexOf("?");
-
-        let urlStr = url.slice(0, queryIndex);
-
-        let queryParamsStr = url.slice(queryIndex, url.length)
-
-        return { urlStr, queryParamsStr }
-    }
-
     getSrc(): GetSrcType {
         const result: GetSrcType = {
             originalSrc: '',
             lqipSrc: ''
         };
-        const { lqip, src, path, transformation, transformationPosition, queryParameters } = this.props;
+        const { lqip, src, path } = this.props;
         const ikClient = this.getIKClient();
         const contextOptions = this.getContext();
-
-        const options = {
-            urlEndpoint: this.props.urlEndpoint || contextOptions.urlEndpoint,
-            src: src || contextOptions.src,
-            path: path || contextOptions.path,
-            transformation: transformation || contextOptions.transformation,
-            transformationPosition: transformationPosition || contextOptions.transformationPosition,
-            queryParameters: queryParameters || contextOptions.queryParameters
-        };
+        const options = getIKElementsCommonOptions(this.props, contextOptions);
 
         result.originalSrc = ikClient.url(options);
-        const urlInfoObj = this.divideUrlAndQueryParams(result.originalSrc);
+
+        const urlInfoObj = divideUrlAndQueryParams(result.originalSrc);
+
         if (this.props.enabledGif) {
             result.originalSrc = urlInfoObj.urlStr + '/ik-gif-video.mp4' + urlInfoObj.queryParamsStr;
         }
 
         if (lqip && lqip.active) {
-            const quality = parseInt((lqip.quality || lqip.threshold), 10) || 20;
-            const blur = parseInt((lqip.blur || lqip.blur), 10) || 6;
-            const newTransformation = options.transformation ? [...options.transformation] : [];
-            if (lqip.raw && typeof lqip.raw === "string" && lqip.raw.trim() != "") {
-                newTransformation.push({
-                    raw: lqip.raw.trim()
-                });
-            } else {
-                newTransformation.push({
-                    quality,
-                    blur
-                })
-            }
-            result.lqipSrc = ikClient.url({
-                ...options,
-                transformation: newTransformation
-            });
-            const urlInfoObj = this.divideUrlAndQueryParams(result.lqipSrc);
+            result.lqipSrc = getLqipUrl(options, lqip, ikClient)
+
+            const urlInfoObj = divideUrlAndQueryParams(result.lqipSrc);
+
             if (this.props.enabledGif) {
                 result.lqipSrc = urlInfoObj.urlStr + '/ik-gif-video.mp4' + urlInfoObj.queryParamsStr;
             }
@@ -110,7 +80,7 @@ export class IKVideo extends ImageKitComponent {
 
             if (result.thumbnailSrc) {
                 //Remove extra query parameters
-                const urlInfoObj = this.divideUrlAndQueryParams(result.thumbnailSrc);
+                const urlInfoObj = divideUrlAndQueryParams(result.thumbnailSrc);
                 result.thumbnailSrc = urlInfoObj.urlStr + '/ik-thumbnail.jpg' + urlInfoObj.queryParamsStr;
             }
         }
@@ -119,50 +89,12 @@ export class IKVideo extends ImageKitComponent {
     }
 
     getEffectiveConnection() {
-        try {
-            // return navigator.connection.effectiveType;
-            return undefined
-        } catch (ex) {
-            return "4g";
-        }
+        return fetchEffectiveConnection()
     }
 
     updateVideoUrl() {
-        const {
-            intersected,
-            originalSrcLoaded,
-        } = this.state;
-
-        const {
-            lqip = null,
-            loading
-        } = this.props;
-
-        if (loading !== "lazy" && lqip === null) {
-            this.setState({ currentUrl: this.state.originalSrc })
-        } else if (loading !== "lazy" && lqip && lqip.active) {
-            if (originalSrcLoaded) {
-                this.setState({ currentUrl: this.state.originalSrc })
-            } else {
-                this.setState({ currentUrl: this.state.lqipSrc })
-            }
-        } else if (loading === "lazy" && lqip === null) {
-            if (intersected) {
-                this.setState({ currentUrl: this.state.originalSrc })
-            } else {
-                this.setState({ currentUrl: "" })
-            }
-        } else if (loading === "lazy" && lqip && lqip.active) {
-            if (intersected && originalSrcLoaded) {
-                this.setState({ currentUrl: this.state.originalSrc })
-            } else {
-                this.setState({ currentUrl: this.state.lqipSrc })
-            }
-        } else if (loading === "lazy" && lqip && !lqip.active) {
-            this.setState({ currentUrl: this.state.originalSrc })
-        } else if (loading !== "lazy" && lqip && !lqip.active) {
-            this.setState({ currentUrl: this.state.originalSrc })
-        }
+        const url = getIKElementsUrl(this.props, this.state);
+        this.setState({ currentUrl: url })
     }
 
     triggerOriginalVideoLoad() {
@@ -226,20 +158,20 @@ export class IKVideo extends ImageKitComponent {
         if (observe) observe.disconnect();
     }
 
-    areObjectsDifferent(prevProps: IKProps, newProps: IKProps) {
+    areObjectsDifferent(prevProps: IKPropsType, newProps: IKPropsType) {
         for (let index = 0; index < propsAffectingURL.length; index++) {
-            if (prevProps[propsAffectingURL[index] as keyof IKProps] != newProps[propsAffectingURL[index] as keyof IKProps]) {
+            if (prevProps[propsAffectingURL[index] as keyof IKPropsType] != newProps[propsAffectingURL[index] as keyof IKPropsType]) {
                 return true;
             };
         }
         return false;
     }
 
-    componentDidUpdate(prevProps: IKProps, prevState: IKState) {
+    componentDidUpdate(prevProps: IKPropsType, prevState: IKState) {
         let contextOptions = this.getContext();
 
         if (
-            this.areObjectsDifferent(prevProps, this.props as IKProps) ||
+            this.areObjectsDifferent(prevProps, this.props as IKPropsType) ||
             this.areObjectsDifferent(prevState.contextOptions, contextOptions)
         ) {
             const { originalSrc, lqipSrc } = this.getSrc();

@@ -1,11 +1,16 @@
-export interface IKPropsType {
-    lqip?: any
-    src?: string
-    path?: string
-    transformation?: string
-    transformationPosition?: string
-    queryParameters?: { [key: string]: string | number }
-    loading?: string
-    alt?: string
+import { IKContextType } from '../IKContextType';
+
+export type IKPropsType = IKContextType & {
     className?: string
-}
+    loading?: string,
+    alt?: string,
+    inputRef?: React.LegacyRef<HTMLInputElement>,
+    width?: string,
+    height?: string,
+    controls?: boolean,
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    enabledGif?: boolean,
+    thumbnailTransformation?: any,
+    onThumbnailLoad?: (thumbnail: string) => void,
+    onUpload?: () => void
+  }
