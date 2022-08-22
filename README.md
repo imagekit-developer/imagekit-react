@@ -137,6 +137,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
     useUniqueFileName={true}
     responseFields={["tags"]}
     folder={"/sample-folder"}
+    inputRef={uploadRef}
     onError={onError} onSuccess={onSuccess}
   />
 </IKContext>
@@ -453,11 +454,9 @@ The `IKVideo` component renders an `video` tag. It is used for rendering and man
 | urlEndpoint      | String | Optional. The base URL to be appended before the path of the video. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
 | path             | String |Conditional. This is the path at which the video exists. For example, `/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation. |
 | src              | String |Conditional. This is the complete URL of an video already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation. |
-| transformation   | Array of objects |Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as the Array's different objects. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it is applied in the URL as it is. |
+| transformation   | Array of objects |Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it is applied in the URL as it is. |
 | transformationPosition | String |Optional. The default value is `path` that places the transformation string as a URL path parameter. It can also be specified as `query`, which adds the transformation string as the URL's query parameter i.e.`tr`. If you use `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
 | queryParameters  | Object |Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and not necessarily related to ImageKit. Especially useful if you want to add some versioning parameter to your URLs. |
-| loading  | String |Optional. Pass `lazy` to lazy load videos. Note: Component does not accept change in this value after it has mounted. |
-| lqip  | Object |Optional. You can use this to show a low-quality blurred placeholder while the original video is being loaded e.g. `{active:true, quality: 20, blur: 6, raw: "n-lqip_named_transformation"`}. The default value of `quality` is `20`, and `blur` is `6`. If `raw` transformation is provided, SDK uses that and ignores the `quality` and `blur` parameters. <br /> Note: Component does not accept change in this value after it has mounted.|
 
 ### Basic resizing examples
 
@@ -527,147 +526,8 @@ See the complete list of transformations supported in ImageKit [here](https://do
 | rotation | rt |
 | blur | bl |
 | named | n |
-| trimmingStartOffset | so |
-| trimmingEndOffset | eo |
-| trimmingDuration | du |
-| layering | l |
-| layerInfo | i |
-| layerXPosition | lx |
-| layerYPosition | ly |
-| layerRelativePosition | lfo |
-| layerStartTime | lso |
-| layerDuration | ldu |
-| layerEndtime | leo |
-| imageOverlayWidth | w |
-| imageOverlayHeight | h |
-| imageOverlayAspectRatio | ar |
-| imageOverlayCropMethod | c |
-| imageOverlayCromMode | cm |
-| imageOverlayRelativeFocus | fo |
-| imageOverlayBorder | b |
-| imageOverlayBGColor | bg |
-| imageOverlayRadius | r |
-| imageOverlayRotationDegree | rt |
-| layerTextWidth | w |
-| layerTextFontSize | fs |
-| layerTextFontFamily | ff |
-| layerTextColor | co |
-| layerTextInnerAlignment | ia |
-| layerTextPadding | pa |
-| layerTextAlpha | al |
-| layerTextTypography | tg |
-| layerTextBGColor | bg |
-| layerTextRadius | r |
+
 </details>
-
-### Lazy loading videos
-
-You can lazy load videos using the `loading` prop. When you use `loading="lazy"`, all videos that are immediately viewable without scrolling load normally. Those that are far below the device viewport are only fetched when the user scrolls near them.
-
-The SDK uses a fixed threshold based on the effective connection type to ensure that videos are loaded early enough so that they have finished loading once the user scrolls near to them.
-
-On fast connections (e.g 4G), the value of threshold is `1250px` and on slower connections (e.g 3G), it is `2500px`.
-
-> You should always set the `height` and `width` of video element to avoid [layout shift](https://www.youtube.com/watch?v=4-d_SoCHeWE) when lazy-loading videos.
-
-Example usage:
-
-```js
-// Lazy loading videos
-<IKVideo
-  path="/default-video.mp4"
-  transformation={[
-    {
-      height:300,
-      width:400
-    }
-  ]}
-  loading="lazy"
-  height="300"
-  width="400"
-/>
-```
-
-### Low-quality video placeholders (LQIP)
-To improve user experience, you can use a low-quality blurred variant of the original video as a placeholder while the original video is being loaded in the background. Once the loading of the original video is finished, the placeholder is replaced with the original video.
-
-```js
-// Loading a blurred low quality video placeholder while the original video is being loaded
-<IKVideo
-  path="/default-video.mp4"
-  lqip={{active:true}}
-/>
-```
-
-By default, the SDK uses the `quality:20` and `blur:6`. You can change this. For example:
-
-```js
-<IKVideo
-  path="/default-video.mp4"
-  lqip={{active:true, quality: 40, blur: 5}}
-/>
-```
-
-You can also specify a `raw` transformation if you want more control over the URL of the low-quality video placeholder. In this case, the SDK ignores `quality` and `blur` parameters.
-
-```js
-<IKVideo
-  path="/default-video.mp4"
-  lqip={{active:true, raw: "n-lqip_named_transformation"}}
-/>
-```
-
-### Combining lazy loading with low-quality placeholders
-You have the option to lazy-load the original video only when the user scrolls near them. Until then, only a low-quality placeholder is loaded. This saves a lot of network bandwidth if the user never scrolls further down.
-
-```js
-// Loading a blurred low quality video placeholder and lazy-loading original when user scrolls near them
-<IKVideo
-  path="/default-video.mp4"
-  transformation={[{height:300,width:400}]}
-  lqip={{active:true}}
-  loading="lazy"
-  height="300"
-  width="400"
-/>
-```
-
-### Overriding urlEndpoint for a particular video
-You can use `urlEndpoint` prop in an individual `IKVideo` to change url for that video. For example:
-```js
-<IKContext urlEndpoint="https://ik.imagekit.io/your_imagekit_id">
-  // Render an video using parent IKContext urlEndpont - https://ik.imagekit.io/your_imagekit_id/default-video.mp4
-  <IKVideo path="/default-video.mp4" />
-
-  // Overriding urlEndpoint defined in parent IkContext - https://www.custom-domain.com/default-video.mp4
-  <IKVideo urlEndpoint="https://www.custom-domain.com" path="/default-video.mp4" />
-</IKContext>
-```
-
-### Get Thumbnail from video
-You can use `onThumbnailLoad` prop to get thumbnail url and render it according to your use, to transform thumbnail you can use `thumbnailTransformation` prop. For example.
-
-```js
-<IKVideo
-  path={'/default-video.mp4'}
-  transformation={[{ height: 200, width: 200 }]}
-  controls={true}
-  thumbnailTransformation={[{ height: 200, width: 200 }]}
-  onThumbnailLoad={(url) => console.log("Thumbnail Url", url)}
-/>
-```
-
-### GIF to MP4
-You can use `enabledGif` prop to give support for GIF files, internally it will convert GIF file to MP4 and render it as normal video. For example.
-
-```js
-<IKVideo
-  path={'/default-gif.gif'}
-  controls={true}
-  enabledGif={true}
-/>
-```
-
 
 ## File upload
 
@@ -687,8 +547,9 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 | isPrivateFile | Boolean | Optional. Accepts `true` of `false`. The default value is `false`. Specify whether to mark the file as private or not. This is only relevant for image type files|
 | customCoordinates   | String | Optional. Define an important area in the image. This is only relevant for image type files. To be passed as a string with the `x` and `y` coordinates of the top-left corner, and `width` and `height` of the area of interest in format `x,y,width,height`. For example - `10,10,100,100` |
 | responseFields   | Array of string | Optional. Values of the fields that you want upload API to return in the response. For example, set the value of this field to `["tags", "customCoordinates", "isPrivateFile"]` to get value of `tags`, `customCoordinates`, and `isPrivateFile` in the response. |
-| inputRef   | Reference | Optional. Set ref variable.|
-| onUpload   | Function callback | Optional. Called if the upload is started.|
+| inputRef   | Reference | Optional. Forward reference to the core HTMLInputElement.|
+| xhr   | Reference | Optional. Set xhr variable for custom events binding.|
+| onStart   | Function callback | Optional. Called if the upload is started. The first argument is uploaded file and the second argument is custom XHR object |
 | onSuccess   | Function callback | Optional. Called if the upload is successful. The first and only argument is the response JOSN from the upload API |
 | onError   | Function callback | Optional. Called if upload results in an error. The first and only argument is the error received from the upload API |
 | urlEndpoint      | String | Optional. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
@@ -697,12 +558,21 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 
 > Make sure that you have specified `authenticationEndpoint` and `publicKey` in `IKUpload` or in the parent `IKContext` component as a prop. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token`, and `expire`. [Learn how to implement authenticationEndpoint](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#how-to-implement-authenticationendpoint-endpoint) on your server. Refer to [demo application](#demo-application) for an example implementation.
 
+
 Sample Usage
 
 ```js
-const onUpload = () => {
+const customXHR = new XMLHttpRequest();
+
+// File uploading progress tracking, using xhr object
+customXHR.upload.addEventListener('progress', function (e) {
+  console.log("File uploading in progress")
+});
+
+const onStart = (file, xhr) => {
     // Triggered when image/video get start's uploading
-    console.log("Uploading start")
+    console.log("file size", file.size)
+    console.log("xhr", xhr)
 }
 
 const onError = (err) => {
@@ -721,10 +591,38 @@ const onSuccess = (res) => {
   authenticationEndpoint="http://www.yourserver.com/auth"
 >
   <IKUpload
+    xhr={customXHR}
     onError={onError}
     onSuccess={onSuccess}
-    onUpload={onUpload}
+    onStart={onStart}
   />
+
+  <h1>Custom Upload Button</h1>
+  {reftest && <button onClick={() => reftest.current.click()}>Upload</button>}
+</IKContext>;
+```
+
+Custom Button Example, using Forward ref.
+
+```js
+import React, { useRef } from 'react';
+
+const reftest = useRef(null)
+
+<IKContext
+  publicKey="your_public_api_key"
+  urlEndpoint="https://ik.imagekit.io/your_imagekit_id"
+  authenticationEndpoint="http://www.yourserver.com/auth"
+>
+  <IKUpload
+    className='hide-default-button'
+    inputRef={reftest}
+    onError={onError}
+    onSuccess={onSuccess}
+  />
+
+  <h1>Custom Upload Button</h1>
+  {reftest && <button className='custom-button-style' onClick={() => reftest.current.click()}>Upload</button>}
 </IKContext>;
 ```
 

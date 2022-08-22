@@ -9,8 +9,6 @@ export type IKPropsType = IKContextType & {
     height?: string,
     controls?: boolean,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    enabledGif?: boolean,
-    thumbnailTransformation?: any,
-    onThumbnailLoad?: (thumbnail: string) => void,
-    onUpload?: () => void
+    onStart?: (file: File, xhr: XMLHttpRequest) => void,
+    xhr?: XMLHttpRequest
   }

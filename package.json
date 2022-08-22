@@ -1,6 +1,6 @@
 {
     "name": "imagekitio-react",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
@@ -26,14 +26,14 @@
         "cypress": "^10.4.0",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "typescript": "^4.5.2"
+        "typescript": "^4.5.2",
+        "cypress-file-upload": "^5.0.8"
     },
     "peerDependencies": {
         "react": "^17.0.2",
         "react-dom": "^17.0.2"
     },
     "dependencies": {
-        "cypress-file-upload": "^5.0.8",
         "imagekit-javascript": "^1.5.2"
     }
 }

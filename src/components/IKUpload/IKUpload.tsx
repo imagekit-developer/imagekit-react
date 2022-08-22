@@ -18,9 +18,10 @@ export class IKUpload extends ImageKitComponent {
       isPrivateFile,
       customCoordinates,
       responseFields,
+      xhr,
       onError,
       onSuccess,
-      onUpload
+      onStart
     } = this.props;
 
     const publicKey = this.props.publicKey || contextOptions.publicKey;
@@ -58,6 +59,8 @@ export class IKUpload extends ImageKitComponent {
 
     if (e.target.files?.length) {
       const file = e.target.files[0];
+
+      const customXHR = xhr || new XMLHttpRequest();
   
       const params = {
         file: file,
@@ -68,10 +71,11 @@ export class IKUpload extends ImageKitComponent {
         isPrivateFile,
         customCoordinates,
         responseFields,
+        xhr: customXHR
       }
 
       // Trigger when upload starts.
-      if (onUpload) onUpload();
+      if (onStart) onStart(file, customXHR);
   
       ikClient.upload(params, (err: Error | null, result: IKResponse<UploadResponse> | null) => {
         if (err) {

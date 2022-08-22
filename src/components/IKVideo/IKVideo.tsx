@@ -4,27 +4,17 @@ import { ImageKitContext } from "../IKContext";
 import { IKPropsType } from "../../interfaces/types/IKPropsType";
 import { IKStateType } from "../../interfaces/types/IKStateType";
 import { GetSrcReturnType } from "../../interfaces/types/GetSrcReturnType";
-import { divideUrlAndQueryParams } from "../Utils/Utility";
 import { fetchEffectiveConnection, 
-    getIKElementsCommonOptions, 
-    getLqipUrl,
+    getIKElementsCommonOptions,
     getIKElementsUrl 
 } from "../Utils/Utility";
 
 const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
 
-type GetSrcType = GetSrcReturnType & {
-    thumbnailSrc?: string
-}
-
-type IKState = IKStateType & {
-    thumbnailSrc?: string,
-}
-
 export class IKVideo extends ImageKitComponent {
     videoRef: React.RefObject<HTMLVideoElement> = React.createRef();
 
-    state: IKState = {
+    state: IKStateType = {
         currentUrl: undefined,
         originalSrcLoaded: false,
         intersected: false,
@@ -33,57 +23,25 @@ export class IKVideo extends ImageKitComponent {
 
     constructor(props: IKPropsType, context: any) {
         super(props, context);
-        const { originalSrc, lqipSrc, thumbnailSrc } = this.getSrc();
+        const { originalSrc, lqipSrc } = this.getSrc();
         this.state = {
             ...this.state,
             originalSrc: originalSrc,
-            lqipSrc: lqipSrc,
-            thumbnailSrc: thumbnailSrc
+            lqipSrc: lqipSrc
         }
     }
 
-    getSrc(): GetSrcType {
-        const result: GetSrcType = {
+    getSrc(): GetSrcReturnType {
+        const result: GetSrcReturnType = {
             originalSrc: '',
             lqipSrc: ''
         };
-        const { lqip, src, path } = this.props;
+
         const ikClient = this.getIKClient();
         const contextOptions = this.getContext();
         const options = getIKElementsCommonOptions(this.props, contextOptions);
 
         result.originalSrc = ikClient.url(options);
-
-        const urlInfoObj = divideUrlAndQueryParams(result.originalSrc);
-
-        if (this.props.enabledGif) {
-            result.originalSrc = urlInfoObj.urlStr + '/ik-gif-video.mp4' + urlInfoObj.queryParamsStr;
-        }
-
-        if (lqip && lqip.active) {
-            result.lqipSrc = getLqipUrl(options, lqip, ikClient)
-
-            const urlInfoObj = divideUrlAndQueryParams(result.lqipSrc);
-
-            if (this.props.enabledGif) {
-                result.lqipSrc = urlInfoObj.urlStr + '/ik-gif-video.mp4' + urlInfoObj.queryParamsStr;
-            }
-        }
-
-        if (this.props.onThumbnailLoad) {
-            result.thumbnailSrc = ikClient.url({
-                urlEndpoint: this.props.urlEndpoint || contextOptions.urlEndpoint,
-                src: src || contextOptions.src,
-                path: path || contextOptions.path,
-                transformation: this.props.thumbnailTransformation ? this.props.thumbnailTransformation : []
-            });
-
-            if (result.thumbnailSrc) {
-                //Remove extra query parameters
-                const urlInfoObj = divideUrlAndQueryParams(result.thumbnailSrc);
-                result.thumbnailSrc = urlInfoObj.urlStr + '/ik-thumbnail.jpg' + urlInfoObj.queryParamsStr;
-            }
-        }
 
         return result;
     }
@@ -93,7 +51,7 @@ export class IKVideo extends ImageKitComponent {
     }
 
     updateVideoUrl() {
-        const url = getIKElementsUrl(this.props, this.state);
+        const url = getIKElementsUrl({ loading: '', lqip: null}, this.state);
         this.setState({ currentUrl: url })
     }
 
@@ -113,13 +71,6 @@ export class IKVideo extends ImageKitComponent {
 
         const video = this.videoRef.current;
         const { lqip, loading } = this.props;
-
-        const { thumbnailSrc } = this.getSrc();
-
-        if (thumbnailSrc && this.props.onThumbnailLoad) {
-            let url = thumbnailSrc ? thumbnailSrc : ''
-            this.props.onThumbnailLoad(url)
-        }
 
         if (window && 'IntersectionObserver' in window && loading === "lazy") {
             let connectionType = this.getEffectiveConnection();
@@ -167,7 +118,7 @@ export class IKVideo extends ImageKitComponent {
         return false;
     }
 
-    componentDidUpdate(prevProps: IKPropsType, prevState: IKState) {
+    componentDidUpdate(prevProps: IKPropsType, prevState: IKStateType) {
         let contextOptions = this.getContext();
 
         if (
@@ -186,7 +137,7 @@ export class IKVideo extends ImageKitComponent {
         let { currentUrl } = this.state;
 
         return <video className={this.props.className} width={this.props.width} height={this.props.height} controls={this.props.controls}>
-            <source src={currentUrl} type="video/mp4"></source>
+            <source src={currentUrl} type="video/mp4" />
         </video>
     }
 }

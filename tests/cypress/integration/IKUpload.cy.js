@@ -27,7 +27,7 @@ describe('IKUpload Element', () => {
             cy.visit(APP_HOST);
      
             //upload file with attachFile
-            cy.get('.file-upload-ik').attachFile(p)
+            cy.get('.file-upload-error').attachFile(p)
      
             // wait for 2 secs
             cy.wait(2000);
