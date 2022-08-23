@@ -15,6 +15,14 @@ describe('ImageKit React SDK', () => {
 
       cy.wait(500);
 
+      const attr = cy
+        .get('.lazyload')
+        .invoke('attr', 'src')
+
+      console.log(attr)
+
+      attr.should('eq', 'random-value-to-throw-err')
+
       cy.get('.lazyload')
         .should('have.attr', 'src')
         .and('include', 'tr:h-200,w-200/default-image.jpg');
