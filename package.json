@@ -38,6 +38,14 @@
     "author": "ImageKit",
     "license": "MIT",
     "devDependencies": {
+        "@babel/cli": "^7.7.4",
+        "@babel/core": "^7.7.4",
+        "@babel/plugin-proposal-class-properties": "^7.7.4",
+        "@babel/plugin-proposal-export-default-from": "^7.7.4",
+        "@babel/preset-env": "^7.7.4",
+        "@babel/preset-react": "^7.7.4",
+        "@babel/register": "^7.7.4",
+        "@babel/runtime": "^7.7.6",
         "@types/node": "^17.0.21",
         "@types/react": "^17.0.37",
         "@types/react-dom": "^17.0.11",
@@ -46,7 +54,14 @@
         "jest": "^26.5.2",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "typescript": "^4.5.2"
+        "typescript": "^4.5.2",
+        "codecov": "^3.8.0",
+        "enzyme": "^3.11.0",
+        "enzyme-adapter-react-16": "^1.15.5",
+        "babel-loader": "^8.0.6",
+        "react-test-renderer": "^16.13.1",
+        "require-context.macro": "^1.2.2",
+        "sinon": "^9.2.0"
     },
     "peerDependencies": {
         "react": "^17.0.2",
