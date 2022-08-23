@@ -1,23 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
-import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
+import { IKContext, IKImage, IKUpload, IKCore, IKVideo } from 'imagekitio-react'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
 
+  const videoUrlEndpoint = 'https://ik.imagekit.io/demo/';
+
   const path = "default-image.jpg";
+  const videoPath = "sample-video.mp4";
 
   const src = `${urlEndpoint}/${path}`;
+
+  const customXHR = new XMLHttpRequest();
+  customXHR.upload.addEventListener('progress', function (e) {
+    console.log("File uploading in progress")
+  });
+
+  useEffect(() => {
+    createCustomeImg()
+  }, [])
+
+  const onStart = (file, xhr) => {
+    console.log("file", file)
+    console.log("xhr", xhr)
+  }
 
   const onError = err => {
     console.log("Error");
     console.log(err);
+    setError({ uploadFileErr: err.message })
   };
 
   const onSuccess = res => {
     console.log("Success");
     console.log(res);
+    console.log(res.$ResponseMetadata.statusCode); // 200
+    console.log(res.$ResponseMetadata.headers); // headers
     setUploadedImageSource(res.url);
   };
 
@@ -30,6 +50,27 @@ function App() {
     "height": "300",
     "width": "300"
   }]);
+
+  let reftest = useRef(null)
+  const [imgIkcore, setImgIkCore] = useState('');
+  const [error, setError] = useState();
+
+  const createCustomeImg = () => {
+    const imagekit = new IKCore({
+      urlEndpoint: urlEndpoint
+    });
+    if (imagekit) {
+      let imageURL = imagekit.url({
+        path: "/default-image.jpg",
+        urlEndpoint: urlEndpoint,
+        transformation: [{
+          "height": "300",
+          "width": "400"
+        }]
+      });
+      setImgIkCore(imageURL)
+    }
+  }
 
   return (
     <div className="App">
@@ -142,11 +183,50 @@ function App() {
           useUniqueFileName={true}
           responseFields={["tags"]}
           folder={"/sample-folder"}
-          onError={onError} onSuccess={onSuccess}
+          onStart={onStart}
+          onError={onError}
+          onSuccess={onSuccess}
+          inputRef={reftest}
+          xhr={customXHR}
         />
 
         <p>Your above uploaded file will appear here </p>
         <IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} />
+
+        <h3>Upload invalid file</h3>
+        <IKUpload
+          className={"file-upload-error"}
+          folder={"/sample-folder"}
+          onError={onError}
+          onSuccess={onSuccess}
+        />
+
+        {error?.uploadFileErr && <p style={{ color: 'red' }} className='upload-error-ik'>{'Your request contains invalid file type.'}</p>}
+      </IKContext>
+
+      <h1>Custom Upload Button</h1>
+      {reftest && <button onClick={() => reftest.current.click()}>Upload</button>}
+
+      <h1>Render Image Using IKCore Sdk</h1>
+      {imgIkcore && <IKImage urlEndpoint={urlEndpoint} src={imgIkcore} className="image-ikcore" />}
+
+      <IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} urlEndpoint={videoUrlEndpoint}>
+        <h1>Video Element</h1>
+        <IKVideo
+          className='ikvideo-default'
+          path={videoPath}
+          transformation={[{ height: 200, width: 200 }]}
+          controls={true}
+        />
+
+        <br />
+        <h3>Video with some advance transformation</h3>
+        <IKVideo
+          className='ikvideo-with-tr'
+          path={videoPath}
+          transformation={[{ height: 200, width: 600, b: '5_red', q: 95 }]}
+          controls={true}
+        />
       </IKContext>
     </div>
   );

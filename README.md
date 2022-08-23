@@ -461,15 +461,15 @@ The `IKVideo` component renders an `video` tag. It is used for rendering and man
 ### Basic resizing examples
 
 ```js
-<IKContext urlEndpoint="https://ik.imagekit.io/your_imagekit_id">
-  // Video from related file path with no transformations - https://ik.imagekit.io/your_imagekit_id/default-video.mp4
+<IKContext urlEndpoint="https://ik.imagekit.io/demo/your_imagekit_id">
+  // Video from related file path with no transformations - https://ik.imagekit.io/demo/your_imagekit_id/sample-video.mp4
   <IKVideo
-    path="/default-video.mp4"
+    path="/sample-video.mp4"
   />
 
-  // Video resizing - https://ik.imagekit.io/your_imagekit_id/tr:w-h-300,w-400/default-video.mp4
+  // Video resizing - https://ik.imagekit.io/demo/your_imagekit_id/tr:w-h-300,w-400/sample-video.mp4
   <IKVideo
-    path="/default-video.mp4"
+    path="/sample-video.mp4"
     transformation={[{
       height:300,
       width:400
@@ -481,9 +481,9 @@ The `IKVideo` component renders an `video` tag. It is used for rendering and man
     src="https://www.custom-domain.com/default-video.mp4"
   />
 
-  // Using a new tranformation parameter which is not there in this SDK yet - https://ik.imagekit.io/your_imagekit_id/tr:custom-value/default-video.mp4
+  // Using a new tranformation parameter which is not there in this SDK yet - https://ik.imagekit.io/demo/your_imagekit_id/tr:custom-value/sample-video.mp4
   <IKVideo
-    path="/default-video.mp4"
+    path="/sample-video.mp4"
     transformation={[{
       custom: 'value'
     }]}
@@ -570,9 +570,9 @@ customXHR.upload.addEventListener('progress', function (e) {
 });
 
 const onStart = (file, xhr) => {
-    // Triggered when image/video get start's uploading
-    console.log("file size", file.size)
-    console.log("xhr", xhr)
+  // Triggered when image/video get start's uploading
+  console.log("file size", file.size)
+  console.log("xhr", xhr)
 }
 
 const onError = (err) => {
