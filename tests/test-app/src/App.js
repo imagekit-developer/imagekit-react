@@ -201,7 +201,7 @@ function App() {
           onSuccess={onSuccess}
         />
 
-        {error.uploadFileErr && <p style={{ color: 'red' }} className='upload-error-ik'>{'Your request contains invalid file type.'}</p>}
+        {(error && error.hasOwnProperty('uploadFileErr')) && <p style={{ color: 'red' }} className='upload-error-ik'>{'Your request contains invalid file type.'}</p>}
       </IKContext>
 
       <h1>Custom Upload Button</h1>
@@ -215,14 +215,10 @@ function App() {
         <IKVideo
           className='ikvideo-default'
           path={videoPath}
-          // transformation={[{ height: 200, width: 200 }]}
-          width="400"
+          transformation={[{ height: 200, width: 200 }]}
           controls={true}
         />
 
-        <br />
-        <br />
-        <br />
         <br />
         <h3>Video with some advance transformation</h3>
         <IKVideo
