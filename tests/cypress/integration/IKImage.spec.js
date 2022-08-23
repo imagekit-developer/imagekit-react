@@ -19,9 +19,15 @@ describe('ImageKit React SDK', () => {
         .should('have.attr', 'src')
         .and('include', 'tr:h-200,w-200/default-image.jpg');
 
+      let srcString;
       cy.get('.lazyload')
-        .should('have.attr', 'src')
-        .and('include', 'random12345');
+        .should(($img) => {
+          srcString = $img.attr('src');
+          console.log('~~~~~~~~~~~~~~~~~~~')
+          console.log(srcString.substr(22))
+          console.log(Buffer.from(srcString).toString('base64'))
+          console.log('~~~~~~~~~~~~~~~~~~~')
+        });
     });
   });
 
