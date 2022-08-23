@@ -18,6 +18,10 @@ describe('ImageKit React SDK', () => {
       cy.get('.lazyload')
         .should('have.attr', 'src')
         .and('include', 'tr:h-200,w-200/default-image.jpg');
+
+      cy.get('.lazyload')
+        .should('have.attr', 'src')
+        .and('include', 'random12345');
     });
   });
 
