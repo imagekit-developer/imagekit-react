@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     createCustomeImg()
-  }, [])
+  })
 
   const onStart = (file, xhr) => {
     console.log("file", file)
