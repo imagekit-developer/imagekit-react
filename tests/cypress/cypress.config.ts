@@ -13,7 +13,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       return require('./plugins/index.js')(on, config)
     },
-    specPattern: 'e2e/**/*.cy.{js,jsx,ts,tsx}',
+    specPattern: 'integration/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'support/index.js',
   },
 })
