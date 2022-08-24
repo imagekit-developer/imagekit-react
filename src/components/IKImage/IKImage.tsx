@@ -13,7 +13,7 @@ import { fetchEffectiveConnection,
 const propsAffectingURL = ["urlEndpoint", "path", "src", "transformation", "transformationPosition", "queryParameters"];
 
 export class IKImage extends ImageKitComponent {
-    imageRef: React.RefObject<HTMLImageElement> = React.createRef();
+    imageRef: React.RefObject<HTMLImageElement>;
 
     state: IKStateType = {
         currentUrl: undefined,
@@ -25,6 +25,7 @@ export class IKImage extends ImageKitComponent {
     constructor(props: IKPropsType, context: any) {
         super(props, context);
         const { originalSrc, lqipSrc } = this.getSrc();
+        this.imageRef = React.createRef();
         this.state = {
             ...this.state,
             originalSrc: originalSrc,
