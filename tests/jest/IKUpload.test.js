@@ -54,17 +54,17 @@ const ikInstance = {
 
 describe('IKUpload', () => {
   describe('Upload event handling', () => {
-    let imageKitComponentStub;
+    // let imageKitComponentStub;
     let ikInstanceUploadStub;
 
     // setup stubs and spies
-    imageKitComponentStub = sinon.stub(ImageKitComponent.prototype, 'getIKClient');
-    imageKitComponentStub.callsFake(() => ikInstance);
+    // imageKitComponentStub = sinon.stub(ImageKitComponent.prototype, 'getIKClient');
+    // imageKitComponentStub.callsFake(() => ikInstance);
     ikInstanceUploadStub = sinon.stub(ikInstance, 'upload');
 
     beforeEach(() => {
       // reset stubs
-      imageKitComponentStub.resetHistory();
+      // imageKitComponentStub.resetHistory();
       ikInstanceUploadStub.resetHistory();
       onSuccess.resetHistory();
       onError.resetHistory();
