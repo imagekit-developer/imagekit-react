@@ -19,7 +19,7 @@ function App() {
   });
 
   useEffect(() => {
-    createCustomeImg()
+    createCustomImg()
   })
 
   const onStart = (file, xhr) => {
@@ -52,25 +52,29 @@ function App() {
   }]);
 
   let reftest = useRef(null)
-  // const [imgIkcore, setImgIkCore] = useState('');
+  const [imgIkcore, setImgIkCore] = useState('');
   const [error, setError] = useState();
 
-  // const createCustomeImg = () => {
-  //   const imagekit = new IKCore({
-  //     urlEndpoint: urlEndpoint
-  //   });
-  //   if (imagekit) {
-  //     let imageURL = imagekit.url({
-  //       path: "/default-image.jpg",
-  //       urlEndpoint: urlEndpoint,
-  //       transformation: [{
-  //         "height": "300",
-  //         "width": "400"
-  //       }]
-  //     });
-  //     setImgIkCore(imageURL)
-  //   }
-  // }
+  const createCustomImg = () => {
+    const imagekit = new IKCore({
+      urlEndpoint: urlEndpoint
+    });
+    if (imagekit) {
+      try {
+        let imageURL = imagekit.url({
+          path: "/default-image.jpg",
+          urlEndpoint: urlEndpoint,
+          transformation: [{
+            "height": "300",
+            "width": "400"
+          }]
+        });
+        setImgIkCore(imageURL)
+      } catch (err) {
+        console.log("err", err.message)
+      }
+    }
+  }
 
   return (
     <div className="App">
@@ -207,8 +211,8 @@ function App() {
       <h1>Custom Upload Button</h1>
       {reftest && <button onClick={() => reftest.current.click()}>Upload</button>}
 
-      {/* <h1>Render Image Using IKCore Sdk</h1>
-      {imgIkcore && <IKImage urlEndpoint={urlEndpoint} src={imgIkcore} className="image-ikcore" />} */}
+      <h1>Render Image Using IKCore Sdk</h1>
+      {imgIkcore && <IKImage urlEndpoint={urlEndpoint} src={imgIkcore} className="image-ikcore" />}
 
       <IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} urlEndpoint={videoUrlEndpoint}>
         <h1>Video Element</h1>
