@@ -23,7 +23,7 @@
         "build": "rm -rf dist/ && npm run build:esm && npm run build:cjs",
         "build:esm": "tsc",
         "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
-        "cypress:open": "cypress open",
+        "cypress:open": "cypress open --config-file=cypress.config.ts",
         "test": "jest",
         "test:ci": "jest --coverage && codecov",
         "test:cov": "jest --coverage",
