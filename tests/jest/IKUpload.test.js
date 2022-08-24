@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import ImageKitComponent from '../../src/components/ImageKitComponent';
-import IKContext from '../../src/components/IKContext';
-import IKUpload from '../../src/components/IKUpload';
+import { ImageKitComponent } from '../../src/components/ImageKit';
+import { IKContext } from '../../src/components/IKContext';
+import { IKUpload } from '../../src/components/IKUpload';
 
 const publicKey = 'test_public_key';
 const urlEndpoint = 'http://ik.imagekit.io/test_url_endpoint';

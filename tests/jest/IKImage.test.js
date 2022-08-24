@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
-import IKImage from '../../src/components/IKImage';
+import { IKImage } from '../../src/components/IKImage';
 import IntersectionObserverMock from './mocks/IntersectionObserverMock';
 
 const urlEndpoint = 'http://ik.imagekit.io/test_imagekit_id';
