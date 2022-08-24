@@ -3,7 +3,7 @@ import ImageKit from 'imagekit-javascript';
 import { IKContextType } from '../../interfaces/IKContextType'
 import { IKPropsType } from '../../interfaces/types/IKPropsType';
 
-export class ImageKitComponent extends PureComponent<IKPropsType, any> {
+export class ImageKitComponent extends PureComponent<IKPropsType> {
   constructor(props: IKPropsType, context: IKContextType) {
     super(props, context);
     this.getContext = this.getContext.bind(this);
