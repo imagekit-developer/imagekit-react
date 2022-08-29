@@ -1,15 +1,24 @@
 import React from 'react';
-import ImageKitComponent from "../ImageKitComponent/";
+import ImageKitComponent from "../ImageKitComponent";
 import COMMON_PROPS from "../IKContext/props"
-import IK_UPLOAD_PROPS from "./props"
+import IK_UPLOAD_PROPS, { IKUploadProps } from "./props"
 
 const PROP_TYPES = {
   ...COMMON_PROPS,
   ...IK_UPLOAD_PROPS
 };
 
-export default class IKUpload extends ImageKitComponent {
-  uploadFile(e) {
+export default class IKUpload extends ImageKitComponent<IKUploadProps> {
+  static propTypes = PROP_TYPES;
+  static defaultProps = {
+    useUniqueFileName: true,
+    isPrivateFile: false,
+    customCoordinates: "",
+    tags: [],
+    folder: "/",
+    responseFields: []
+  };
+  uploadFile(e: React.ChangeEvent<HTMLInputElement>) {
     const contextOptions = this.getContext();
 
     const {
@@ -57,20 +66,20 @@ export default class IKUpload extends ImageKitComponent {
 
     var ikClient = this.getIKClient();
 
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
 
     var params = {
-      file: file,
-      fileName: fileName || file.name,
+      file: file || '',
+      fileName: fileName || file?.name || '',
       useUniqueFileName,
-      tags,
+      tags: tags?.join(',') || undefined,
       folder,
       isPrivateFile,
       customCoordinates,
-      responseFields,
+      responseFields: responseFields?.join(',') || undefined,
     }
 
-    ikClient.upload(params, (err, result) => {
+    ikClient.upload(params, (err: any, result: any) => {
       if (err) {
         if (onError && typeof onError === "function") {
           onError(err);
@@ -105,8 +114,8 @@ export default class IKUpload extends ImageKitComponent {
 
     return (
       <input
-        type="file"
         {...restProps}
+        type="file"
         onChange={(e) => {
           if (this.props.onChange && typeof this.props.onChange === "function") {
             this.props.onChange(e);
@@ -117,14 +126,3 @@ export default class IKUpload extends ImageKitComponent {
     )
   }
 }
-
-IKUpload.defaultProps = {
-  useUniqueFileName: true,
-  isPrivateFile: false,
-  customCoordinates: "",
-  tags: [],
-  folder: "/",
-  responseFields: []
-}
-
-IKUpload.propTypes = PROP_TYPES;

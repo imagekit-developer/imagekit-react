@@ -1,16 +1,10 @@
 import React from 'react';
 import ImageKitComponent from "../ImageKitComponent";
+import { InferProps } from 'prop-types';
 import { ImageKitContextType } from './ImageKitContextType';
 import ImageKit from 'imagekit-javascript';
-import COMMON_PROPS from "./props"
-import IK_IMAGE_PROPS from "../IKImage/props"
-import IK_UPLOAD_PROPS from "../IKUpload/props"
+import { IKContextCombinedProps } from "./props"
 
-const PROP_TYPES = {
-  ...COMMON_PROPS,
-  ...IK_IMAGE_PROPS,
-  ...IK_UPLOAD_PROPS
-};
 
 /**
  * Provides a container for ImageKit components. Any option set in IKContext will be passed to the children.
@@ -21,16 +15,17 @@ const PROP_TYPES = {
  *    <Image src={link}/>
  *</IKContext>
  */
-class IKContext extends ImageKitComponent {
-  extractContextOptions(mergedOptions) {
-    var result = {};
+class IKContext extends ImageKitComponent<IKContextCombinedProps> {
+  static propTypes = IKContextCombinedProps;
+  extractContextOptions(mergedOptions: InferProps<IKContextCombinedProps>) {
+    var result: IKContextCombinedProps = {};
 
-    const propKeys = Object.keys(PROP_TYPES);
+    const propKeys = Object.keys(IKContextCombinedProps);
 
     for (var i = 0; i < propKeys.length; i++) {
       var key = propKeys[i];
-      const value = mergedOptions[key];
-      if (value) result[key] = value;
+      const value = mergedOptions[key as keyof IKContextCombinedProps];
+      if (value) result[key as keyof IKContextCombinedProps] = value;
     }
 
     return result;
@@ -45,7 +40,6 @@ class IKContext extends ImageKitComponent {
 
     if (contextOptions.urlEndpoint && contextOptions.urlEndpoint.trim() !== "") {
       contextOptions.ikClient = new ImageKit({
-        sdkVersion: `react-${this.getVersion()}`,
         urlEndpoint: contextOptions.urlEndpoint
       });
     }
@@ -58,7 +52,6 @@ class IKContext extends ImageKitComponent {
   }
 }
 
-IKContext.propTypes = PROP_TYPES;
 IKContext.contextType = ImageKitContextType;
 
 export default IKContext;
