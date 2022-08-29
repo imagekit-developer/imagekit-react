@@ -6,4 +6,4 @@ import pkg from '../../package.json';
 Enzyme.configure({ adapter: new Adapter() });
 
 // global test variables
-global.SDK_VERSION = `ik-sdk-version=react-${pkg.version}`;
+global.SDK_VERSION = `ik-sdk-version=javascript-1.5.2`;

@@ -17,7 +17,7 @@ class ImageKitComponent<T = void> extends PureComponent<React.PropsWithChildren 
   }
 
   getContext() {
-    return this.context;
+    return this.context || {};
   }
 
   getIKClient(): ImageKit {
