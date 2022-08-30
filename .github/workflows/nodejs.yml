@@ -50,18 +50,16 @@ jobs:
         npm pack
     - name: build test-app
       run: |
-        cd tests/test-app && npm install && npm install ../../imagekitio*.tgz && npm run build
-
-    - name: tar workspace
-      run: |
-        tar -cf build.tar --exclude=./build.tar .
-
-    - name: Archive build details
-      uses: actions/upload-artifact@v3
-      with:
-        name: e2e-archive
-        path: build.tar
-        retention-days: 1
+        cd tests/test-app
+        echo REACT_APP_URL_ENDPOINT = ${{ secrets.ik_url_endopint }} > .env;
+        echo REACT_APP_PUBLIC_KEY = ${{ secrets.ik_public_key }} >> .env;
+        echo REACT_APP_PRIVATE_KEY = ${{ secrets.ik_private_key }} >> .env;
+        npm install && npm install ../../imagekitio*.tgz && npm run build
+      env:
+        CI: true
+        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
+        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
+        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
 
     - name: Run E2E tests
       uses: cypress-io/github-action@v2

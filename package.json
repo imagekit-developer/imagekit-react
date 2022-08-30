@@ -13,7 +13,7 @@
     "test:cov": "jest --coverage",
     "test:e2e": "cypress open",
     "test:watch": "jest --watch",
-    "serve:test-app": "export SKIP_PREFLIGHT_CHECK=true;cd tests/test-app; npm start"
+    "serve:test-app": "export SKIP_PREFLIGHT_CHECK=true;npx serve -s tests/test-app/build -p 4000"
   },
   "repository": {
     "type": "git",
