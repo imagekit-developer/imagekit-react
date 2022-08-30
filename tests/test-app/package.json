@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "imagekitio-react": "../../",
+    "imagekitio-react": "git+https://github.com/amanforindia/imagekit-react.git#aaffda7c206dd05cf2a10c1f73bc7c272eb7a7a6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.4.0"
