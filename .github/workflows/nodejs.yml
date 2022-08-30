@@ -52,11 +52,15 @@ jobs:
       run: |
         cd tests/test-app && npm install && npm install ../../imagekitio*.tgz && npm run build
 
+    - name: tar workspace
+      run: |
+        tar -cf build.tar .
+
     - name: Archive build details
       uses: actions/upload-artifact@v3
       with:
         name: e2e-archive
-        path: .
+        path: build.tar
         retention-days: 1
 
     - name: Run E2E tests
