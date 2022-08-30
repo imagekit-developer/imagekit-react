@@ -43,14 +43,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Setup module and build test-app
+    - name: Setup module
       run: |
         npm install
         npm run build
-        cd tests/test-app
-        echo REACT_APP_URL_ENDPOINT = ${{ secrets.ik_url_endopint }} > .env;
-        npm install
-        npm run build
+    - name: build test-app
+      run: |
+        cd tests/test-app && npm install && npm run build
 
     - name: Run E2E tests
       uses: cypress-io/github-action@v2
