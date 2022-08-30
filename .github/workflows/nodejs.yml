@@ -52,6 +52,13 @@ jobs:
       run: |
         cd tests/test-app && npm install && npm install ../../imagekitio*.tgz && npm run build
 
+    - name: Archive build details
+      uses: actions/upload-artifact@v3
+      with:
+        name: e2e-archive
+        path: .
+        retention-days: 1
+
     - name: Run E2E tests
       uses: cypress-io/github-action@v2
       with:
