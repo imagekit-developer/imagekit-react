@@ -50,7 +50,7 @@ jobs:
         npm pack
     - name: build test-app
       run: |
-        cd tests/test-app && npm install && npm install ../../imagekitio*.tgz && && npm run build
+        cd tests/test-app && npm install && npm install ../../imagekitio*.tgz && npm run build
 
     - name: Run E2E tests
       uses: cypress-io/github-action@v2
