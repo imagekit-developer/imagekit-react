@@ -54,7 +54,7 @@ jobs:
 
     - name: tar workspace
       run: |
-        tar -cf build.tar .
+        tar -cf build.tar --exclude=./build.tar .
 
     - name: Archive build details
       uses: actions/upload-artifact@v3
