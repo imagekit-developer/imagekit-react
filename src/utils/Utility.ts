@@ -70,7 +70,7 @@ export const getSrc = ({ urlEndpoint, lqip, src, path, transformation, transform
   return result;
 }
 
-export const getIKElementsUrl = ({ lqip, loading }: IKImageProps, { intersected, originalSrcLoaded, originalSrc, lqipSrc }: IKImageState) => {
+export const getIKElementsUrl = ({ lqip = null, loading }: IKImageProps, { intersected, originalSrcLoaded, originalSrc, lqipSrc }: IKImageState) => {
     /*
       No lazy loading no lqip
         src=originalImage
