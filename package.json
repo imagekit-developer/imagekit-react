@@ -23,6 +23,7 @@
   "module": "dist/imagekitio-react.esm.js",
   "browser": "dist/imagekitio-react.umd.js",
   "browser:min": "dist/imagekitio-react.umd.min.js",
+  "types": "dist/types/src/index.d.ts",
   "files": [
     "dist",
     "src"
