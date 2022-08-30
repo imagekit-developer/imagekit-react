@@ -6,14 +6,14 @@ import IK_UPLOAD_PROPS from "../IKUpload/props";
 const Props = {
     publicKey: PropTypes.string,
     urlEndpoint: PropTypes.string,
-    authenticationEndpoint: PropTypes.string
+    authenticationEndpoint: PropTypes.string,
 };
 
 export const IKContextCombinedProps = {
   ...Props,
   ...IK_IMAGE_PROPS,
   ...IK_UPLOAD_PROPS,
-  ikClient: ImageKit,
+  ikClient: PropTypes.instanceOf(ImageKit),
 };
 
 export type IKContextCombinedProps = InferProps<typeof IKContextCombinedProps> & {

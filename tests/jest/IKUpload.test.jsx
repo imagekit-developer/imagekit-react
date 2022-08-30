@@ -37,6 +37,7 @@ const uploadMock = (params, callback, auth) => {
     // if all matches, return success response
     callback(null, successResponse);
   } catch (err) {
+    console.log(err);
     // if any assertion fails, return error response
     callback(failureResponse);
   }

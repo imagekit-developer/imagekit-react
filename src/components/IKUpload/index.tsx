@@ -8,7 +8,7 @@ const PROP_TYPES = {
   ...IK_UPLOAD_PROPS
 };
 
-export default class IKUpload extends ImageKitComponent<IKUploadProps> {
+class IKUpload extends ImageKitComponent<IKUploadProps> {
   static propTypes = PROP_TYPES;
   static defaultProps = {
     useUniqueFileName: true,
@@ -72,11 +72,11 @@ export default class IKUpload extends ImageKitComponent<IKUploadProps> {
       file: file || '',
       fileName: fileName || file?.name || '',
       useUniqueFileName,
-      tags: tags?.join(',') || undefined,
+      tags,
       folder,
       isPrivateFile,
       customCoordinates,
-      responseFields: responseFields?.join(',') || undefined,
+      responseFields,
     }
 
     ikClient.upload(params, (err: any, result: any) => {
@@ -126,3 +126,5 @@ export default class IKUpload extends ImageKitComponent<IKUploadProps> {
     )
   }
 }
+
+export default IKUpload;

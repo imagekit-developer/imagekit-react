@@ -110,6 +110,7 @@ describe('IKContext', () => {
 
 		expect(ikContext.props().path).toEqual(differentImageRelativePath);
 		ikContext.update();
+		// console.log(ikContext.find('IKImage').instance());
 		const childContext = ikContext.find('IKImage').instance().getContext();
 		expect(childContext.path).toEqual(differentImageRelativePath);
 

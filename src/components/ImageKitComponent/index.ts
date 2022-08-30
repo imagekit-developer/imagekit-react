@@ -5,8 +5,8 @@ import pkg from '../../../package.json';
 import { IKContextBaseProps } from '../IKContext/props';
 
 class ImageKitComponent<T = void> extends PureComponent<React.PropsWithChildren & IKContextBaseProps & T> {
-  constructor(props: React.PropsWithChildren & T) {
-    super(props);
+  constructor(props: React.PropsWithChildren & T, context: any) {
+    super(props, context);
     this.getContext = this.getContext.bind(this);
   }
   static contextType = ImageKitContextType;
@@ -41,7 +41,5 @@ class ImageKitComponent<T = void> extends PureComponent<React.PropsWithChildren 
     return null;
   }
 }
-
-ImageKitComponent.contextType = ImageKitContextType;
 
 export default ImageKitComponent;

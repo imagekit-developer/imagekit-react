@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import ImageKitComponent from "../ImageKitComponent";
 import { InferProps } from 'prop-types';
 import { ImageKitContextType } from './ImageKitContextType';
@@ -15,7 +15,7 @@ import { IKContextCombinedProps } from "./props"
  *    <Image src={link}/>
  *</IKContext>
  */
-class IKContext extends PureComponent<React.PropsWithChildren & IKContextCombinedProps> {
+class IKContext extends ImageKitComponent<IKContextCombinedProps> {
   static propTypes = IKContextCombinedProps;
   extractContextOptions(mergedOptions: InferProps<IKContextCombinedProps>) {
     var result: IKContextCombinedProps = {};
@@ -25,7 +25,9 @@ class IKContext extends PureComponent<React.PropsWithChildren & IKContextCombine
     for (var i = 0; i < propKeys.length; i++) {
       var key = propKeys[i];
       const value = mergedOptions[key as keyof IKContextCombinedProps];
-      if (value) result[key as keyof IKContextCombinedProps] = value;
+      if (value) {
+        result[key as keyof IKContextCombinedProps] = value;
+      }
     }
 
     return result;
@@ -34,7 +36,7 @@ class IKContext extends PureComponent<React.PropsWithChildren & IKContextCombine
   render() {
     const { children } = this.props;
 
-    const mergedOptions = { ...this.props };
+    const mergedOptions = { ...this.getContext(), ...this.props };
 
     const contextOptions = this.extractContextOptions(mergedOptions);
 
@@ -52,6 +54,5 @@ class IKContext extends PureComponent<React.PropsWithChildren & IKContextCombine
   }
 }
 
-IKContext.contextType = ImageKitContextType;
 
 export default IKContext;
