@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import ImageKit from 'imagekit-javascript';
 import { ImageKitContextType } from '../IKContext/ImageKitContextType';
-import pkg from '../../../package.json';
 import { IKContextBaseProps } from '../IKContext/props';
 
 class ImageKitComponent<T = void> extends PureComponent<React.PropsWithChildren & IKContextBaseProps & T> {
@@ -11,10 +10,6 @@ class ImageKitComponent<T = void> extends PureComponent<React.PropsWithChildren 
   }
   static contextType = ImageKitContextType;
   context!: React.ContextType<typeof ImageKitContextType>;
-
-  getVersion() {
-    return pkg.version;
-  }
 
   getContext() {
     return this.context || {};

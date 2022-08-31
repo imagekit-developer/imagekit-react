@@ -37,7 +37,7 @@ export const getSrc = ({ urlEndpoint, lqip, src, path, transformation, transform
   ikClient: ImageKit, contextOptions: IKContextCombinedProps): GetSrcReturnType => {
   // @ts-ignore
   let options: UrlOptions = {
-    urlEndpoint: urlEndpoint || contextOptions.urlEndpoint || undefined,
+    urlEndpoint: urlEndpoint || contextOptions.urlEndpoint,
     src: src || contextOptions.src || undefined,
     path: path || contextOptions.path || undefined,
     transformation: transformation || contextOptions.transformation || [],

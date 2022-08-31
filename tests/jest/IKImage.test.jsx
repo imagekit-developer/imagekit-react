@@ -523,6 +523,31 @@ describe('IKImage', () => {
         expect(ikImage.find('img').prop('src')).toEqual(lazyLoadedURL);
       });
 
+      test('image should not have actual src when element does not have isInteresecting', () => {
+        const ikImage = mount(
+          <IKImage
+            urlEndpoint={urlEndpoint}
+            path={relativePath}
+            loading="lazy"
+          />
+        );
+
+        // verify that src is blank initially
+        expect(ikImage.find('img').prop('src')).toEqual('');
+
+        // verify mocks were called
+        expect(observeSpy.calledOnce).toEqual(true);
+        expect(intersectionObserverSpy.calledOnce).toEqual(true);
+
+        // trigger element intersection callback
+        intersectionObserverSpy.args[0][0]([{ }]);
+        // update wrapper
+        ikImage.update();
+
+        // const lazyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
+        expect(ikImage.find('img').prop('src')).toEqual('');
+      });
+
       test('intersection observer should disconnect when component unmounts', () => {
         const ikImage = shallow(
           <IKImage

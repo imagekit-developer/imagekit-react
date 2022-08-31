@@ -19,6 +19,7 @@ export const IKContextCombinedProps = {
 export type IKContextCombinedProps = InferProps<typeof IKContextCombinedProps> & {
   src?: string;
   path?: string;
+  urlEndpoint?: string;
 };
 
 export type IKContextBaseProps = InferProps<typeof Props>;
