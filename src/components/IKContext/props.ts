@@ -20,6 +20,7 @@ export type IKContextCombinedProps = InferProps<typeof IKContextCombinedProps> &
   src?: string;
   path?: string;
   urlEndpoint?: string;
+  transformation?: Array<string>;
 };
 
 export type IKContextBaseProps = InferProps<typeof Props>;

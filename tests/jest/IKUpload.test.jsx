@@ -10,6 +10,7 @@ const urlEndpoint = 'http://ik.imagekit.io/test_url_endpoint';
 const authenticationEndpoint = 'test_auth_endpoint';
 
 const sampleEvent = { target: { files: [{ name: 'sample.jpg' }] } };
+const sampleEmptyEvent = { target: { files: [] } };
 const successResponse = { key: 'upload success response' };
 const failureResponse = { key: 'upload failure response' };
 
@@ -160,6 +161,122 @@ describe('IKUpload', () => {
         // verify error callback
         expect(onError.calledOnce).toEqual(true)
         expect(onError.args[0][0]).toEqual({ message: 'Missing authenticationEndpoint' });
+      });
+
+      test('should not call upload or onError for missing urlEndpoint and missing onError', () => {
+        const ikUpload = mount(
+          <IKContext  authenticationEndpoint={authenticationEndpoint} publicKey={publicKey} >
+            <IKUpload onSuccess={onSuccess} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(ikInstanceUploadStub.called).toEqual(false)
+
+        // trigger file change and upload 
+        ikUpload.find('IKUpload').simulate('change', sampleEvent);
+
+        // verify upload spy
+        expect(ikInstanceUploadStub.called).toEqual(false);
+        expect(onError.calledOnce).toEqual(false);
+      });
+
+      test('should not call upload for missing publickKey and missing onError', () => {
+        const ikUpload = mount(
+          <IKContext  authenticationEndpoint={authenticationEndpoint} urlEndpoint={urlEndpoint} >
+            <IKUpload onSuccess={onSuccess} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(ikInstanceUploadStub.called).toEqual(false)
+
+        // trigger file change and upload 
+        ikUpload.find('IKUpload').simulate('change', sampleEvent);
+
+        // verify upload spy
+        expect(ikInstanceUploadStub.called).toEqual(false);
+        expect(onError.calledOnce).toEqual(false);
+      });
+
+      test('should not call upload for missing file', () => {
+        const ikUpload = mount(
+          <IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} urlEndpoint={urlEndpoint} >
+            <IKUpload onError={onError} onSuccess={onSuccess} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(ikInstanceUploadStub.called).toEqual(false)
+
+        // trigger file change and upload 
+        ikUpload.find('IKUpload').simulate('change', sampleEmptyEvent);
+
+        // verify upload spy
+        expect(ikInstanceUploadStub.called).toEqual(false);
+        expect(onError.calledOnce).toEqual(false);
+      });
+
+      test('should not call upload for missing authenticationEndpoint and missing onError', () => {
+        const ikUpload = mount(
+          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
+            <IKUpload onSuccess={onSuccess} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(ikInstanceUploadStub.called).toEqual(false)
+
+        // trigger file change and upload 
+        ikUpload.find('IKUpload').simulate('change', sampleEvent);
+
+        // verify upload spy
+        expect(ikInstanceUploadStub.called).toEqual(false);
+        expect(onError.calledOnce).toEqual(false);
+      });
+
+      test('should not call onError in case server returns error response and missing onError', () => {
+        const ikUpload = mount(
+          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint}>
+            <IKUpload onSuccess={onSuccess} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(ikInstanceUploadStub.called).toEqual(false)
+
+        const serverError = new Error('server error');
+        // make upload mock function return error
+        ikInstanceUploadStub.callsFake((params, callback, auth) => callback(serverError))
+
+        // trigger file change and upload 
+        ikUpload.find('IKUpload').simulate('change', sampleEvent);
+
+        // verify upload spy
+        expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+
+        // verify error callback
+        expect(onError.calledOnce).toEqual(false);
+      });
+
+      test('should not call onSuccess in case server returns error response and missing onSuccess', () => {
+        const ikUpload = mount(
+          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint}>
+            <IKUpload onError={onError} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(ikInstanceUploadStub.called).toEqual(false)
+
+        // trigger file change and upload 
+        ikUpload.find('IKUpload').simulate('change', sampleEvent);
+
+        // verify upload spy
+        expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+
+        // verify error callback
+        expect(onSuccess.calledOnce).toEqual(false);
       });
 
       test('should call onError in case server returns error response', () => {

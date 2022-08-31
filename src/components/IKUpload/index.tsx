@@ -67,10 +67,13 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
     var ikClient = this.getIKClient();
 
     const file = e.target.files?.[0];
+    if (!file) {
+      return;
+    }
 
     var params = {
-      file: file || '',
-      fileName: fileName || file?.name || '',
+      file: file,
+      fileName: fileName || file.name,
       useUniqueFileName,
       tags,
       folder,

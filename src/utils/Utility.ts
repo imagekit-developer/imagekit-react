@@ -40,7 +40,7 @@ export const getSrc = ({ urlEndpoint, lqip, src, path, transformation, transform
     urlEndpoint: urlEndpoint || contextOptions.urlEndpoint,
     src: src || contextOptions.src || undefined,
     path: path || contextOptions.path || undefined,
-    transformation: transformation || contextOptions.transformation || [],
+    transformation: transformation || contextOptions.transformation,
     transformationPosition: ((transformationPosition || contextOptions.transformationPosition || undefined) as TransformationPosition),
     queryParameters: queryParameters || contextOptions.queryParameters || {}
   };
