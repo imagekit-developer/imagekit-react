@@ -763,7 +763,7 @@ describe('IKImage', () => {
         expect(ikImage.find('img').prop('src')).toEqual(fullyLoadedURL);
       });
 
-      test('should not work for image with lqip active key set to false and lazy loading enabled', () => {
+      test('should work for image with lqip active key set to false and lazy loading enabled', () => {
         const ikImage = mount(
           <IKImage
             urlEndpoint={urlEndpoint}
@@ -773,7 +773,7 @@ describe('IKImage', () => {
           />
         );
 
-        expect(ikImage.find('img').prop('src')).toBeUndefined();
+        expect(ikImage.find('img').prop('src')).toEqual('');
         
         expect(observeSpy.calledOnce).toEqual(true);
         expect(intersectionObserverSpy.calledOnce).toEqual(true);
@@ -782,7 +782,8 @@ describe('IKImage', () => {
         intersectionObserverSpy.args[0][0]([{ isIntersecting: true }]);
         ikImage.update();
 
-        expect(ikImage.find('img').prop('src')).toBeUndefined();
+        const fullyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`;
+        expect(ikImage.find('img').prop('src')).toEqual(fullyLoadedURL);
       });
     });
   });

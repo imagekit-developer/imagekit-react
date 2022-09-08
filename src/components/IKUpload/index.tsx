@@ -7,8 +7,12 @@ const PROP_TYPES = {
   ...COMMON_PROPS,
   ...IK_UPLOAD_PROPS
 };
+type IKUploadState = {
+  xhr?: XMLHttpRequest;
+}
 
 class IKUpload extends ImageKitComponent<IKUploadProps> {
+  state: IKUploadState = {};
   static propTypes = PROP_TYPES;
   static defaultProps = {
     useUniqueFileName: true,
@@ -18,6 +22,12 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
     folder: "/",
     responseFields: []
   };
+
+  abort() {
+    if (this.state.xhr) {
+      this.state.xhr.abort();
+    }
+  }
   uploadFile(e: React.ChangeEvent<HTMLInputElement>) {
     const contextOptions = this.getContext();
 
@@ -30,7 +40,7 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
       customCoordinates,
       responseFields,
       onError,
-      onSuccess
+      onSuccess,
     } = this.props;
 
     const publicKey = this.props.publicKey || contextOptions.publicKey;
@@ -71,6 +81,19 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
       return;
     }
 
+    if (this.props.validateFile && !this.props.validateFile(file)) {
+      return;
+    }
+
+    const xhr = new XMLHttpRequest();
+    const progressCb = (e: any) => {
+      if (this.props.onUploadProgress && typeof this.props.onUploadProgress === 'function') {
+        this.props.onUploadProgress(e);
+      }
+    };
+
+    xhr.upload.addEventListener('progress', progressCb);
+
     var params = {
       file: file,
       fileName: fileName || file.name,
@@ -80,6 +103,7 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
       isPrivateFile,
       customCoordinates,
       responseFields,
+      xhr,
     }
 
     ikClient.upload(params, (err: any, result: any) => {
@@ -92,10 +116,12 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
           onSuccess(result);
         }
       }
+      xhr.upload.removeEventListener('progress', progressCb);
     }, {
       publicKey,
       authenticationEndpoint
-    })
+    });
+    this.setState({ xhr });
   }
 
   render() {
@@ -112,16 +138,24 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
       responseFields,
       onError,
       onSuccess,
+      onUploadStart,
+      onUploadProgress,
+      inputRef,
+      validateFile,
       ...restProps
     } = this.props;
 
     return (
       <input
         {...restProps}
+        ref={inputRef}
         type="file"
         onChange={(e) => {
           if (this.props.onChange && typeof this.props.onChange === "function") {
             this.props.onChange(e);
+          }
+          if (onUploadStart && typeof onUploadStart === "function") {
+            onUploadStart(e);
           }
           this.uploadFile(e);
         }}

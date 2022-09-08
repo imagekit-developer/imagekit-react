@@ -8,8 +8,7 @@ const COMBINED_IMAGE_PROP_TYPES = {
     ...Props
   };
   
-  export type IKImageProps = Omit<InferProps<typeof COMBINED_IMAGE_PROP_TYPES>, 'src' | 'path'> & (UrlOptionsPath | UrlOptionsSrc) & React.ImgHTMLAttributes<HTMLImageElement>;
-
-  export type IKImageBaseProps = InferProps<typeof Props>;
+  export type IKVideoProps = Omit<InferProps<typeof COMBINED_IMAGE_PROP_TYPES>, 'src' | 'path'> & (UrlOptionsPath | UrlOptionsSrc) & React.VideoHTMLAttributes<HTMLVideoElement>;
+  export type IKVideoBaseProps = InferProps<typeof Props>;
   
   export default COMBINED_IMAGE_PROP_TYPES;

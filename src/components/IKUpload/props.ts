@@ -1,5 +1,5 @@
 import PropTypes, { InferProps } from 'prop-types';
-import React from 'react';
+import React, { LegacyRef } from 'react';
 
 const Props = {
     fileName: PropTypes.string,
@@ -10,7 +10,11 @@ const Props = {
     folder: PropTypes.string,
     customCoordinates: PropTypes.string,
     onError: PropTypes.func,
-    onSuccess: PropTypes.func
+    onSuccess: PropTypes.func,
+    onUploadStart: PropTypes.func,
+    onUploadProgress: PropTypes.func,
+    inputRef: PropTypes.object,
+    validateFile: PropTypes.func,
 }
 
 export type IKUploadProps = InferProps<typeof Props> & {
@@ -20,6 +24,7 @@ export type IKUploadProps = InferProps<typeof Props> & {
     isPrivateFile?: boolean;
     customCoordinates?: string;
     responseFields?: Array<string>;
+    inputRef?: LegacyRef<HTMLInputElement>;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default Props;

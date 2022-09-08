@@ -2,6 +2,7 @@ import ImageKit from 'imagekit-javascript';
 import PropTypes, { InferProps } from 'prop-types';
 import IK_IMAGE_PROPS from "../IKImage/props";
 import IK_UPLOAD_PROPS from "../IKUpload/props";
+import IK_VIDEO_PROPS from "../IKUpload/props";
 
 const Props = {
     publicKey: PropTypes.string,
@@ -13,6 +14,7 @@ export const IKContextCombinedProps = {
   ...Props,
   ...IK_IMAGE_PROPS,
   ...IK_UPLOAD_PROPS,
+  ...IK_VIDEO_PROPS,
   ikClient: PropTypes.instanceOf(ImageKit),
 };
 

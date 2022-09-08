@@ -15,11 +15,39 @@ const successResponse = { key: 'upload success response' };
 const failureResponse = { key: 'upload failure response' };
 
 const onChange = sinon.spy();
+const onUploadStart = sinon.spy();
+const onUploadProgress = sinon.spy();
 const onError = sinon.spy();
 const onSuccess = sinon.spy();
+const mockXMLHttpRequest = () => {
+  const mock = {
+    open: jest.fn(),
+    addEventListener: jest.fn(),
+    setRequestHeader: jest.fn(),
+    send: jest.fn(),
+    getResponseHeader: jest.fn(),
+    abort: sinon.spy(),
+
+    upload: {
+      // addEventListener: (name, cb) => evtListeners.push(cb),
+      // removeEventListener: (name, cb) => evtListeners.pop(),
+      // progress: evtListeners[0],
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    },
+  };
+
+  window.XMLHttpRequest = jest.fn(() => mock);
+
+  return mock;
+};
+let mockXMLHttpRequestObj = null;
 
 const uploadMock = (params, callback, auth) => {
   try {
+    const { xhr, ...paramsWithoutXhr } = params;
+    const [[, progress]] = mockXMLHttpRequestObj.upload.addEventListener.mock.calls;
+    progress({ loaded: 12, total: 100 });
     // verify upload call params
     expect(params).toEqual({
       file: { name: 'sample.jpg' },
@@ -29,7 +57,8 @@ const uploadMock = (params, callback, auth) => {
       folder: '/',
       isPrivateFile: false,
       customCoordinates: '',
-      responseFields: []
+      responseFields: [],
+      xhr: mockXMLHttpRequestObj,
     });
     expect(auth).toEqual({
       publicKey: 'test_public_key',
@@ -70,6 +99,9 @@ describe('IKUpload', () => {
       ikInstanceUploadStub.resetHistory();
       onSuccess.resetHistory();
       onError.resetHistory();
+      onUploadStart.resetHistory();
+      onUploadProgress.resetHistory();
+      mockXMLHttpRequestObj = mockXMLHttpRequest();
 
       ikInstanceUploadStub.callsFake(uploadMock);
     });
@@ -322,6 +354,78 @@ describe('IKUpload', () => {
 
         // verify change callback
         expect(onChange.calledOnce).toEqual(true);
+      });
+      test('should call onUploadStart when file input changes', () => {
+        // mount component
+        const ikUpload = mount(
+          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+            <IKUpload onError={onError} onSuccess={onSuccess} onUploadStart={onUploadStart} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(onUploadStart.called).toEqual(false);
+
+        // trigger file change and upload 
+        ikUpload.find('IKUpload').simulate('change', sampleEvent);
+
+        // verify change callback
+        expect(onUploadStart.calledOnce).toEqual(true);
+      });
+
+      test('should not upload file if validateFile fails', () => {
+        // mount component
+        const ikUpload = mount(
+          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+            <IKUpload onError={onError} onSuccess={onSuccess} validateFile={() => false} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(ikInstanceUploadStub.called).toEqual(false);
+
+        // trigger file change and upload 
+        ikUpload.find('IKUpload').simulate('change', sampleEvent);
+
+        // verify change callback
+        expect(ikInstanceUploadStub.called).toEqual(false);
+      });
+
+      test('should call onUploadProgress during file upload', () => {
+        // mount component
+        const ikUpload = mount(
+          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+            <IKUpload onError={onError} onSuccess={onSuccess} onUploadProgress={onUploadProgress} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(onUploadProgress.called).toEqual(false);
+
+        // trigger file change and upload 
+        ikUpload.find('IKUpload').simulate('change', sampleEvent);
+        expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+
+        // verify change callback
+        expect(onUploadProgress.called).toEqual(true);
+      });
+
+      test('should call abort on xhr', () => {
+        // mount component
+        const ref = React.createRef();
+        const ikUpload = mount(
+          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+            <IKUpload onError={onError} onSuccess={onSuccess} ref={ref} />
+          </IKContext>
+        );
+        // verify setup integrity
+        expect(ikUpload.html()).toEqual('<input type="file">');
+        expect(ikUpload.find(IKUpload).getElement().ref).toBe(ref);
+        ref.current.abort();
+        expect(mockXMLHttpRequestObj.abort.called).toEqual(false);
+        ikUpload.find('IKUpload').simulate('change', sampleEvent);
+        ref.current.abort();
+        expect(mockXMLHttpRequestObj.abort.called).toEqual(true);
       });
     });
 

@@ -1,7 +1,8 @@
 import ImageKit from "imagekit-javascript";
 import { TransformationPosition, UrlOptions } from "imagekit-javascript/dist/src/interfaces";
-import { IKContextCombinedProps } from "../components/IKContext/props";
-import { IKImageProps } from "../components/IKImage/combinedProps";
+import { IKContextCombinedProps, IKContextBaseProps } from "../components/IKContext/props";
+import { IKImageProps, IKImageBaseProps } from "../components/IKImage/combinedProps";
+import { IKVideoBaseProps } from "../components/IKVideo/combinedProps";
 
 
 export type IKImageState = {
@@ -12,7 +13,7 @@ export type IKImageState = {
   intersected: boolean;
   contextOptions: IKContextCombinedProps;
   observe?: IntersectionObserver;
-}  
+}
 
 export const fetchEffectiveConnection = () => {
     try {
@@ -33,7 +34,7 @@ export const areObjectsDifferent = <T>(prevProps: T, newProps: T, propsAffecting
 }
 type GetSrcReturnType = {originalSrc: string; lqipSrc?: string;};
 
-export const getSrc = ({ urlEndpoint, lqip, src, path, transformation, transformationPosition, queryParameters }: IKImageProps,
+export const getSrc = ({ urlEndpoint, lqip, src, path, transformation, transformationPosition, queryParameters }: IKImageBaseProps & IKVideoBaseProps & IKContextBaseProps,
   ikClient: ImageKit, contextOptions: IKContextCombinedProps): GetSrcReturnType => {
   // @ts-ignore
   let options: UrlOptions = {
@@ -86,22 +87,23 @@ export const getIKElementsUrl = ({ lqip = null, loading }: IKImageProps, { inter
         onIntersect:
         src=originalImage (when loaded)
     */
+   const isLqipActive = (lqip: IKImageProps['lqip']) => (lqip && lqip.active);
 
-    if (loading !== "lazy" && lqip === null) {
+    if (loading !== "lazy" && !isLqipActive(lqip)) {
       return originalSrc;
-    } else if (loading !== "lazy" && lqip && lqip.active) {
+    } else if (loading !== "lazy" && isLqipActive(lqip)) {
       if (originalSrcLoaded) {
         return originalSrc;
       } else {
         return lqipSrc;
       }
-    } else if (loading === "lazy" && lqip === null) {
+    } else if (loading === "lazy" && !isLqipActive(lqip)) {
       if (intersected) {
         return originalSrc;
       } else {
         return "";
       }
-    } else if (loading === "lazy" && lqip && lqip.active) {
+    } else { //  if (loading === "lazy" && isLqipActive(lqip))
       if (intersected && originalSrcLoaded) {
         return originalSrc;
       } else {
