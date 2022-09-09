@@ -24,6 +24,10 @@ router.get("/auth", function(req, res) {
         signature : signature
     });
 });
+router.get("/", (req, res) => {
+  res.status(200);
+  res.send();
+});
 
 app.use("/",router);
 
