@@ -33,7 +33,7 @@ describe('IKUpload Element', () => {
             cy.wait(2000);
 
             //Verify uploaded file
-            cy.get('.upload-error-ik').should('contain', 'Your request is missing authorization parameters. Read the upload API documentation.')
+            cy.get('.upload-error-ik').should('contain', 'File upload failed.')
         });
     });
 });

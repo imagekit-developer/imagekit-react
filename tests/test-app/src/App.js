@@ -169,7 +169,7 @@ function App() {
           onSuccess={onSuccess}
         />
 
-        {(error && error.hasOwnProperty('uploadFileErr')) && <p style={{ color: 'red' }} className='upload-error-ik'>{error.uploadFileErr}</p>}
+        {(error && error.hasOwnProperty('uploadFileErr')) && <p style={{ color: 'red' }} className='upload-error-ik'>{'File upload failed.'}</p>}
       </IKContext>
 
       <IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} urlEndpoint={videoUrlEndpoint}>
