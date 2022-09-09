@@ -55,6 +55,8 @@ jobs:
         echo REACT_APP_PUBLIC_KEY = ${{ secrets.ik_public_key }} >> .env;
         echo REACT_APP_PRIVATE_KEY = ${{ secrets.ik_private_key }} >> .env;
         npm install && npm install ../../imagekitio*.tgz && npm run build
+        cd server
+        npm install
       env:
         CI: true
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
@@ -65,7 +67,7 @@ jobs:
       uses: cypress-io/github-action@v2
       with:
         start: npm run serve:test-app
-        wait-on: http://localhost:4000
+        wait-on: 'http://localhost:4000, http://localhost:4001'
       env:
         CI: true
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}

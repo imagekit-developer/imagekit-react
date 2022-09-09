@@ -13,7 +13,7 @@
     "test:cov": "jest --coverage",
     "test:e2e": "cypress open",
     "test:watch": "jest --watch",
-    "serve:test-app": "export SKIP_PREFLIGHT_CHECK=true;npx serve@13.0.2 -s tests/test-app/build -p 4000"
+    "serve:test-app": "export SKIP_PREFLIGHT_CHECK=true;npx serve@13.0.2 -s tests/test-app/build -p 4000 & cd tests/test-app/server && node server"
   },
   "repository": {
     "type": "git",
@@ -61,7 +61,8 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "codecov": "^3.8.0",
-    "cypress": "^5.6.0",
+    "cypress": "^10.4.0",
+    "cypress-file-upload": "^5.0.8",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "jest": "^26.5.2",

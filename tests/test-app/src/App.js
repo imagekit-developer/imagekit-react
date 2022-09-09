@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
+  let reftest = useRef(null);
+  const [error, setError] = useState();
 
   const path = "default-image.jpg";
 
@@ -13,11 +15,14 @@ function App() {
   const onError = err => {
     console.log("Error");
     console.log(err);
+    setError({ uploadFileErr: err.message });
   };
 
   const onSuccess = res => {
     console.log("Success");
     console.log(res);
+    console.log(res.$ResponseMetadata.statusCode); // 200
+    console.log(res.$ResponseMetadata.headers); // headers
     setUploadedImageSource(res.url);
   };
 
@@ -142,11 +147,27 @@ function App() {
           useUniqueFileName={true}
           responseFields={["tags"]}
           folder={"/sample-folder"}
-          onError={onError} onSuccess={onSuccess}
+          onError={onError}
+          onSuccess={onSuccess}
+          inputRef={reftest}
+          className="file-upload-ik"
         />
+        <p>Custom Upload Button</p>
+        {reftest && <button onClick={() => reftest.current.click()}>Upload</button>}
 
         <p>Your above uploaded file will appear here </p>
-        <IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} />
+        <IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} className="uploaded-img-ik" />
+
+
+        <p>Upload invalid file</p>
+        <IKUpload
+          className={"file-upload-error"}
+          folder={"/sample-folder"}
+          onError={onError}
+          onSuccess={onSuccess}
+        />
+
+        {(error && error.hasOwnProperty('uploadFileErr')) && <p style={{ color: 'red' }} className='upload-error-ik'>{error.uploadFileErr}</p>}
       </IKContext>
     </div>
   );

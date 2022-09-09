@@ -10,7 +10,7 @@ dotenv.config();
 const uuid = require('uuid');
 const crypto = require("crypto");
 
-const privateKey = process.env.PRIVATE_KEY;
+const privateKey = process.env.REACT_APP_PRIVATE_KEY;
 
 router.get("/auth", function(req, res) {
     var token = req.query.token || uuid.v4();
