@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './App.css';
-import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
+import { IKImage, IKContext, IKUpload, IKVideo } from 'imagekitio-react'
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
@@ -9,6 +9,8 @@ function App() {
   const [error, setError] = useState();
 
   const path = "default-image.jpg";
+  const videoUrlEndpoint = 'https://ik.imagekit.io/demo/';
+  const videoPath = "sample-video.mp4";
 
   const src = `${urlEndpoint}/${path}`;
 
@@ -168,6 +170,25 @@ function App() {
         />
 
         {(error && error.hasOwnProperty('uploadFileErr')) && <p style={{ color: 'red' }} className='upload-error-ik'>{error.uploadFileErr}</p>}
+      </IKContext>
+
+      <IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} urlEndpoint={videoUrlEndpoint}>
+        <p>Video Element</p>
+        <IKVideo
+          className='ikvideo-default'
+          path={videoPath}
+          transformation={[{ height: 200, width: 200 }]}
+          controls={true}
+        />
+
+        <br />
+        <p>Video with some advance transformation</p>
+        <IKVideo
+          className='ikvideo-with-tr'
+          path={videoPath}
+          transformation={[{ height: 200, width: 600, b: '5_red', q: 95 }]}
+          controls={true}
+        />
       </IKContext>
     </div>
   );
