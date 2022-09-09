@@ -29,7 +29,7 @@ yarn add imagekitio-react
 Import components in your code:
 
 ```js
-import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
+import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
 ```
 
 ### Quick examples
@@ -103,6 +103,13 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
     loading="lazy"
     lqip={{ active: true }}
   />
+
+  // Video element with basic transaformation, reduced quality by 50% using q:50
+  <IKVideo
+    path={'/default-video.mp4'}
+    transformation={[{ height: 200, width: 200, q: 50 }]}
+    controls={true}
+  />
 </IKContext>
 
 <IKContext publicKey="your_public_api_key" authenticationEndpoint="https://www.your-server.com/auth">
@@ -121,6 +128,7 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
     useUniqueFileName={true}
     responseFields={["tags"]}
     folder={"/sample-folder"}
+    inputRef={uploadRef}
     onError={onError} onSuccess={onSuccess}
   />
 </IKContext>
@@ -133,11 +141,13 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 
 ## Components
 
-The library includes 3 Components:
+The library includes 5 Components:
 
 * [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticationEndpoint` to all children elements. This component does not render anything.
 * `IKImage` for [image resizing](#image-resizing). This renders a `<img>` tag.
+* `IKVideo` for [video resizing](#video-resizing). This renders a `<video>` tag.
 * `IKUpload`for client-side [file uploading](#file-upload). This renders a `<input type="file">` tag.
+* `IKCore` for [Core SDK](#ikcore), This exposes methods from core javascript SDK like url and upload.
 
 ## IKContext
 
@@ -452,6 +462,29 @@ const onSuccess = (res) => {
     onSuccess={onSuccess}
   />
 </IKContext>;
+```
+
+## IKCore
+
+Accessing the underlying [ImageKit javascript SDK](https://github.com/imagekit-developer/imagekit-javascript) is possible using the `IKCore` import. For example:
+
+```js
+import { IKCore } from "imagekitio-react"
+// Generate image URL
+var imagekit = new IKCore({
+    publicKey: "your_public_api_key",
+    urlEndpoint: "https://ik.imagekit.io/your_imagekit_id",
+    authenticationEndpoint: "http://www.yourserver.com/auth",
+});
+//https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jpg
+var imageURL = imagekit.url({
+    path: "/default-image.jpg",
+    urlEndpoint: "https://ik.imagekit.io/your_imagekit_id/endpoint/",
+    transformation: [{
+        "height": "300",
+        "width": "400"
+    }]
+});
 ```
 
 ## Error Handling
