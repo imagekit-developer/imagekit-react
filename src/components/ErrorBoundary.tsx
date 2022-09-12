@@ -1,10 +1,14 @@
 import React, { ErrorInfo } from "react";
 
+interface IProps {
+  children: JSX.Element;
+}
+
 export default class ErrorBoundary extends React.Component<
-  {},
+  IProps,
   { hasError: boolean; error: string | null; errorInfo: ErrorInfo | null }
 > {
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       hasError: false,
