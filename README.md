@@ -504,7 +504,6 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 Sample Usage
 
 ```js
-const reftest = useRef(null);
 const onUploadStart = (evt) => {
   console.log('Started', evt);
 };
@@ -533,11 +532,7 @@ const onSuccess = (res) => {
     onSuccess={onSuccess}
     onUploadStart={onUploadStart}
     onUploadProgress={onUploadProgress}
-    inputRef={reftest}
-    style={{display: 'none'}} // hide default button
   />
-  <h1>Custom Upload Button</h1>
-  {reftest && <button className='custom-button-style' onClick={() => reftest.current.click()}>Upload</button>}
 </IKContext>;
 ```
 
