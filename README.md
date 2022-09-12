@@ -534,10 +534,7 @@ const onSuccess = (res) => {
     onUploadStart={onUploadStart}
     onUploadProgress={onUploadProgress}
     inputRef={reftest}
-    style={{display: 'none'}} // hide default button
   />
-  <h1>Custom Upload Button</h1>
-  {reftest && <button className='custom-button-style' onClick={() => reftest.current.click()}>Upload</button>}
 </IKContext>;
 ```
 
