@@ -493,7 +493,7 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 | onUploadStart | Function callback | Optional. Called before upload is started. The first and only argument is the HTML input's change event |
 | onUploadProgress | Function callback | Optional. Called while upload is in progress. The first and only argument is the ProgressEvent |
 | validateFile | Function callback | Optional. Called before upload is started to run custom validation. The first and only argument is the file selected for upload. If the callback returns `true`, the upload is allowed to continue. But, if it returns `false`, the upload is not done |
-| onSuccess   | Function callback | Optional. Called if the upload is successful. The first and only argument is the response JOSN from the upload API |
+| onSuccess   | Function callback | Optional. Called if the upload is successful. The first and only argument is the response JSON from the upload API. The request-id, response headers and HTTP status code are also accessible using the $ResponseMetadata key that is exposed from the [javascript sdk](https://github.com/imagekit-developer/imagekit-javascript#access-request-id-other-response-headers-and-http-status-code) |
 | onError   | Function callback | Optional. Called if upload results in an error. The first and only argument is the error received from the upload API |
 | urlEndpoint      | String | Optional. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
 | publicKey      | String | Optional. If not specified, the `publicKey` specified in the parent `IKContext` component is used.|
