@@ -2,13 +2,13 @@ import React, { ErrorInfo } from "react";
 
 export default class ErrorBoundary extends React.Component<
   {},
-  { hasError: boolean; error: string; errorInfo: ErrorInfo | null }
+  { hasError: boolean; error: string | null; errorInfo: ErrorInfo | null }
 > {
   constructor(props: any) {
     super(props);
     this.state = {
       hasError: false,
-      error: "",
+      error: null,
       errorInfo: null,
     };
   }
