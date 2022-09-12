@@ -4,10 +4,13 @@ interface IProps {
   children: JSX.Element;
 }
 
-export default class ErrorBoundary extends React.Component<
-  IProps,
-  { hasError: boolean; error: string | null; errorInfo: ErrorInfo | null }
-> {
+interface IState {
+  hasError: boolean;
+  error: string | null;
+  errorInfo: ErrorInfo | null;
+}
+
+export default class ErrorBoundary extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
