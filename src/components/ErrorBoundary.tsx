@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { ErrorInfo } from "react";
 
-export default class ErrorBoundary extends React.Component {
-  constructor(props) {
+export default class ErrorBoundary extends React.Component<
+  {},
+  { hasError: boolean; error: string; errorInfo: ErrorInfo }
+> {
+  constructor(props: any) {
     super(props);
     this.state = {
       hasError: false,
-      error: null,
-      errorInfo: null
+      error: "",
+      errorInfo: null,
     };
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch(error: Error, info: ErrorInfo) {
     // Display fallback UI
     this.setState({ hasError: true, error: error.toString(), errorInfo: info });
   }
