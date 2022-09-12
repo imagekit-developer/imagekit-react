@@ -2,7 +2,7 @@ import React, { ErrorInfo } from "react";
 
 export default class ErrorBoundary extends React.Component<
   {},
-  { hasError: boolean; error: string; errorInfo: ErrorInfo }
+  { hasError: boolean; error: string; errorInfo: ErrorInfo | null }
 > {
   constructor(props: any) {
     super(props);
