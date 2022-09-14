@@ -5,5 +5,4 @@ node_modules
 lib
 dist
 coverage
-*/.DS_Store
-*/*/.DS_Store
+.DS_Store
