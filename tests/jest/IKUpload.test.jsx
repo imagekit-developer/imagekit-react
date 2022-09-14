@@ -484,6 +484,7 @@ describe('IKUpload', () => {
 	
 			// verify upload spy
 			expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+      expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 	
 			// verify success callback
 			expect(onSuccess.calledOnce).toEqual(true)
@@ -529,6 +530,7 @@ describe('IKUpload', () => {
 	
 			// verify upload spy
 			expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+      expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 	
 			// verify success callback
 			expect(onSuccess.calledOnce).toEqual(true)
@@ -574,6 +576,7 @@ describe('IKUpload', () => {
 	
 			// verify upload spy
 			expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+      expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 	
 			// verify success callback
 			expect(onSuccess.calledOnce).toEqual(true)
