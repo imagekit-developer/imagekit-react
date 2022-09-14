@@ -134,6 +134,7 @@ describe('IKUpload', () => {
 
         // verify upload spy
         expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+        expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 
         // verify success callback
         expect(onSuccess.calledOnce).toEqual(true)
@@ -296,6 +297,7 @@ describe('IKUpload', () => {
 
         // verify upload spy
         expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+        expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 
         // verify error callback
         expect(onError.calledOnce).toEqual(false);
@@ -366,6 +368,7 @@ describe('IKUpload', () => {
 
         // verify change callback
         expect(onChange.calledOnce).toEqual(true);
+        expect(onChange.calledWithMatch(sampleEvent)).toEqual(true);
       });
       test('should call onUploadStart when file input changes', () => {
         // mount component
@@ -384,9 +387,6 @@ describe('IKUpload', () => {
         // verify change callback
         expect(onUploadStart.calledOnce).toEqual(true);
         expect(onUploadStart.calledWithMatch(sampleEvent)).toEqual(true);
-        expect(onSuccess.calledOnce).toEqual(true);
-        expect(onSuccess.calledWithMatch(successResponse)).toEqual(true);
-        expect(onError.calledOnce).toEqual(false);
       });
 
       test('should not upload file if validateFile fails', () => {
@@ -421,6 +421,7 @@ describe('IKUpload', () => {
         // trigger file change and upload 
         ikUpload.find('IKUpload').simulate('change', sampleEvent);
         expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+        expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 
         // verify change callback
         expect(onUploadProgress.called).toEqual(true);
@@ -483,6 +484,7 @@ describe('IKUpload', () => {
 	
 			// verify upload spy
 			expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+      expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 	
 			// verify success callback
 			expect(onSuccess.calledOnce).toEqual(true)
@@ -528,6 +530,7 @@ describe('IKUpload', () => {
 	
 			// verify upload spy
 			expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+      expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 	
 			// verify success callback
 			expect(onSuccess.calledOnce).toEqual(true)
@@ -573,6 +576,7 @@ describe('IKUpload', () => {
 	
 			// verify upload spy
 			expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+      expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 	
 			// verify success callback
 			expect(onSuccess.calledOnce).toEqual(true)
