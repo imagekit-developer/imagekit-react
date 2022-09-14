@@ -426,6 +426,10 @@ describe('IKUpload', () => {
         // verify change callback
         expect(onUploadProgress.called).toEqual(true);
         expect(onUploadProgress.calledWithMatch({ loaded: 12, total: 100 })).toEqual(true);
+        
+        // verify success callback
+        expect(onSuccess.calledOnce).toEqual(true)
+        expect(onSuccess.calledWithMatch(successResponse)).toEqual(true);
       });
 
       test('should call abort on xhr', () => {
