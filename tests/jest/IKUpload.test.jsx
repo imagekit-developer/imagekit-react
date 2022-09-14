@@ -13,6 +13,16 @@ const sampleEvent = { target: { files: [{ name: 'sample.jpg' }] } };
 const sampleEmptyEvent = { target: { files: [] } };
 const successResponse = { key: 'upload success response' };
 const failureResponse = { key: 'upload failure response' };
+const ikClientCalledObj = {
+  file: sampleEvent.target.files[0],
+  fileName: sampleEvent.target.files[0].name,
+  useUniqueFileName: true,
+  tags: [],
+  folder: "/",
+  isPrivateFile: false,
+  customCoordinates: "",
+  responseFields: [],
+};
 
 const onChange = sinon.spy();
 const onUploadStart = sinon.spy();
@@ -306,6 +316,7 @@ describe('IKUpload', () => {
 
         // verify upload spy
         expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+        expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 
         // verify error callback
         expect(onSuccess.calledOnce).toEqual(false);
@@ -330,6 +341,7 @@ describe('IKUpload', () => {
 
         // verify upload spy
         expect(ikInstanceUploadStub.calledOnce).toEqual(true);
+        expect(ikInstanceUploadStub.calledWithMatch(ikClientCalledObj)).toEqual(true);
 
         // verify error callback
         expect(onError.calledOnce).toEqual(true)
@@ -371,6 +383,7 @@ describe('IKUpload', () => {
 
         // verify change callback
         expect(onUploadStart.calledOnce).toEqual(true);
+        expect(onUploadStart.calledWithMatch(sampleEvent)).toEqual(true);
       });
 
       test('should not upload file if validateFile fails', () => {
@@ -408,6 +421,7 @@ describe('IKUpload', () => {
 
         // verify change callback
         expect(onUploadProgress.called).toEqual(true);
+        expect(onUploadProgress.calledWithMatch({ loaded: 12, total: 100 })).toEqual(true);
       });
 
       test('should call abort on xhr', () => {

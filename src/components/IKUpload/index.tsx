@@ -86,7 +86,7 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
     }
 
     const xhr = new XMLHttpRequest();
-    const progressCb = (e: any) => {
+    const progressCb = (e: ProgressEvent<XMLHttpRequestEventTarget>) => {
       if (this.props.onUploadProgress && typeof this.props.onUploadProgress === 'function') {
         this.props.onUploadProgress(e);
       }
