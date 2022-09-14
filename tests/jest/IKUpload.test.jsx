@@ -384,6 +384,9 @@ describe('IKUpload', () => {
         // verify change callback
         expect(onUploadStart.calledOnce).toEqual(true);
         expect(onUploadStart.calledWithMatch(sampleEvent)).toEqual(true);
+        expect(onSuccess.calledOnce).toEqual(true);
+        expect(onSuccess.calledWithMatch(successResponse)).toEqual(true);
+        expect(onError.calledOnce).toEqual(false);
       });
 
       test('should not upload file if validateFile fails', () => {
