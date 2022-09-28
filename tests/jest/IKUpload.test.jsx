@@ -85,7 +85,6 @@ const uploadMock = (params, callback, auth) => {
 
 const ikInstance = {
   options: {
-    sdkVersion: `react-imagekit-sdk-${global.SDK_VERSION}`,
     urlEndpoint: urlEndpoint,
     transformationPosition: 'path'
   },
