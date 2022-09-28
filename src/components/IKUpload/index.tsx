@@ -39,6 +39,13 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
       isPrivateFile,
       customCoordinates,
       responseFields,
+      extensions,
+      webhookUrl,
+      overwriteFile,
+      overwriteAITags,
+      overwriteTags,
+      overwriteCustomMetadata,
+      customMetadata,
       onError,
       onSuccess,
     } = this.props;
@@ -106,6 +113,13 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
       isPrivateFile,
       customCoordinates,
       responseFields,
+      extensions,
+      webhookUrl,
+      overwriteFile,
+      overwriteAITags,
+      overwriteTags,
+      overwriteCustomMetadata,
+      customMetadata,
       xhr,
     }
 
