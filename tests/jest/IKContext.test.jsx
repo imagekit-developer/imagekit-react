@@ -29,7 +29,7 @@ describe('IKContext', () => {
       );
       // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.x.x">
 
-      const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}?${global.SDK_VERSION}`;
+      const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}`;
       expect(ikContext.find('img').prop('src')).toEqual(transformURL);
     });
 
@@ -44,7 +44,7 @@ describe('IKContext', () => {
       );
       // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.x.x">
 
-      const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}?${global.SDK_VERSION}`;
+      const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}`;
       expect(ikContext.find('img').prop('src')).toEqual(transformURL);
       // public key is found via context in the child component
       expect(ikContext.find('IKImage').instance().getContext().publicKey).toEqual(publicKey);
@@ -77,7 +77,7 @@ describe('IKContext', () => {
       // <img alt="" src="https://www.custom-domain.com/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.x.x">
 
       const transformURL = 'https://www.custom-domain.com/tr:h-300,w-400/default-image.jpg';
-      expect(ikContext.find('img').prop('src')).toEqual(`${transformURL}?${global.SDK_VERSION}`);
+      expect(ikContext.find('img').prop('src')).toEqual(`${transformURL}`);
     });
   });
 
@@ -96,7 +96,7 @@ describe('IKContext', () => {
 		const childContext = ikContext.find('IKImage').instance().getContext();
 		expect(childContext.urlEndpoint).toEqual(differentUrlEndpoint);
 
-		expect(ikContext.find('img').prop('src')).toEqual(`${differentUrlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+		expect(ikContext.find('img').prop('src')).toEqual(`${differentUrlEndpoint}/${relativePath}`);
 	});
 	
 	test('change path in IKContext props and childContext path and image src should change accordingly', () => {
@@ -113,7 +113,7 @@ describe('IKContext', () => {
 		const childContext = ikContext.find('IKImage').instance().getContext();
 		expect(childContext.path).toEqual(differentImageRelativePath);
 
-		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/${differentImageRelativePath}?${global.SDK_VERSION}`);
+		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/${differentImageRelativePath}`);
 	});
 
 	test('change src in IKContext props and childContext src and image src should change accordingly', () => {
@@ -130,7 +130,7 @@ describe('IKContext', () => {
 		const childContext = ikContext.find('IKImage').instance().getContext();
 		expect(childContext.src).toEqual(differentAbsolutePath);
 
-		expect(ikContext.find('img').prop('src')).toEqual(`${differentAbsolutePath}?${global.SDK_VERSION}`);
+		expect(ikContext.find('img').prop('src')).toEqual(`${differentAbsolutePath}`);
 	});
 
 	test('change transformation in IKContext props and childContext transformation and image src should change accordingly', () => {
@@ -147,7 +147,7 @@ describe('IKContext', () => {
 		const childContext = ikContext.find('IKImage').instance().getContext();
 		expect(childContext.transformation).toEqual(trArr);
 
-		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}?${global.SDK_VERSION}`);
+		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}`);
 	});
 
 	test('change transformationPosition in IKContext props and childContext transformationPosition and image src should change accordingly', () => {
@@ -164,7 +164,7 @@ describe('IKContext', () => {
 		const childContext = ikContext.find('IKImage').instance().getContext();
 		expect(childContext.transformationPosition).toEqual("query");
 
-		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&tr=h-300%2Cw-300`);
+		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?tr=h-300%2Cw-300`);
 	});
 
 	test('change queryParameters in IKContext props and childContext queryParameters and image src should change accordingly', () => {
@@ -181,7 +181,7 @@ describe('IKContext', () => {
 		const childContext = ikContext.find('IKImage').instance().getContext();
 		expect(childContext.queryParameters).toEqual({"v" : "1"});
 
-		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&v=1`);
+		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?v=1`);
 	});
   })
 });

@@ -27,7 +27,9 @@ class ImageKitComponent<T = void> extends PureComponent<React.PropsWithChildren 
       throw new Error("Missing urlEndpoint during initialization");
     }
     var ikClient = new ImageKit({
-      urlEndpoint: urlEndpoint
+      urlEndpoint: urlEndpoint,
+      // @ts-ignore
+      sdkVersion: "",
     });
     return ikClient;
   }

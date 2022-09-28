@@ -84,6 +84,9 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
     if (this.props.validateFile && !this.props.validateFile(file)) {
       return;
     }
+    if (this.props.onUploadStart && typeof this.props.onUploadStart === "function") {
+      this.props.onUploadStart(e);
+    }
 
     const xhr = new XMLHttpRequest();
     const progressCb = (e: ProgressEvent<XMLHttpRequestEventTarget>) => {
@@ -153,9 +156,6 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
         onChange={(e) => {
           if (this.props.onChange && typeof this.props.onChange === "function") {
             this.props.onChange(e);
-          }
-          if (onUploadStart && typeof onUploadStart === "function") {
-            onUploadStart(e);
           }
           this.uploadFile(e);
         }}

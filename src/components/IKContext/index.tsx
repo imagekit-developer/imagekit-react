@@ -42,7 +42,9 @@ class IKContext extends ImageKitComponent<IKContextCombinedProps> {
 
     if (contextOptions.urlEndpoint && contextOptions.urlEndpoint.trim() !== "") {
       contextOptions.ikClient = new ImageKit({
-        urlEndpoint: contextOptions.urlEndpoint
+        urlEndpoint: contextOptions.urlEndpoint,
+        // @ts-ignore
+        sdkVersion: "",
       });
     }
 

@@ -22,7 +22,7 @@ describe('IKImage', () => {
       test("src with alt attribute", () => {
         const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} src={absolutePath} alt={'some text here'} />);
 
-        expect(ikImage.find('img').prop('src')).toEqual(`${absolutePath}?${global.SDK_VERSION}`);
+        expect(ikImage.find('img').prop('src')).toEqual(`${absolutePath}`);
         expect(ikImage.find('img').prop('alt')).toEqual('some text here');
 
       });
@@ -36,7 +36,7 @@ describe('IKImage', () => {
           />
         );
 
-        const transformURL = `${absolutePathWithQuery}&${global.SDK_VERSION}&version=5&name=check`;
+        const transformURL = `${absolutePathWithQuery}&version=5&name=check`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -51,7 +51,7 @@ describe('IKImage', () => {
             }]} />
         );
 
-        const transformURL = `${absolutePath}?${global.SDK_VERSION}&tr=h-300%2Cw-400`;
+        const transformURL = `${absolutePath}?tr=h-300%2Cw-400`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -60,7 +60,7 @@ describe('IKImage', () => {
           <IKImage urlEndpoint={urlEndpoint} lqip={{ active: true, quality: 20 }} src={absolutePath} id="lqip" />
         );
 
-        const transformURL = `${absolutePath}?${global.SDK_VERSION}&tr=q-20%2Cbl-6`;
+        const transformURL = `${absolutePath}?tr=q-20%2Cbl-6`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -78,7 +78,7 @@ describe('IKImage', () => {
           />
         );
 
-        const transformURL = `${absolutePath}?${global.SDK_VERSION}&tr=h-300%2Cw-400%3Aq-20%2Cbl-6`;
+        const transformURL = `${absolutePath}?tr=h-300%2Cw-400%3Aq-20%2Cbl-6`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
     });
@@ -87,7 +87,7 @@ describe('IKImage', () => {
       test("path with alt attribute", () => {
         const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} path={relativePath} alt={'some text here'} />);
 
-        expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+        expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
         expect(ikImage.find('img').prop('alt')).toEqual('some text here');
       });
 
@@ -96,14 +96,14 @@ describe('IKImage', () => {
           <IKImage urlEndpoint={urlEndpoint} path={relativePath} queryParameters={{ version: 5, name: 'check' }} />
         );
 
-        const transformURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&version=5&name=check`;
+        const transformURL = `${urlEndpoint}/${relativePath}?version=5&name=check`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
       test("path having leading slashes", () => {
         const ikImage = shallow(<IKImage urlEndpoint={urlEndpoint} path="////default-image.jpg" />);
 
-        expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/default-image.jpg?${global.SDK_VERSION}`);
+        expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/default-image.jpg`);
       });
 
       test("path with url endpoint having trailing slashes", () => {
@@ -111,7 +111,7 @@ describe('IKImage', () => {
           <IKImage urlEndpoint="http://ik.imagekit.io/test_imagekit_id////" path={relativePath} />
         );
 
-        expect(ikImage.find('img').prop('src')).toEqual(`http://ik.imagekit.io/test_imagekit_id/${relativePath}?${global.SDK_VERSION}`);
+        expect(ikImage.find('img').prop('src')).toEqual(`http://ik.imagekit.io/test_imagekit_id/${relativePath}`);
       });
 
       test("path with lqip", () => {
@@ -119,7 +119,7 @@ describe('IKImage', () => {
           <IKImage urlEndpoint={urlEndpoint} lqip={{ active: true, quality: 20 }} path={relativePath} id="lqip" />
         );
 
-        const transformURL = `${urlEndpoint}/tr:q-20,bl-6/${relativePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:q-20,bl-6/${relativePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
         expect(ikImage.find('img').prop('id')).toEqual('lqip');
       });
@@ -132,7 +132,7 @@ describe('IKImage', () => {
           }]} />
         );
 
-        const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -150,7 +150,7 @@ describe('IKImage', () => {
           />
         );
 
-        const transformURL = `${urlEndpoint}/tr:h-300,w-400:q-20,bl-6/${relativePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:h-300,w-400:q-20,bl-6/${relativePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
         expect(ikImage.find('img').prop('id')).toEqual('lqip');
       });
@@ -169,7 +169,7 @@ describe('IKImage', () => {
           />
         );
 
-        const transformURL = `${urlEndpoint}/tr:h-300,w-400:q-50,bl-25${nestedImagePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:h-300,w-400:q-50,bl-25${nestedImagePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
         expect(ikImage.find('img').prop('id')).toEqual('lqip');
       });
@@ -187,7 +187,7 @@ describe('IKImage', () => {
           />
         );
 
-        const transformURL = `${urlEndpoint}/tr:n-thumbnail:n-lqip${nestedImagePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:n-thumbnail:n-lqip${nestedImagePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
         expect(ikImage.find('img').prop('id')).toEqual('lqip');
       });
@@ -202,7 +202,7 @@ describe('IKImage', () => {
           }]} />
         );
 
-        const transformURL = `${urlEndpoint}/tr:h-300/${relativePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:h-300/${relativePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -214,7 +214,7 @@ describe('IKImage', () => {
           }]} transformationPosition="query" />
         );
 
-        const transformURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&tr=h-300%2Cw-400`;
+        const transformURL = `${urlEndpoint}/${relativePath}?tr=h-300%2Cw-400`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -226,7 +226,7 @@ describe('IKImage', () => {
           }]} transformationPosition="path" />
         );
 
-        const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:h-300,w-400/${relativePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -238,7 +238,7 @@ describe('IKImage', () => {
           }]} transformationPosition="path" />
         );
 
-        const transformURL = `${absolutePath}?${global.SDK_VERSION}&tr=h-300%2Cw-400`;
+        const transformURL = `${absolutePath}?tr=h-300%2Cw-400`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -252,7 +252,7 @@ describe('IKImage', () => {
           }]} />
         );
 
-        const transformURL = `${urlEndpoint}/tr:h-300,w-400:rt-90/${relativePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:h-300,w-400:rt-90/${relativePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -263,7 +263,7 @@ describe('IKImage', () => {
           }]} />
         );
 
-        const transformURL = `${urlEndpoint}/tr:foo-bar/${relativePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:foo-bar/${relativePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
 
@@ -275,7 +275,7 @@ describe('IKImage', () => {
           }]} />
         );
 
-        const transformURL = `${urlEndpoint}/tr:foo-bar,h-300/${relativePath}?${global.SDK_VERSION}`;
+        const transformURL = `${urlEndpoint}/tr:foo-bar,h-300/${relativePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(transformURL);
       });
     });
@@ -287,15 +287,15 @@ describe('IKImage', () => {
 			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} />);
 			
 			expect(ikImage.props().path).toEqual(relativePath);
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
 
 			ikImage.setProps({ path: differentImageRelativePath });
 
 			expect(ikImage.props().path).toEqual(differentImageRelativePath);
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${differentImageRelativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${differentImageRelativePath}`);
 			ikImage.update();
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${differentImageRelativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${differentImageRelativePath}`);
 
 			// trigger unmount
 			ikImage.unmount();
@@ -305,15 +305,15 @@ describe('IKImage', () => {
 			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} src={absolutePath} />);
 			
 			expect(ikImage.props().src).toEqual(absolutePath);
-			expect(ikImage.state('currentUrl')).toEqual(`${absolutePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${absolutePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${absolutePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${absolutePath}`);
 
 			ikImage.setProps({ src: differentAbsolutePath });
 
 			expect(ikImage.props().src).toEqual(differentAbsolutePath);
-			expect(ikImage.state('currentUrl')).toEqual(`${differentAbsolutePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${differentAbsolutePath}`);
 			ikImage.update();
-			expect(ikImage.find('img').prop('src')).toEqual(`${differentAbsolutePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${differentAbsolutePath}`);
 
 			// trigger unmount
 			ikImage.unmount();
@@ -323,15 +323,15 @@ describe('IKImage', () => {
 			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} />);
 			
 			expect(ikImage.props().urlEndpoint).toEqual(urlEndpoint);
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
 
 			ikImage.setProps({ urlEndpoint: differentUrlEndpoint });
 
 			expect(ikImage.props().urlEndpoint).toEqual(differentUrlEndpoint);
-			expect(ikImage.state('currentUrl')).toEqual(`${differentUrlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${differentUrlEndpoint}/${relativePath}`);
 			ikImage.update();
-			expect(ikImage.find('img').prop('src')).toEqual(`${differentUrlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${differentUrlEndpoint}/${relativePath}`);
 
 			// trigger unmount
 			ikImage.unmount();
@@ -341,15 +341,15 @@ describe('IKImage', () => {
 			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} />);
 			
 			expect(ikImage.props().transformation).toBeUndefined();
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
 
 			ikImage.setProps({ transformation: trArr });
 
 			expect(ikImage.props().transformation).toEqual(trArr);
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}`);
 			ikImage.update();
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}`);
 
 			// trigger unmount
 			ikImage.unmount();
@@ -359,15 +359,15 @@ describe('IKImage', () => {
 			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} transformation={trArr} />);
 			
 			expect(ikImage.props().transformationPosition).toBeUndefined();
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}`);
 
 			ikImage.setProps({ transformationPosition: "query" });
 
 			expect(ikImage.props().transformationPosition).toEqual("query");
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&tr=h-300%2Cw-300`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?tr=h-300%2Cw-300`);
 			ikImage.update();
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&tr=h-300%2Cw-300`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?tr=h-300%2Cw-300`);
 
 			// trigger unmount
 			ikImage.unmount();
@@ -377,15 +377,15 @@ describe('IKImage', () => {
 			const ikImage = mount(<IKImage urlEndpoint={urlEndpoint} path={relativePath} />);
 			
 			expect(ikImage.props().queryParameters).toBeUndefined();
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
 
 			ikImage.setProps({ queryParameters: { "v" : "1" } });
 
 			expect(ikImage.props().queryParameters).toEqual({ "v" : "1" });
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&v=1`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?v=1`);
 			ikImage.update();
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}&v=1`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?v=1`);
 
 			// trigger unmount
 			ikImage.unmount();
@@ -400,15 +400,15 @@ describe('IKImage', () => {
 			);
 
 			expect(ikImage.props().loading).toBeUndefined();
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
 	
 			ikImage.setProps({ loading: "lazy" });
 			ikImage.update();
 
 			expect(ikImage.props().loading).toEqual("lazy");
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
 	
 			// trigger unmount
 			ikImage.unmount();
@@ -423,15 +423,15 @@ describe('IKImage', () => {
 			);
 
 			expect(ikImage.props().lqip).toBeUndefined();
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
 	
 			ikImage.setProps({ lqip: { active: true } });
 			ikImage.update();
 
 			expect(ikImage.props().lqip).toEqual({ active: true });
-			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
-			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+			expect(ikImage.state('currentUrl')).toEqual(`${urlEndpoint}/${relativePath}`);
+			expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
 	
 			// trigger unmount
 			ikImage.unmount();
@@ -519,7 +519,7 @@ describe('IKImage', () => {
         // update wrapper
         ikImage.update();
 
-        const lazyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
+        const lazyLoadedURL = `${urlEndpoint}/${relativePath}`
         expect(ikImage.find('img').prop('src')).toEqual(lazyLoadedURL);
       });
 
@@ -544,7 +544,7 @@ describe('IKImage', () => {
         // update wrapper
         ikImage.update();
 
-        // const lazyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
+        // const lazyLoadedURL = `${urlEndpoint}/${relativePath}`
         expect(ikImage.find('img').prop('src')).toEqual('');
       });
 
@@ -598,7 +598,7 @@ describe('IKImage', () => {
         // update wrapper
         ikImage.update();
 
-        const lazyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
+        const lazyLoadedURL = `${urlEndpoint}/${relativePath}`
         expect(ikImage.find('img').prop('src')).toEqual(lazyLoadedURL);
 
         restoreNavigator();
@@ -631,7 +631,7 @@ describe('IKImage', () => {
         // update wrapper
         ikImage.update();
 
-        const lazyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
+        const lazyLoadedURL = `${urlEndpoint}/${relativePath}`
         expect(ikImage.find('img').prop('src')).toEqual(lazyLoadedURL);
 
         restoreNavigator();
@@ -649,7 +649,7 @@ describe('IKImage', () => {
           />
         );
 
-        expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`);
+        expect(ikImage.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}`);
 
         restoreIntersectionObserverMock();
       });
@@ -725,12 +725,12 @@ describe('IKImage', () => {
           />
         );
 
-        const initialURL = `${urlEndpoint}/tr:q-20,bl-6/${relativePath}?${global.SDK_VERSION}`
+        const initialURL = `${urlEndpoint}/tr:q-20,bl-6/${relativePath}`
         expect(ikImage.find('img').prop('src')).toEqual(initialURL);
 
         imageOnload();
 
-        const expectedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
+        const expectedURL = `${urlEndpoint}/${relativePath}`
         expect(ikImage.find('img').prop('src')).toEqual(expectedURL);
       });
 
@@ -744,7 +744,7 @@ describe('IKImage', () => {
           />
         );
 
-        const lazyLoadedURL = `${urlEndpoint}/tr:q-20,bl-6/${relativePath}?${global.SDK_VERSION}`
+        const lazyLoadedURL = `${urlEndpoint}/tr:q-20,bl-6/${relativePath}`
         expect(ikImage.find('img').prop('src')).toEqual(lazyLoadedURL);
 
         expect(observeSpy.calledOnce).toEqual(true);
@@ -759,7 +759,7 @@ describe('IKImage', () => {
         imageOnload();
         ikImage.update();
 
-        const fullyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`
+        const fullyLoadedURL = `${urlEndpoint}/${relativePath}`
         expect(ikImage.find('img').prop('src')).toEqual(fullyLoadedURL);
       });
 
@@ -782,7 +782,7 @@ describe('IKImage', () => {
         intersectionObserverSpy.args[0][0]([{ isIntersecting: true }]);
         ikImage.update();
 
-        const fullyLoadedURL = `${urlEndpoint}/${relativePath}?${global.SDK_VERSION}`;
+        const fullyLoadedURL = `${urlEndpoint}/${relativePath}`;
         expect(ikImage.find('img').prop('src')).toEqual(fullyLoadedURL);
       });
     });

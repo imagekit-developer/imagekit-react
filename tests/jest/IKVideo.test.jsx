@@ -20,7 +20,7 @@ describe('IKVideo', () => {
     test("src should be present", () => {
       const ikVideo = shallow(<IKVideo urlEndpoint={urlEndpoint} src={absolutePath} />);
 
-      expect(ikVideo.find('video').find('source').prop('src')).toEqual(`${absolutePath}?${global.SDK_VERSION}`);
+      expect(ikVideo.find('video').find('source').prop('src')).toEqual(`${absolutePath}`);
     });
   });
   describe('state update on props', () => {
@@ -29,15 +29,15 @@ describe('IKVideo', () => {
         const ikVideo = mount(<IKVideo urlEndpoint={urlEndpoint} src={absolutePath} />);
         
         expect(ikVideo.props().src).toEqual(absolutePath);
-        expect(ikVideo.state('currentUrl')).toEqual(`${absolutePath}?${global.SDK_VERSION}`);
-        expect(ikVideo.find('video').find('source').prop('src')).toEqual(`${absolutePath}?${global.SDK_VERSION}`);
+        expect(ikVideo.state('currentUrl')).toEqual(`${absolutePath}`);
+        expect(ikVideo.find('video').find('source').prop('src')).toEqual(`${absolutePath}`);
 
         ikVideo.setProps({ src: differentAbsolutePath });
 
         expect(ikVideo.props().src).toEqual(differentAbsolutePath);
-        expect(ikVideo.state('currentUrl')).toEqual(`${differentAbsolutePath}?${global.SDK_VERSION}`);
+        expect(ikVideo.state('currentUrl')).toEqual(`${differentAbsolutePath}`);
         ikVideo.update();
-        expect(ikVideo.find('video').find('source').prop('src')).toEqual(`${differentAbsolutePath}?${global.SDK_VERSION}`);
+        expect(ikVideo.find('video').find('source').prop('src')).toEqual(`${differentAbsolutePath}`);
 
         // trigger unmount
         ikVideo.unmount();
