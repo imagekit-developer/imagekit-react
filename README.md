@@ -499,7 +499,9 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 | publicKey      | String | Optional. If not specified, the `publicKey` specified in the parent `IKContext` component is used.|
 | authenticationEndpoint      | String | Optional. If not specified, the `authenticationEndpoint` specified in the parent `IKContext` component is used. |
 
-> ref can be passed to obtain access to the IKUpload component's instance. Currently, only 1 `abort` method is supported to be called on the ref. Calling the `abort` method will abort the upload if any is in progress.
+Abort upload
+
+ref can be passed to obtain access to the IKUpload component's instance. Currently, only 1 `abort` method is supported to be called on the ref. Calling the `abort` method will abort the upload if any is in progress.
 
 > Make sure that you have specified `authenticationEndpoint` and `publicKey` in `IKUpload` or in the parent `IKContext` component as a prop. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token`, and `expire`. [Learn how to implement authenticationEndpoint](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#how-to-implement-authenticationendpoint-endpoint) on your server. Refer to [demo application](#demo-application) for an example implementation.
 
