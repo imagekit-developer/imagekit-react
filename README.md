@@ -139,7 +139,6 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
 ## Demo application
 * The official step-by-step React quick start guide - https://docs.imagekit.io/getting-started/quickstart-guides/react
 * The official step-by-step React Native quick start guide - https://docs.imagekit.io/getting-started/quickstart-guides/react-native
-* You can also run the demo application in [samples/sample-app](/samples/sample-app) folder as per the [README.md](/samples/sample-app/README.md).
 
 ## Components
 
@@ -171,11 +170,11 @@ will render:
 <img alt="" src="https://ik.imagekit.io/your_imagekit_id/default-image.jpg">
 ```
 
-* `urlEndpoint` is required to use the SDK. You can get URL-endpoint from your ImageKit dashboard - https://imagekit.io/dashboard#url-endpoints.
-* `publicKey` and `authenticationEndpoint` parameters are required if you want to use the SDK for client-side file upload. You can get these parameters from the developer section in your ImageKit dashboard - https://imagekit.io/dashboard#developers.
+* `urlEndpoint` is required to use the SDK. You can get URL-endpoint from your ImageKit dashboard - https://imagekit.io/dashboard/url-endpoints.
+* `publicKey` and `authenticationEndpoint` parameters are required if you want to use the SDK for client-side file upload. You can get these parameters from the developer section in your ImageKit dashboard - https://imagekit.io/dashboard/developer/api-keys.
 * `transformationPosition` is optional. The default value for this parameter is `path`. Acceptable values are `path` & `query`
 
-> Note: Do not include your Private Key in any client-side code.
+> Note: Do not include your [private key](https://docs.imagekit.io/api-reference/api-introduction/api-keys#private-key) in any client-side code.
 
 ## Image resizing
 
