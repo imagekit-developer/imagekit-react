@@ -54,7 +54,7 @@ jobs:
         echo REACT_APP_URL_ENDPOINT = ${{ secrets.ik_url_endopint }} > .env;
         echo REACT_APP_PUBLIC_KEY = ${{ secrets.ik_public_key }} >> .env;
         echo REACT_APP_PRIVATE_KEY = ${{ secrets.ik_private_key }} >> .env;
-        npm install && npm install ../../imagekitio*.tgz && npm run build
+        npm install && npm install ../../imagekitio*.tgz --force && npm run build
         cd server
         npm install
       env:
