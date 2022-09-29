@@ -16,7 +16,7 @@ function App() {
 
   const onError = err => {
     console.log("Error");
-    console.log(err);
+    console.log(JSON.stringify(err));
     setError({ uploadFileErr: err.message });
   };
 
