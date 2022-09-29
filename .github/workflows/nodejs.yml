@@ -74,8 +74,12 @@ jobs:
         REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
         REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
 
-    - name: Archive cypress results
+    - name: tar workspace
+      run: |
+        tar -cf build.tar --exclude=./build.tar .
+    - name: Archive build details
       uses: actions/upload-artifact@v3
       with:
-        name: cypress-report
-        path: tests/cypress
+        name: e2e-archive
+        path: build.tar
+        retention-days: 1
