@@ -4,6 +4,3 @@ import pkg from '../../package.json';
 
 // Configure Enzyme with React 16 adapter
 Enzyme.configure({ adapter: new Adapter() });
-
-// global test variables
-global.SDK_VERSION = `ik-sdk-version=react-${pkg.version}`;
