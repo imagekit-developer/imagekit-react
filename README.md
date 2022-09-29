@@ -29,7 +29,7 @@ yarn add imagekitio-react
 Import components in your code:
 
 ```js
-import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
+import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
 ```
 
 ### Quick examples
@@ -103,6 +103,13 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
     loading="lazy"
     lqip={{ active: true }}
   />
+
+  // Video element with basic transaformation, reduced quality by 50% using q:50
+  <IKVideo
+    path={'/default-video.mp4'}
+    transformation={[{ height: 200, width: 200, q: 50 }]}
+    controls={true}
+  />
 </IKContext>
 
 <IKContext publicKey="your_public_api_key" authenticationEndpoint="https://www.your-server.com/auth">
@@ -121,6 +128,7 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
     useUniqueFileName={true}
     responseFields={["tags"]}
     folder={"/sample-folder"}
+    inputRef={uploadRef}
     onError={onError} onSuccess={onSuccess}
   />
 </IKContext>
@@ -133,15 +141,17 @@ import { IKImage, IKContext, IKUpload } from 'imagekitio-react'
 
 ## Components
 
-The library includes 3 Components:
+The library includes 5 Components:
 
 * [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticationEndpoint` to all children elements. This component does not render anything.
 * `IKImage` for [image resizing](#image-resizing). This renders a `<img>` tag.
+* `IKVideo` for [video resizing](#video-resizing). This renders a `<video>` tag.
 * `IKUpload`for client-side [file uploading](#file-upload). This renders a `<input type="file">` tag.
+* `IKCore` for [Core SDK](#ikcore), This exposes methods from [ImageKit javascript SDK](https://github.com/imagekit-developer/imagekit-javascript) like url and upload.
 
 ## IKContext
 
-In order to use the SDK, you need to provide it with a few configuration parameters. You can use a parent `IKContext` component to define common options for all children `IKImage` or `IKupload` compoents. For example:
+In order to use the SDK, you need to provide it with a few configuration parameters. You can use a parent `IKContext` component to define common options for all children `IKImage`, `IKVideo` or `IKupload` compoents. For example:
 
 ```js
 <IKContext
@@ -403,6 +413,64 @@ You can use `urlEndpoint` prop in an individual `IKImage` to change url for that
 </IKContext>
 ```
 
+## Video resizing
+
+The `IKVideo` component renders a `video` tag. It is used for rendering and manipulating videos in real-time. `IKVideo` component accepts the following props:
+
+| Prop             | Type | Description                    |
+| :----------------| :----|:----------------------------- |
+| urlEndpoint      | String | Optional. The base URL to be appended before the path of the video. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
+| path             | String |Conditional. This is the path at which the video exists. For example, `/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation. |
+| src              | String |Conditional. This is the complete URL of a video already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation. |
+| transformation   | Array of objects |Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |
+| transformationPosition | String |Optional. The default value is path, which places the transformation string as a path parameter in the URL. It can also be specified as query, which adds the transformation string as the query parameter tr in the URL. If you use the src parameter to create the URL, then the transformation string is always added as a query parameter. |
+| queryParameters  | Object |Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and are not necessarily related to ImageKit. Especially useful if you want to add some versioning parameters to your URLs. |
+
+### Basic video resizing examples
+
+```js
+<IKContext urlEndpoint="https://ik.imagekit.io/demo/your_imagekit_id">
+  // Video from related file path with no transformations - https://ik.imagekit.io/demo/your_imagekit_id/sample-video.mp4
+  <IKVideo
+    path="/sample-video.mp4"
+  />
+  // Video resizing - https://ik.imagekit.io/demo/your_imagekit_id/tr:w-h-300,w-400/sample-video.mp4
+  <IKVideo
+    path="/sample-video.mp4"
+    transformation={[{
+      height:300,
+      width:400
+    }]}
+  />
+  // Loading video from an absolute file path with no transformations - https://www.custom-domain.com/default-video.mp4
+  <IKVideo
+    src="https://www.custom-domain.com/default-video.mp4"
+  />
+  // Using a new tranformation parameter which is not there in this SDK yet - https://ik.imagekit.io/demo/your_imagekit_id/tr:custom-value/sample-video.mp4
+  <IKVideo
+    path="/sample-video.mp4"
+    transformation={[{
+      custom: 'value'
+    }]}
+  />
+</IKContext>
+```
+
+The `transformation` prop is an array of objects. Each object can have the following properties.
+
+```js
+// It means first resize the video to 400x400 and then rotate 90 degree
+transformation = [
+  {
+    height: 400,
+    width: 400,
+    rt: 90
+  }
+]
+```
+
+
+
 ## File upload
 
 The SDK provides the `IKUpload` component to upload files to the [ImageKit Media Library](https://docs.imagekit.io/media-library/overview). 
@@ -421,7 +489,11 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 | isPrivateFile | Boolean | Optional. Accepts `true` of `false`. The default value is `false`. Specify whether to mark the file as private or not. This is only relevant for image type files|
 | customCoordinates   | String | Optional. Define an important area in the image. This is only relevant for image type files. To be passed as a string with the `x` and `y` coordinates of the top-left corner, and `width` and `height` of the area of interest in format `x,y,width,height`. For example - `10,10,100,100` |
 | responseFields   | Array of string | Optional. Values of the fields that you want upload API to return in the response. For example, set the value of this field to `["tags", "customCoordinates", "isPrivateFile"]` to get value of `tags`, `customCoordinates`, and `isPrivateFile` in the response. |
-| onSuccess   | Function callback | Optional. Called if the upload is successful. The first and only argument is the response JOSN from the upload API |
+| inputRef   | Reference | Optional. Forward reference to the core HTMLInputElement.|
+| onUploadStart | Function callback | Optional. Called before upload is started. The first and only argument is the HTML input's change event |
+| onUploadProgress | Function callback | Optional. Called while upload is in progress. The first and only argument is the ProgressEvent |
+| validateFile | Function callback | Optional. Called before upload is started to run custom validation. The first and only argument is the file selected for upload. If the callback returns `true`, the upload is allowed to continue. But, if it returns `false`, the upload is not done |
+| onSuccess   | Function callback | Optional. Called if the upload is successful. The first and only argument is the response JSON from the upload API. The request-id, response headers and HTTP status code are also accessible using the $ResponseMetadata key that is exposed from the [javascript sdk](https://github.com/imagekit-developer/imagekit-javascript#access-request-id-other-response-headers-and-http-status-code) |
 | onError   | Function callback | Optional. Called if upload results in an error. The first and only argument is the error received from the upload API |
 | urlEndpoint      | String | Optional. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
 | publicKey      | String | Optional. If not specified, the `publicKey` specified in the parent `IKContext` component is used.|
@@ -429,9 +501,21 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 
 > Make sure that you have specified `authenticationEndpoint` and `publicKey` in `IKUpload` or in the parent `IKContext` component as a prop. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token`, and `expire`. [Learn how to implement authenticationEndpoint](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#how-to-implement-authenticationendpoint-endpoint) on your server. Refer to [demo application](#demo-application) for an example implementation.
 
+#### Abort upload
+
+ref can be passed to obtain access to the IKUpload component's instance. Currently, only 1 `abort` method is supported to be called on the ref. Calling the `abort` method will abort the upload if any is in progress.
+
 Sample Usage
 
 ```js
+const onUploadStart = (evt) => {
+  console.log('Started', evt);
+};
+
+const onUploadProgress = (evt) => {
+  console.log('Progress: ', evt);
+};
+
 const onError = (err) => {
   console.log('Error');
   console.log(err);
@@ -450,8 +534,64 @@ const onSuccess = (res) => {
   <IKUpload
     onError={onError}
     onSuccess={onSuccess}
+    onUploadStart={onUploadStart}
+    onUploadProgress={onUploadProgress}
   />
 </IKContext>;
+```
+
+Custom Button Example, using inputRef
+
+```js
+const reftest = useRef(null);
+
+const onError = (err) => {
+  console.log('Error');
+  console.log(err);
+};
+
+const onSuccess = (res) => {
+  console.log('Success');
+  console.log(res);
+};
+
+<IKContext
+  publicKey="your_public_api_key"
+  urlEndpoint="https://ik.imagekit.io/your_imagekit_id"
+  authenticationEndpoint="http://www.yourserver.com/auth"
+>
+  <IKUpload
+    onError={onError}
+    onSuccess={onSuccess}
+    inputRef={reftest}
+    style={{display: 'none'}} // hide default button
+  />
+  <h1>Custom Upload Button</h1>
+  {reftest && <button className='custom-button-style' onClick={() => reftest.current.click()}>Upload</button>}
+</IKContext>;
+```
+
+## IKCore
+
+Accessing the underlying [ImageKit javascript SDK](https://github.com/imagekit-developer/imagekit-javascript) is possible using the `IKCore` import. For example:
+
+```js
+import { IKCore } from "imagekitio-react"
+// Generate image URL
+var imagekit = new IKCore({
+    publicKey: "your_public_api_key",
+    urlEndpoint: "https://ik.imagekit.io/your_imagekit_id",
+    authenticationEndpoint: "http://www.yourserver.com/auth",
+});
+//https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jpg
+var imageURL = imagekit.url({
+    path: "/default-image.jpg",
+    urlEndpoint: "https://ik.imagekit.io/your_imagekit_id/endpoint/",
+    transformation: [{
+        "height": "300",
+        "width": "400"
+    }]
+});
 ```
 
 ## Error Handling

@@ -6,12 +6,21 @@ import { terser } from 'rollup-plugin-terser';
 import replace from '@rollup/plugin-replace';
 import pkg from './package.json';
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import extensions from 'rollup-plugin-extensions';
 
 const PLUGINS = [
 	peerDepsExternal(),
 	resolve(),
+	extensions({
+		// Supporting Typescript files
+		// Uses ".mjs, .js" by default
+		extensions: ['.tsx', '.ts', '.jsx', '.js'],
+		// Resolves index dir files based on supplied extensions
+		// This is enable by default
+		resolveIndex: true,
+	  }),
 	babel({
-		extensions: ['.js'],
+		extensions: ['.js', '.jsx', '.ts', '.tsx'],
 	}),
 	json(),
 	replace({
@@ -22,7 +31,7 @@ const PLUGINS = [
 
 export default [
 	{
-		input: 'src/index.js',
+		input: 'src/index.ts',
 		external: ['react', 'prop-types'],
 		output: [
 			{ file: pkg.main, format: 'cjs' },
@@ -32,7 +41,7 @@ export default [
 	},
 	// UMD build with inline PropTypes
 	{
-		input: 'src/index.js',
+		input: 'src/index.ts',
 		external: ['react'],
 		output: [
 			{
@@ -48,7 +57,7 @@ export default [
 	},
 	// Minified UMD Build With PropTypes
 	{
-		input: 'src/index.js',
+		input: 'src/index.ts',
 		output: [
 			{
 				name: 'ImageKitReact',
