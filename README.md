@@ -474,10 +474,7 @@ transformation = [
 
 The SDK provides the `IKUpload` component to upload files to the [ImageKit Media Library](https://docs.imagekit.io/media-library/overview). 
 
-`IKUpload` component accepts the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data) options as props.
-
-The SDK provides `IKUpload` component to upload files to the ImageKit Media Library. It accepts the `fileName` parameter as a prop. The file parameter is provided as input from the user.
-
+`IKUpload` component accepts the following props. These options are better explained in the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data) documentation.
 
 | Prop             | Type | Description                    |
 | :----------------| :----|:----------------------------- |
@@ -488,6 +485,12 @@ The SDK provides `IKUpload` component to upload files to the ImageKit Media Libr
 | isPrivateFile | Boolean | Optional. Accepts `true` of `false`. The default value is `false`. Specify whether to mark the file as private or not. This is only relevant for image type files|
 | customCoordinates   | String | Optional. Define an important area in the image. This is only relevant for image-type files. To be passed as a string with the `x` and `y` coordinates of the top-left corner and `width` and `height` of the area of interest in the format `x,y,width,height`. For example - `10,10,100,100` |
 | responseFields   | Array of string | Optional. Values of the fields that you want upload API to return in the response. For example, set the value of this field to `["tags", "customCoordinates", "isPrivateFile"]` to get value of `tags`, `customCoordinates`, and `isPrivateFile` in the response. |
+| extensions   | Array of object | Optional. Array of object for [applying extensions](https://docs.imagekit.io/extensions/overview) on the image. |
+| webhookUrl   | String | Optional. Final status of pending extensions will be sent to this URL. |
+| overwriteFile   | Boolean | Optional. Default is true. If overwriteFile is set to false and useUniqueFileName is also false, and a file already exists at the exact location, upload API will return an error immediately. |
+| overwriteAITags   | Boolean | Optional. Default is true. If set to true and a file already exists at the exact location, its AITags will be removed. Set overwriteAITags to false to preserve AITags. |
+| overwriteCustomMetadata   | Boolean | Optional. Default is true. If the request does not have customMetadata , overwriteCustomMetadata is set to true and a file already exists at the exact location, exiting customMetadata will be removed. In case the request body has customMetadata, setting overwriteCustomMetadata to false has no effect and request's customMetadata is set on the asset. |
+| customMetadata   | Object | Optional. JSON key-value data to be associated with the asset. |
 | inputRef   | Reference | Optional. Forward reference to the core HTMLInputElement.|
 | onUploadStart | Function callback | Optional. Called before the upload is started. The first and only argument is the HTML input's change event |
 | onUploadProgress | Function callback | Optional. Called while an upload is in progress. The first and only argument is the ProgressEvent |
