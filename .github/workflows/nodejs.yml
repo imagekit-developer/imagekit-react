@@ -75,9 +75,11 @@ jobs:
         REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
 
     - name: tar workspace
+      if: always()
       run: |
         tar -cf build.tar --exclude=./build.tar .
     - name: Archive build details
+      if: always()
       uses: actions/upload-artifact@v3
       with:
         name: e2e-archive
