@@ -74,6 +74,7 @@ jobs:
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
         REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
         REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
+        REACT_APP_AUTHENTICATION_ENDPOINT: 'http://localhost:4001/auth'
 
     - name: tar workspace
       if: always()
