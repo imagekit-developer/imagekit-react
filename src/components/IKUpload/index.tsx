@@ -159,6 +159,13 @@ class IKUpload extends ImageKitComponent<IKUploadProps> {
       onUploadProgress,
       inputRef,
       validateFile,
+      webhookUrl,
+      overwriteFile,
+      overwriteAITags,
+      overwriteTags,
+      overwriteCustomMetadata,
+      extensions,
+      customMetadata,
       ...restProps
     } = this.props;
 
