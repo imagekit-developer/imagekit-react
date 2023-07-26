@@ -97,7 +97,7 @@ class IKImage extends ImageKitComponent<IKImageProps> {
 
   render() {
     let { currentUrl } = this.state;
-    const { urlEndpoint, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = this.props;
+    const { urlEndpoint, authenticationEndpoint, publicKey, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = this.props;
     return <img
       alt={this.props.alt || ""}
       src={currentUrl}
