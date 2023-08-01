@@ -125,6 +125,7 @@ const IKImage = (props: IKImageProps) => {
     intersected: false,
     contextOptions: {},
     observe: undefined,
+    initialzeState: false
   });
 
   const { getIKClient } = useImageKitComponent({ ...props })
@@ -177,14 +178,15 @@ const IKImage = (props: IKImageProps) => {
     return () => {
       if (state.observe) state.observe.disconnect();
     };
-  }, [contextOptions]);
+  }, [contextOptions, updateImageUrl]);
 
   useEffect(() => {
-    console.log({ contextOptions, getIKClient }, ' dora 1 ')
-    const { originalSrc, lqipSrc } = getSrc(props, getIKClient(), contextOptions);
-    setState((prevState) => ({ ...prevState, originalSrc, lqipSrc }));
-    updateImageUrl();
-    setState((prevState) => ({ ...prevState, contextOptions }));
+    if (!state.initialzeState) {
+      const { originalSrc, lqipSrc } = getSrc(props, getIKClient(), contextOptions);
+      setState((prevState) => ({ ...prevState, originalSrc, lqipSrc }));
+      updateImageUrl();
+      setState((prevState) => ({ ...prevState, contextOptions, initialzeState: true }));
+    }
   }, [contextOptions, getIKClient]);
 
   const { currentUrl } = state;

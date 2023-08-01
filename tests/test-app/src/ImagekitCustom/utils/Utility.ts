@@ -13,6 +13,7 @@ export type IKImageState = {
   intersected: boolean;
   contextOptions: IKContextCombinedProps;
   observe?: IntersectionObserver;
+  initialzeState: boolean
 }
 
 export const fetchEffectiveConnection = () => {
