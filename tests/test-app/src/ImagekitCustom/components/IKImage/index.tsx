@@ -187,7 +187,7 @@ const IKImage = (props: IKImageProps) => {
       updateImageUrl();
       setState((prevState) => ({ ...prevState, contextOptions, initialzeState: true }));
     }
-  }, [contextOptions, getIKClient]);
+  }, [contextOptions, props]);
 
   const { currentUrl } = state;
   const { urlEndpoint, authenticationEndpoint, publicKey, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = props;

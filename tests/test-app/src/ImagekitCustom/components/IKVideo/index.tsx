@@ -20,10 +20,12 @@ const IKVideo = (props: IKVideoProps & IKContextBaseProps) => {
   const { getIKClient } = useImageKitComponent({ ...props });
   const contextItems = useContext(ImageKitContext)
 
+  // console.log({ contextItems, getIKClient })
+
   useEffect(() => {
     const { originalSrc } = getSrc(props, getIKClient(), contextItems);
     setState((prevState) => ({ ...prevState, currentUrl: originalSrc }));
-  }, [contextItems, getIKClient]);
+  }, [contextItems, props]);
 
   useEffect(() => {
     setState((prevState) => ({ ...prevState, contextOptions: contextItems }));
