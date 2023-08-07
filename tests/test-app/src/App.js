@@ -30,6 +30,7 @@ function App() {
   };
 
   const [uploadedImageSource, setUploadedImageSource] = useState();
+
   const [imageTr, setImageTr] = useState([{
     "height": "200",
     "width": "200"
@@ -44,7 +45,7 @@ function App() {
       <h1>Hi! This is an ImageKit React SDK Demo!</h1>
 
       <p>Directly using <code>IkImage</code></p>
-      <IKImage urlEndpoint={urlEndpoint} src={src} />
+      {/* <IKImage urlEndpoint={urlEndpoint} src={src} /> */}
 
       <p>Dynamic transformation update directly using IKImage</p>
       <IKImage

@@ -13,30 +13,25 @@ export type IKVideoState = {
 const IKVideo = (props: IKVideoProps & IKContextBaseProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [state, setState] = useState<IKVideoState>({
-    currentUrl: undefined,
+    currentUrl: '',
     contextOptions: {}
   });
 
   const { getIKClient } = useImageKitComponent({ ...props });
   const contextItems = useContext(ImageKitContext)
 
-  // console.log({ contextItems, getIKClient })
-
   useEffect(() => {
     const { originalSrc } = getSrc(props, getIKClient(), contextItems);
-    setState((prevState) => ({ ...prevState, currentUrl: originalSrc }));
+    setState((prevState) => ({ ...prevState, currentUrl: originalSrc, contextOptions: contextItems }));
   }, [contextItems, props]);
 
-  useEffect(() => {
-    setState((prevState) => ({ ...prevState, contextOptions: contextItems }));
-  }, [contextItems]);
-
   const { currentUrl } = state;
+
   const { urlEndpoint, publicKey, authenticationEndpoint, path, src, transformation, transformationPosition, queryParameters, ...restProps } = props;
 
   return (
-    <video {...restProps} ref={videoRef}>
-      <source src={currentUrl} type="video/mp4"></source>
+    <video {...restProps} ref={videoRef} key={currentUrl}>
+      <source src={currentUrl} type="video/mp4" />
     </video>
   );
 }

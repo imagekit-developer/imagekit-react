@@ -1,3 +1,113 @@
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import COMBINED_PROP_TYPES, { IKImageProps } from './combinedProps';
+import { fetchEffectiveConnection, getIKElementsUrl, getSrc } from '../../utils/Utility';
+import { ImageKitContext } from '../IKContext';
+import useImageKitComponent from '../ImageKitComponent';
+
+const IKImage = (props: IKImageProps) => {
+  const imageRef = useRef<HTMLImageElement>(null);
+  const { getIKClient } = useImageKitComponent({ ...props });
+  const contextOptions = useContext(ImageKitContext);
+
+  const [currentUrl, setCurrentUrl] = useState<string | undefined>(undefined);
+  const [originalSrc, setOriginalSrc] = useState<string>("");
+  const [lqipSrc, setLqipSrc] = useState<string>("");
+  const [originalSrcLoaded, setOriginalSrcLoaded] = useState<boolean>(false);
+  const [observe, setObserve] = useState<IntersectionObserver | undefined>(undefined);
+  const [initialized, setInitialized] = useState<boolean>(false);
+  const [intersected, setIntersected] = useState<boolean>(false);
+
+  useEffect(() => {
+    const { originalSrc: newOriginalSrc, lqipSrc: newLqipSrc } = getSrc(props, getIKClient(), contextOptions);
+    setOriginalSrc(newOriginalSrc);
+    setLqipSrc(newLqipSrc ? newLqipSrc : '');
+    setInitialized(true);
+  }, [contextOptions, props, initialized]);
+
+  const updateImageUrl = async () => {
+    const url = await getIKElementsUrl(props, { originalSrc, lqipSrc, intersected, contextOptions, initialzeState: initialized, originalSrcLoaded, observe }); // Include intersected state
+    if (url) {
+      setCurrentUrl(url);
+    }
+  };
+
+  const triggerOriginalImageLoad = () => {
+    var img = new Image();
+    img.onload = () => {
+      setOriginalSrcLoaded(true);
+    };
+    img.src = originalSrc;
+  };
+
+  useEffect(() => {
+    if (originalSrcLoaded)
+      updateImageUrl();
+  }, [originalSrcLoaded])
+
+  useEffect(() => {
+
+    const image = imageRef.current;
+    const { lqip, loading } = props;
+
+    if (initialized) {
+      if (window && 'IntersectionObserver' in window && loading === "lazy") {
+        const connectionType = fetchEffectiveConnection();
+        let rootMargin = "1250px";
+        if (connectionType !== "4g") rootMargin = "2500px";
+        const imageObserver = new IntersectionObserver(entries => {
+          const el = entries[0];
+          if (el && el.isIntersecting && !intersected) {
+            setIntersected(true);
+            setObserve(prevObserver => {
+              if (prevObserver) {
+                prevObserver.disconnect();
+              }
+              return undefined;
+            });
+            triggerOriginalImageLoad();
+            updateImageUrl();
+          }
+        }, {
+          rootMargin: `${rootMargin} 0px ${rootMargin} 0px`
+        });
+        if (image) {
+          imageObserver.observe(image);
+          setObserve(imageObserver);
+        }
+      } else {
+        setIntersected(true);
+        triggerOriginalImageLoad();
+        updateImageUrl();
+      }
+    }
+    return () => {
+      if (observe) {
+        observe.disconnect();
+      }
+    };
+  }, [props, originalSrc, lqipSrc]);
+
+  const { urlEndpoint, authenticationEndpoint, publicKey, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = props;
+
+  return <img
+    alt={props.alt || ""}
+    src={currentUrl ? currentUrl : ''}
+    ref={imageRef}
+    {...restProps}
+  />;
+};
+
+IKImage.propTypes = COMBINED_PROP_TYPES;
+
+// IKImage.defaultProps = {
+//   loading: "lazy",
+//   lqip: {
+//     active: true
+//   }
+// };
+
+export default IKImage;
+
 // import React from 'react';
 // import ImageKitComponent from "../ImageKitComponent";
 // import { IKContextCombinedProps } from "../IKContext/props"
@@ -108,103 +218,3 @@
 // }
 
 // export default IKImage;
-
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import COMBINED_PROP_TYPES, { IKImageProps } from './combinedProps';
-import { fetchEffectiveConnection, getIKElementsUrl, getSrc, IKImageState } from '../../utils/Utility';
-import { ImageKitContext } from '../IKContext';
-import useImageKitComponent from '../ImageKitComponent';
-
-const IKImage = (props: IKImageProps) => {
-  const imageRef = useRef<HTMLImageElement>(null);
-  const [state, setState] = useState<IKImageState>({
-    currentUrl: undefined,
-    originalSrc: "",
-    lqipSrc: "",
-    originalSrcLoaded: false,
-    intersected: false,
-    contextOptions: {},
-    observe: undefined,
-  });
-
-  // console.log(state)
-  const { getIKClient } = useImageKitComponent({ ...props })
-  const contextOptions = useContext(ImageKitContext)
-
-  const updateImageUrl = useCallback(() => {
-    const url = getIKElementsUrl(props, state);
-    setState((prevState) => ({ ...prevState, currentUrl: url }));
-  }, []);
-
-  const triggerOriginalImageLoad = useCallback(() => {
-    var img = new Image();
-    img.onload = () => {
-      setState((prevState) => ({ ...prevState, originalSrcLoaded: true }));
-      updateImageUrl();
-    };
-    img.src = state.originalSrc;
-  }, []);
-
-  useEffect(() => {
-    updateImageUrl();
-    setState((prevState) => ({ ...prevState, contextOptions }));
-
-    const image = imageRef.current;
-    const { lqip, loading } = props;
-
-    if (window && 'IntersectionObserver' in window && loading === "lazy") {
-      var connectionType = fetchEffectiveConnection();
-      var rootMargin = "1250px";
-      if (connectionType !== "4g") rootMargin = "2500px";
-      const imageObserver = new IntersectionObserver(entries => {
-        const el = entries[0];
-        if (el && el.isIntersecting) {
-          setState((prevState) => ({ ...prevState, intersected: true }));
-          if (lqip && lqip.active) triggerOriginalImageLoad();
-          imageObserver.disconnect();
-          updateImageUrl();
-        }
-      }, {
-        rootMargin: `${rootMargin} 0px ${rootMargin} 0px`
-      });
-      imageObserver.observe(image!);
-      setState((prevState) => ({ ...prevState, observe: imageObserver }));
-    } else {
-      setState((prevState) => ({ ...prevState, intersected: true }));
-      if (lqip && lqip.active) triggerOriginalImageLoad();
-      updateImageUrl();
-    }
-
-    return () => {
-      if (state.observe) state.observe.disconnect();
-    };
-  }, [contextOptions]);
-
-  useEffect(() => {
-    const { originalSrc, lqipSrc } = getSrc(props, getIKClient(), contextOptions);
-    setState((prevState) => ({ ...prevState, originalSrc, lqipSrc }));
-    updateImageUrl();
-    setState((prevState) => ({ ...prevState, contextOptions }));
-  }, [contextOptions, getIKClient]);
-
-  const { currentUrl } = state;
-  const { urlEndpoint, authenticationEndpoint, publicKey, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = props;
-
-  return <img
-    alt={props.alt || ""}
-    src={currentUrl}
-    ref={imageRef}
-    {...restProps}
-  />;
-};
-
-IKImage.propTypes = COMBINED_PROP_TYPES;
-
-IKImage.defaultProps = {
-  loading: "lazy",
-  lqip: {
-    active: true
-  }
-};
-
-export default IKImage;
