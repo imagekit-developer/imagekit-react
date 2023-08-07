@@ -13,6 +13,7 @@ export type IKImageState = {
   intersected: boolean;
   contextOptions: IKContextCombinedProps;
   observe?: IntersectionObserver;
+  initialzeState: boolean
 }
 
 export const fetchEffectiveConnection = () => {
@@ -52,7 +53,7 @@ export const getSrc = ({ urlEndpoint, lqip, src, path, transformation, transform
     var quality = Math.round(lqip.quality || lqip.threshold || 20);
     var blur = Math.round(lqip.blur || 6);
     var newTransformation = options.transformation ? [...options.transformation] : [];
-    if (lqip.raw && typeof lqip.raw === "string" && lqip.raw.trim() != "") {
+    if (lqip.raw && typeof lqip.raw === "string" && lqip.raw.trim() !== "") {
       newTransformation.push({
         raw: lqip.raw.trim()
       });
