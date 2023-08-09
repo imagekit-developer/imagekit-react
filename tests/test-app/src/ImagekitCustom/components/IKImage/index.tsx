@@ -47,7 +47,7 @@ const IKImage = (props: IKImageProps) => {
   useEffect(() => {
 
     const image = imageRef.current;
-    const { lqip, loading } = props;
+    const { loading } = props;
 
     if (initialized) {
       if (window && 'IntersectionObserver' in window && loading === "lazy") {
