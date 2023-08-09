@@ -45,7 +45,7 @@ function App() {
       <h1>Hi! This is an ImageKit React SDK Demo!</h1>
 
       <p>Directly using <code>IkImage</code></p>
-      {/* <IKImage urlEndpoint={urlEndpoint} src={src} /> */}
+      <IKImage urlEndpoint={urlEndpoint} src={src} />
 
       <p>Dynamic transformation update directly using IKImage</p>
       <IKImage

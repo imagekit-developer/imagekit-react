@@ -312,9 +312,11 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
       xhr,
     };
 
+    //@ts-ignore
     ikClient.upload(params, (err: any, result: any) => {
       if (err) {
         if (onError && typeof onError === "function") {
+          console.log(err)
           onError(err);
         }
       } else {
