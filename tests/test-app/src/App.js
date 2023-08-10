@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './App.css';
-// import { IKImage, IKContext, IKUpload, IKVideo } from 'imagekitio-react'
-import { IKImage, IKContext, IKUpload, IKVideo } from './ImagekitCustom/index'
+import { IKImage, IKContext, IKUpload, IKVideo } from 'imagekitio-react'
+
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
