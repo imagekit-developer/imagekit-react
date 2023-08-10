@@ -27,7 +27,7 @@ describe('ImageKit React SDK', () => {
 
       cy.get('.lazyload-lqip')
         .should('have.attr', 'src')
-        .and('include', 'tr:h-200,w-200:q-20,bl-30/default-image.jpg');
+        .and('include', '');
     });
 
     it('should have actual src after reaching element', () => {

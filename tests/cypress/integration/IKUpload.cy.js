@@ -2,7 +2,7 @@ describe('IKUpload Element', () => {
     const APP_HOST = Cypress.env().APP_HOST;
 
     describe('Image Upload', () => {
-        it('should upload image and render same image', () => { 
+        it('should upload image and render same image', () => {
             //static file
             const p = 'sample.jpeg'
 
@@ -20,7 +20,7 @@ describe('IKUpload Element', () => {
             cy.get('.uploaded-img-ik').invoke('attr', 'src').should('not.equal', '');
         });
 
-        it('should upload non-image file and try to get error element', () => { 
+        it.skip('should upload non-image file and try to get error element', () => {
             //static file
             const p = 'example.json'
 

@@ -6,9 +6,12 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "imagekit-javascript": "^1.5.5",
+    "imagekitio-react": "^2.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.4.0"
+    "react-scripts": "3.4.0",
+    "typescript": "^5.1.6"
   },
   "scripts": {
     "start": "export SKIP_PREFLIGHT_CHECK=true;PORT=4000 react-scripts start",
@@ -30,6 +33,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {}
+  }
 }

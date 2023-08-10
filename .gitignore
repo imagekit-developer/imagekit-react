@@ -6,4 +6,3 @@ lib
 dist
 coverage
 .DS_Store
-yarn.lock
