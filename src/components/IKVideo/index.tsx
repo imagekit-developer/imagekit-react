@@ -27,7 +27,7 @@ const IKVideo = (props: IKVideoProps & IKContextBaseProps) => {
 
   const { currentUrl } = state;
 
-  const { urlEndpoint, publicKey, authenticationEndpoint, path, src, transformation, transformationPosition, queryParameters, ...restProps } = props;
+  const { urlEndpoint, publicKey, authenticator, path, src, transformation, transformationPosition, queryParameters, ...restProps } = props;
 
   return (
     <video {...restProps} ref={videoRef} key={currentUrl}>
