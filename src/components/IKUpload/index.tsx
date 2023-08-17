@@ -1,192 +1,3 @@
-// import React from 'react';
-// import ImageKitComponent from "../ImageKitComponent";
-// import COMMON_PROPS from "../IKContext/props"
-// import IK_UPLOAD_PROPS, { IKUploadProps } from "./props"
-
-// const PROP_TYPES = {
-//   ...COMMON_PROPS,
-//   ...IK_UPLOAD_PROPS
-// };
-// type IKUploadState = {
-//   xhr?: XMLHttpRequest;
-// }
-
-// class IKUpload extends ImageKitComponent<IKUploadProps> {
-//   state: IKUploadState = {};
-//   static propTypes = PROP_TYPES;
-//   static defaultProps = {
-//     useUniqueFileName: true,
-//     isPrivateFile: false,
-//     customCoordinates: "",
-//     tags: [],
-//     folder: "/",
-//     responseFields: []
-//   };
-
-//   abort() {
-//     if (this.state.xhr) {
-//       this.state.xhr.abort();
-//     }
-//   }
-//   uploadFile(e: React.ChangeEvent<HTMLInputElement>) {
-//     const contextOptions = this.getContext();
-
-//     const {
-//       fileName,
-//       useUniqueFileName,
-//       tags,
-//       folder,
-//       isPrivateFile,
-//       customCoordinates,
-//       responseFields,
-//       extensions,
-//       webhookUrl,
-//       overwriteFile,
-//       overwriteAITags,
-//       overwriteTags,
-//       overwriteCustomMetadata,
-//       customMetadata,
-//       onError,
-//       onSuccess,
-//     } = this.props;
-
-//     const publicKey = this.props.publicKey || contextOptions.publicKey;
-//     const authenticationEndpoint = this.props.authenticationEndpoint || contextOptions.authenticationEndpoint;
-//     const urlEndpoint = this.props.urlEndpoint || contextOptions.urlEndpoint;
-
-//     if (!publicKey || publicKey.trim() === "") {
-//       if (onError && typeof onError === "function") {
-//         onError({
-//           message: "Missing publicKey"
-//         });
-//       }
-//       return;
-//     }
-
-//     if (!authenticationEndpoint || authenticationEndpoint.trim() === "") {
-//       if (onError && typeof onError === "function") {
-//         onError({
-//           message: "Missing authenticationEndpoint"
-//         });
-//       }
-//       return;
-//     }
-
-//     if (!urlEndpoint || urlEndpoint.trim() === "") {
-//       if (onError && typeof onError === "function") {
-//         onError({
-//           message: "Missing urlEndpoint"
-//         });
-//       }
-//       return;
-//     }
-
-//     var ikClient = this.getIKClient();
-
-//     const file = e.target.files?.[0];
-//     if (!file) {
-//       return;
-//     }
-
-//     if (this.props.validateFile && !this.props.validateFile(file)) {
-//       return;
-//     }
-//     if (this.props.onUploadStart && typeof this.props.onUploadStart === "function") {
-//       this.props.onUploadStart(e);
-//     }
-
-//     const xhr = new XMLHttpRequest();
-//     const progressCb = (e: ProgressEvent<XMLHttpRequestEventTarget>) => {
-//       if (this.props.onUploadProgress && typeof this.props.onUploadProgress === 'function') {
-//         this.props.onUploadProgress(e);
-//       }
-//     };
-
-//     xhr.upload.addEventListener('progress', progressCb);
-
-//     var params = {
-//       file: file,
-//       fileName: fileName || file.name,
-//       useUniqueFileName,
-//       tags,
-//       folder,
-//       isPrivateFile,
-//       customCoordinates,
-//       responseFields,
-//       extensions,
-//       webhookUrl,
-//       overwriteFile,
-//       overwriteAITags,
-//       overwriteTags,
-//       overwriteCustomMetadata,
-//       customMetadata,
-//       xhr,
-//     }
-
-//     ikClient.upload(params, (err: any, result: any) => {
-//       if (err) {
-//         if (onError && typeof onError === "function") {
-//           onError(err);
-//         }
-//       } else {
-//         if (onSuccess && typeof onSuccess === "function") {
-//           onSuccess(result);
-//         }
-//       }
-//       xhr.upload.removeEventListener('progress', progressCb);
-//     }, {
-//       publicKey,
-//       authenticationEndpoint
-//     });
-//     this.setState({ xhr });
-//   }
-
-//   render() {
-//     let {
-//       publicKey,
-//       urlEndpoint,
-//       authenticationEndpoint,
-//       fileName,
-//       useUniqueFileName,
-//       tags,
-//       folder,
-//       isPrivateFile,
-//       customCoordinates,
-//       responseFields,
-//       onError,
-//       onSuccess,
-//       onUploadStart,
-//       onUploadProgress,
-//       inputRef,
-//       validateFile,
-//       webhookUrl,
-//       overwriteFile,
-//       overwriteAITags,
-//       overwriteTags,
-//       overwriteCustomMetadata,
-//       extensions,
-//       customMetadata,
-//       ...restProps
-//     } = this.props;
-
-//     return (
-//       <input
-//         {...restProps}
-//         ref={inputRef}
-//         type="file"
-//         onChange={(e) => {
-//           if (this.props.onChange && typeof this.props.onChange === "function") {
-//             this.props.onChange(e);
-//           }
-//           this.uploadFile(e);
-//         }}
-//       />
-//     )
-//   }
-// }
-
-// export default IKUpload;
-
 import React, { useContext } from 'react';
 import COMMON_PROPS, { IKContextBaseProps } from "../IKContext/props";
 import IK_UPLOAD_PROPS, { IKUploadProps } from "./props";
@@ -212,7 +23,7 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
   const {
     publicKey,
     urlEndpoint,
-    authenticationEndpoint,
+    authenticator,
     fileName,
     useUniqueFileName,
     tags,
@@ -239,7 +50,8 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
 
     const publicKey = props.publicKey || contextOptions.publicKey;
-    const authenticationEndpoint = props.authenticationEndpoint || contextOptions.authenticationEndpoint;
+    // const authenticationEndpoint = props.authenticationEndpoint || contextOptions.authenticationEndpoint;
+    const authenticator = props.authenticator || contextOptions.authenticator;
     const urlEndpoint = props.urlEndpoint || contextOptions.urlEndpoint;
 
     if (!publicKey || publicKey.trim() === "") {
@@ -251,10 +63,28 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
       return;
     }
 
-    if (!authenticationEndpoint || authenticationEndpoint.trim() === "") {
+    if (!authenticator) {
       if (onError && typeof onError === "function") {
         onError({
-          message: "Missing authenticationEndpoint"
+          message: "The authenticator function is not provided."
+        });
+      }
+      return;
+    }
+
+    if (typeof authenticator !== 'function') {
+      if (onError && typeof onError === "function") {
+        onError({
+          message: "The provided authenticator is not a function."
+        });
+      }
+      return;
+    }
+
+    if (authenticator.length !== 0) {
+      if (onError && typeof onError === "function") {
+        onError({
+          message: "The authenticator function should not accept any parameters. Please provide a parameterless function reference."
         });
       }
       return;
@@ -309,26 +139,60 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
       overwriteTags,
       overwriteCustomMetadata,
       customMetadata,
+      signature: '',
+      expire: 0,
+      token: '',
       xhr,
     };
 
-    //@ts-ignore
-    ikClient.upload(params, (err: any, result: any) => {
-      if (err) {
-        if (onError && typeof onError === "function") {
-          console.log(err)
-          onError(err);
-        }
-      } else {
-        if (onSuccess && typeof onSuccess === "function") {
-          onSuccess(result);
-        }
+    const authPromise = authenticator()
+
+    if (!(authPromise instanceof Promise)) {
+      if (onError && typeof onError === "function") {
+        onError({
+          message: "The authenticator function is expected to return a Promise instance."
+        });
       }
-      xhr.upload.removeEventListener('progress', progressCb);
-    }, {
-      publicKey,
-      authenticationEndpoint
-    });
+      return;
+    }
+
+    authPromise
+      .then(({ signature, token, expire }) => {
+        params['signature'] = signature;
+        params['expire'] = expire;
+        params['token'] = token
+        ikClient.upload(params, (err: any, result: any) => {
+          if (err) {
+            if (onError && typeof onError === "function") {
+              console.log(err)
+              onError(err);
+            }
+          } else {
+            if (onSuccess && typeof onSuccess === "function") {
+              onSuccess(result);
+            }
+          }
+          xhr.upload.removeEventListener('progress', progressCb);
+        }, {
+          publicKey,
+        });
+      })
+      .catch((data) => {
+        var error;
+        if (data instanceof Array) {
+          error = data[0];
+        }
+        else {
+          error = data
+        }
+
+        if (onError && typeof onError === "function") {
+          onError({
+            message: String(error)
+          });
+        }
+        return;
+      })
   };
 
   return (

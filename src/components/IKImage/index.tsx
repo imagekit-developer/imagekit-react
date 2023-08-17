@@ -87,7 +87,7 @@ const IKImage = (props: IKImageProps) => {
     };
   }, [props, originalSrc, lqipSrc]);
 
-  const { urlEndpoint, authenticationEndpoint, publicKey, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = props;
+  const { urlEndpoint, authenticator, publicKey, loading, lqip, path, src, transformation, transformationPosition, queryParameters, ...restProps } = props;
 
   return <img
     alt={props.alt || ""}

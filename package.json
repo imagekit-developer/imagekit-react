@@ -80,7 +80,7 @@
     "typescript": "^4.8.2"
   },
   "dependencies": {
-    "imagekit-javascript": "^1.5.4",
+    "imagekit-javascript": "^2.0.0",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {

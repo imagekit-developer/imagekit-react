@@ -29,6 +29,46 @@ function App() {
     setUploadedImageSource(res.url);
   };
 
+  const authenticator = () => {
+    return new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.timeout = 6000; //modify if required
+      var url = authenticationEndpoint;
+      if (url.indexOf("?") === -1) {
+        url += `?t=${Math.random().toString()}`;
+      } else {
+        url += `&t=${Math.random().toString()}`;
+      }
+      xhr.open('GET', url);
+      xhr.ontimeout = function (e) {
+        reject(["Authentication request timed out in 60 seconds", xhr]);
+      };
+      xhr.addEventListener("load", () => {
+        if (xhr.status === 200) {
+          try {
+            var body = JSON.parse(xhr.responseText);
+            var obj = {
+              signature: body.signature,
+              expire: body.expire,
+              token: body.token
+            }
+            resolve(obj);
+          } catch (ex) {
+            reject([ex, xhr]);
+          }
+        } else {
+          try {
+            var error = JSON.parse(xhr.responseText);
+            reject([error, xhr]);
+          } catch (ex) {
+            reject([ex, xhr]);
+          }
+        }
+      });
+      xhr.send();
+    })
+  }
+
   const [uploadedImageSource, setUploadedImageSource] = useState();
 
   const [imageTr, setImageTr] = useState([{
@@ -51,7 +91,7 @@ function App() {
       <IKImage
         publicKey={publicKey}
         urlEndpoint={urlEndpoint}
-        authenticationEndpoint={authenticationEndpoint}
+        // authenticationEndpoint={authenticationEndpoint}
         className={'img-transformation-direct'}
         path={path}
         transformation={imageTrSansIKContext}
@@ -79,7 +119,10 @@ function App() {
       <br />
 
       <p>Using context <code>IKContext</code></p>
-      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint}
+        // authenticationEndpoint={authenticationEndpoint} 
+        authenticator={authenticator}
+      >
         <p>Let's add an Image</p>
         <IKImage src={src} />
 
@@ -174,7 +217,9 @@ function App() {
         {(error && error.hasOwnProperty('uploadFileErr')) && <p style={{ color: 'red' }} className='upload-error-ik'>{'File upload failed.'}</p>}
       </IKContext>
 
-      <IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} urlEndpoint={videoUrlEndpoint}>
+      <IKContext publicKey={publicKey}
+        // authenticationEndpoint={authenticationEndpoint} 
+        urlEndpoint={videoUrlEndpoint}>
         <p>Video Element</p>
         <IKVideo
           className='ikvideo-default'
