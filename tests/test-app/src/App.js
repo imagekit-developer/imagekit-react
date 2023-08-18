@@ -91,7 +91,6 @@ function App() {
       <IKImage
         publicKey={publicKey}
         urlEndpoint={urlEndpoint}
-        // authenticationEndpoint={authenticationEndpoint}
         className={'img-transformation-direct'}
         path={path}
         transformation={imageTrSansIKContext}
@@ -119,9 +118,7 @@ function App() {
       <br />
 
       <p>Using context <code>IKContext</code></p>
-      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint}
-        // authenticationEndpoint={authenticationEndpoint} 
-        authenticator={authenticator}
+      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticator={authenticator}
       >
         <p>Let's add an Image</p>
         <IKImage src={src} />
@@ -217,9 +214,7 @@ function App() {
         {(error && error.hasOwnProperty('uploadFileErr')) && <p style={{ color: 'red' }} className='upload-error-ik'>{'File upload failed.'}</p>}
       </IKContext>
 
-      <IKContext publicKey={publicKey}
-        // authenticationEndpoint={authenticationEndpoint} 
-        urlEndpoint={videoUrlEndpoint}>
+      <IKContext publicKey={publicKey} urlEndpoint={videoUrlEndpoint}>
         <p>Video Element</p>
         <IKVideo
           className='ikvideo-default'

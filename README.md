@@ -26,7 +26,7 @@ Example implementation for `authenticator` using `XMLHttpRequest`.
     return new Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest();
       xhr.timeout = 6000; //modify if required
-      var url = authenticationEndpoint;
+      var url = 'server_endpoint';
       if (url.indexOf("?") === -1) {
         url += `?t=${Math.random().toString()}`;
       } else {
