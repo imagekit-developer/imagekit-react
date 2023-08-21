@@ -12,6 +12,59 @@ ImageKit React SDK allows you to resize, optimize, deliver and upload images and
 
 ImageKit is a complete media storage, optimization, and transformation solution that comes with an image and video CDN. It can be integrated with your existing infrastructure - storage like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
+## Changelog - SDK Version 2.0.0
+### Breaking changes
+**1. Authentication Process Update:**
+* Previously, when using this SDK, we had to pass `authenticationEndpoint` which is used by SDK internally for fetching security parameters i.e `signature`, `token`, and `expire`.
+* In version 2.0.0, we have deprecated the use of the `authenticationEndpoint` parameter. Instead, the SDK now introduces a new parameter named `authenticator`. This parameter expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
+
+Example implementation for `authenticator` using `XMLHttpRequest`.
+
+``` javascript
+
+ const authenticator = () => {
+    return new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.timeout = 6000; //modify if required
+      var url = 'server_endpoint';
+      if (url.indexOf("?") === -1) {
+        url += `?t=${Math.random().toString()}`;
+      } else {
+        url += `&t=${Math.random().toString()}`;
+      }
+      xhr.open('GET', url);
+      xhr.ontimeout = function (e) {
+        reject(["Authentication request timed out in 60 seconds", xhr]);
+      };
+      xhr.addEventListener("load", () => {
+        if (xhr.status === 200) {
+          try {
+            var body = JSON.parse(xhr.responseText);
+            var obj = {
+              signature: body.signature,
+              expire: body.expire,
+              token: body.token
+            }
+            resolve(obj);
+          } catch (ex) {
+            reject([ex, xhr]);
+          }
+        } else {
+          try {
+            var error = JSON.parse(xhr.responseText);
+            reject([error, xhr]);
+          } catch (ex) {
+            reject([ex, xhr]);
+          }
+        }
+      });
+      xhr.send();
+    })
+  }
+```
+
+*Note*: Avoid generating security parameters on the client side. Always send a request to your backend to retrieve security parameters, as the generation of these parameters necessitates the use of your Imagekit `privateKey`, which must not be included in client-side code.
+
 ## Installation
 
 ```shell
@@ -114,7 +167,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
   />
 </IKContext>
 
-<IKContext publicKey="your_public_api_key" authenticationEndpoint="https://www.your-server.com/auth">
+<IKContext publicKey="your_public_api_key">
   // Simple file upload and response handling
   <IKUpload
     onError={onError}
@@ -144,7 +197,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
 
 The library includes 5 Components:
 
-* [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticationEndpoint` to all children elements. This component does not render anything.
+* [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticator` to all children elements. This component does not render anything.
 * `IKImage` for [image resizing](#image-resizing). This renders a `<img>` tag.
 * `IKVideo` for [video resizing](#video-resizing). This renders a `<video>` tag.
 * `IKUpload`for client-side [file uploading](#file-upload). This renders a `<input type="file">` tag.
@@ -159,7 +212,7 @@ To use the SDK, you need to provide it with a few configuration parameters. You 
   urlEndpoint="https://ik.imagekit.io/your_imagekit_id"  // Required. Default URL-endpoint is https://ik.imagekit.io/your_imagekit_id
   publicKey="your_public_api_key" // optional
   transformationPosition="path" // optional
-  authenticationEndpoint="http://www.yourserver.com/auth"> // optional
+  authenticator={()=>Promise} // optional
   <IKImage path="/default-image.jpg" />
 </IKContext>
 ```
@@ -171,7 +224,7 @@ will render:
 ```
 
 * `urlEndpoint` is required to use the SDK. You can get URL-endpoint from your ImageKit dashboard - https://imagekit.io/dashboard/url-endpoints.
-* `publicKey` and `authenticationEndpoint` parameters are required if you want to use the SDK for client-side file upload. You can get these parameters from the developer section in your ImageKit dashboard - https://imagekit.io/dashboard/developer/api-keys.
+* `publicKey` and `authenticator` parameters are required if you want to use the SDK for client-side file upload. You can get these parameters from the developer section in your ImageKit dashboard - https://imagekit.io/dashboard/developer/api-keys.
 * `transformationPosition` is optional. The default value for this parameter is `path`. Acceptable values are `path` & `query`
 
 > Note: Do not include your [private key](https://docs.imagekit.io/api-reference/api-introduction/api-keys#private-key) in any client-side code.
@@ -499,9 +552,9 @@ The SDK provides the `IKUpload` component to upload files to the [ImageKit Media
 | onError   | Function callback | Optional. Called if upload results in an error. The first and only argument is the error received from the upload API |
 | urlEndpoint      | String | Optional. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
 | publicKey      | String | Optional. If not specified, the `publicKey` specified in the parent `IKContext` component is used.|
-| authenticationEndpoint      | String | Optional. If not specified, the `authenticationEndpoint` specified in the parent `IKContext` component is used. |
+| authenticator      | ()=>Promise<{signature:string,token:string,expiry:number}> | Optional. If not specified, the `authenticator` specified in the parent `IKContext` component is used. |
 
-> Make sure that you have specified `authenticationEndpoint` and `publicKey` in `IKUpload` or in the parent `IKContext` component as a prop. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token`, and `expire`. [Learn how to implement authenticationEndpoint](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#how-to-implement-authenticationendpoint-endpoint) on your server. Refer to [demo application](#demo-application) for an example implementation.
+> Make sure that you have specified `authenticator` and `publicKey` in `IKUpload` or in the parent `IKContext` component as a prop. The authenticator expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 
 #### Abort upload
 
@@ -531,7 +584,8 @@ const onSuccess = (res) => {
 <IKContext
   publicKey="your_public_api_key"
   urlEndpoint="https://ik.imagekit.io/your_imagekit_id"
-  authenticationEndpoint="http://www.yourserver.com/auth"
+  authenticator={()=>Promise} 
+  // This promise  resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 >
   <IKUpload
     onError={onError}
@@ -560,7 +614,8 @@ const onSuccess = (res) => {
 <IKContext
   publicKey="your_public_api_key"
   urlEndpoint="https://ik.imagekit.io/your_imagekit_id"
-  authenticationEndpoint="http://www.yourserver.com/auth"
+  authenticator={()=>Promise} 
+  // This promise  resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 >
   <IKUpload
     onError={onError}
@@ -583,7 +638,6 @@ import { IKCore } from "imagekitio-react"
 var imagekit = new IKCore({
     publicKey: "your_public_api_key",
     urlEndpoint: "https://ik.imagekit.io/your_imagekit_id",
-    authenticationEndpoint: "http://www.yourserver.com/auth",
 });
 //https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jpg
 var imageURL = imagekit.url({

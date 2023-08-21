@@ -50,7 +50,6 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
 
     const publicKey = props.publicKey || contextOptions.publicKey;
-    // const authenticationEndpoint = props.authenticationEndpoint || contextOptions.authenticationEndpoint;
     const authenticator = props.authenticator || contextOptions.authenticator;
     const urlEndpoint = props.urlEndpoint || contextOptions.urlEndpoint;
 
