@@ -17,6 +17,7 @@ ImageKit is a complete media storage, optimization, and transformation solution 
 **1. Authentication Process Update:**
 * Previously, when using this SDK, we had to pass `authenticationEndpoint` which is used by SDK internally for fetching security parameters i.e `signature`, `token`, and `expire`.
 * In version 2.0.0, we have deprecated the use of the `authenticationEndpoint` parameter. Instead, the SDK now introduces a new parameter named `authenticator`. This parameter expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
+* Now `ref` needs to passed instead of `inputRef` in IKUpload component
 
 Example implementation for `authenticator` using `XMLHttpRequest`.
 
@@ -183,7 +184,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
     useUniqueFileName={true}
     responseFields={["tags"]}
     folder={"/sample-folder"}
-    inputRef={uploadRef}
+    ref={uploadRef}
     onError={onError} onSuccess={onSuccess}
   />
 </IKContext>
@@ -544,7 +545,7 @@ The SDK provides the `IKUpload` component to upload files to the [ImageKit Media
 | overwriteAITags   | Boolean | Optional. Default is true. If set to true and a file already exists at the exact location, its AITags will be removed. Set overwriteAITags to false to preserve AITags. |
 | overwriteCustomMetadata   | Boolean | Optional. Default is true. If the request does not have customMetadata , overwriteCustomMetadata is set to true and a file already exists at the exact location, exiting customMetadata will be removed. In case the request body has customMetadata, setting overwriteCustomMetadata to false has no effect and request's customMetadata is set on the asset. |
 | customMetadata   | Object | Optional. JSON key-value data to be associated with the asset. |
-| inputRef   | Reference | Optional. Forward reference to the core HTMLInputElement.|
+| ref   | Reference | Optional. Forward reference to the core HTMLInputElement.|
 | onUploadStart | Function callback | Optional. Called before the upload is started. The first and only argument is the HTML input's change event |
 | onUploadProgress | Function callback | Optional. Called while an upload is in progress. The first and only argument is the ProgressEvent |
 | validateFile | Function callback | Optional. Called before the upload is started to run custom validation. The first and only argument is the file selected for upload. If the callback returns `true`, the upload is allowed to continue. But, if it returns `false`, the upload is not done |
@@ -596,7 +597,7 @@ const onSuccess = (res) => {
 </IKContext>;
 ```
 
-Custom Button Example, using inputRef
+Custom Button Example, using ref
 
 ```js
 const reftest = useRef(null);
@@ -620,7 +621,7 @@ const onSuccess = (res) => {
   <IKUpload
     onError={onError}
     onSuccess={onSuccess}
-    inputRef={reftest}
+    ref={reftest}
     style={{display: 'none'}} // hide default button
   />
   <h1>Custom Upload Button</h1>
