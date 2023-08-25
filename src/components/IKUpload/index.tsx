@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, useContext, useState } from 'react';
 import COMMON_PROPS, { IKContextBaseProps } from "../IKContext/props";
 import IK_UPLOAD_PROPS, { IKUploadProps } from "./props";
 import { ImageKitContext } from '../IKContext';
@@ -24,13 +24,9 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     }
   }
 
-  const mergedRef = useRef<HTMLInputElement | null>(null);
-
-  //@ts-ignore
-  useImperativeHandle(ref, () => ({
-    abort,
-    ...mergedRef.current
-  }));
+  if (ref && (ref as any).current) {
+    (ref as any).current = { ...(ref as any).current, abort }
+  }
 
   const {
     publicKey,
@@ -209,7 +205,7 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
   return (
     <input
       {...restProps}
-      ref={mergedRef}
+      ref={ref}
       type="file"
       onChange={(e) => {
         if (props.onChange && typeof props.onChange === "function") {

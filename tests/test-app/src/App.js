@@ -8,6 +8,17 @@ function App() {
   const authenticationEndpoint = process.env.REACT_APP_AUTHENTICATION_ENDPOINT;
   let reftest = useRef(null);
   const [error, setError] = useState();
+  const [isUploading, setIsUploading] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState();
+  const [uploadedImageSource, setUploadedImageSource] = useState();
+  const [imageTr, setImageTr] = useState([{
+    "height": "200",
+    "width": "200"
+  }]);
+  const [imageTrSansIKContext, setImageTrSansIKContext] = useState([{
+    "height": "300",
+    "width": "300"
+  }]);
 
   const path = "default-image.jpg";
   const videoUrlEndpoint = 'https://ik.imagekit.io/demo/';
@@ -19,6 +30,7 @@ function App() {
     console.log("Error");
     console.log(JSON.stringify(err));
     setError({ uploadFileErr: err.message });
+    setIsUploading(false)
   };
 
   const onSuccess = res => {
@@ -27,6 +39,7 @@ function App() {
     console.log(res.$ResponseMetadata.statusCode); // 200
     console.log(res.$ResponseMetadata.headers); // headers
     setUploadedImageSource(res.url);
+    setIsUploading(false)
   };
 
   const authenticator = () => {
@@ -69,16 +82,13 @@ function App() {
     })
   }
 
-  const [uploadedImageSource, setUploadedImageSource] = useState();
+  const onUploadStart = (_) => {
+    setIsUploading(true)
+  }
 
-  const [imageTr, setImageTr] = useState([{
-    "height": "200",
-    "width": "200"
-  }]);
-  const [imageTrSansIKContext, setImageTrSansIKContext] = useState([{
-    "height": "300",
-    "width": "300"
-  }]);
+  const onUploadProgress = (e) => {
+    setUploadProgress(e)
+  }
 
   return (
     <div className="App">
@@ -118,8 +128,7 @@ function App() {
       <br />
 
       <p>Using context <code>IKContext</code></p>
-      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticator={authenticator}
-      >
+      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticator={authenticator}>
         <p>Let's add an Image</p>
         <IKImage src={src} />
 
@@ -195,12 +204,22 @@ function App() {
           onSuccess={onSuccess}
           ref={reftest}
           className="file-upload-ik"
+          onUploadProgress={onUploadProgress}
+          onUploadStart={onUploadStart}
         />
+        {isUploading !== null ? <p>{isUploading ? `...Uploading (${uploadProgress ? uploadProgress.type ? (uploadProgress.loaded / uploadProgress.total * 100).toFixed(2) + '%)' : '' : ''}` : 'uploaded'}</p> : <></>}
+        {isUploading ? <button onClick={() => {
+          reftest.current.abort()
+          setIsUploading(null);
+        }}>Cancel</button> : <></>}
         <p>Custom Upload Button</p>
         {reftest && <button onClick={() => reftest.current.click()}>Upload</button>}
 
         <p>Your above uploaded file will appear here </p>
-        <IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} className="uploaded-img-ik" />
+        <IKImage urlEndpoint={urlEndpoint} src={uploadedImageSource} className="uploaded-img-ik" transformation={[{
+          "height": "200",
+          "width": "200",
+        }]} />
 
 
         <p>Upload invalid file</p>
@@ -232,7 +251,7 @@ function App() {
           controls={true}
         />
       </IKContext>
-    </div>
+    </div >
   );
 }
 
