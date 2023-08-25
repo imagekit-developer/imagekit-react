@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { forwardRef, useContext, useState } from 'react';
 import COMMON_PROPS, { IKContextBaseProps } from "../IKContext/props";
 import IK_UPLOAD_PROPS, { IKUploadProps } from "./props";
 import { ImageKitContext } from '../IKContext';
@@ -9,16 +9,24 @@ const PROP_TYPES = {
   ...IK_UPLOAD_PROPS
 };
 
-// type IKUploadState = {
-//   xhr?: XMLHttpRequest;
-// };
+type IKUploadState = {
+  xhr?: XMLHttpRequest;
+};
 
-const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
-  // const inputRef = useRef<HTMLInputElement>(null);
-  // const [state, setState] = useState<IKUploadState>({});
+const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps>((props, ref) => {
+  const [state, setState] = useState<IKUploadState>({});
   const contextOptions = useContext(ImageKitContext);
   const { getIKClient } = useImageKitComponent({ ...props });
-  // const inputRef = ref
+
+  const abort = () => {
+    if (state.xhr) {
+      state.xhr.abort();
+    }
+  }
+
+  if (ref && (ref as any).current) {
+    (ref as any).current = { ...(ref as any).current, abort }
+  }
 
   const {
     publicKey,
@@ -35,7 +43,6 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
     onSuccess,
     onUploadStart,
     onUploadProgress,
-    inputRef,
     validateFile,
     webhookUrl,
     overwriteFile,
@@ -144,7 +151,7 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
       xhr,
     };
 
-    const authPromise = authenticator()
+    const authPromise = authenticator();
 
     if (!(authPromise instanceof Promise)) {
       if (onError && typeof onError === "function") {
@@ -175,6 +182,7 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
         }, {
           publicKey,
         });
+        setState({ xhr })
       })
       .catch((data) => {
         var error;
@@ -197,7 +205,7 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
   return (
     <input
       {...restProps}
-      ref={inputRef}
+      ref={ref}
       type="file"
       onChange={(e) => {
         if (props.onChange && typeof props.onChange === "function") {
@@ -207,8 +215,8 @@ const IKUpload = (props: IKUploadProps & IKContextBaseProps) => {
       }}
     />
   );
-};
+});
 
-IKUpload.propTypes = PROP_TYPES;
+IKUpload.propTypes = { ...PROP_TYPES };
 
 export default IKUpload;

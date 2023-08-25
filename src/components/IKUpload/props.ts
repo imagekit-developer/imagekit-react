@@ -1,6 +1,6 @@
 import { UploadResponse } from 'imagekit-javascript/dist/src/interfaces';
 import PropTypes, { InferProps } from 'prop-types';
-import React, { LegacyRef } from 'react';
+import React from 'react';
 
 const Props = {
     fileName: PropTypes.string,
@@ -21,8 +21,8 @@ const Props = {
     onSuccess: PropTypes.func,
     onUploadStart: PropTypes.func,
     onUploadProgress: PropTypes.func,
-    inputRef: PropTypes.object,
     validateFile: PropTypes.func,
+    ref: PropTypes.any,
 }
 
 export type IKUploadProps = InferProps<typeof Props> & {
@@ -39,7 +39,6 @@ export type IKUploadProps = InferProps<typeof Props> & {
     overwriteTags?: boolean,
     overwriteCustomMetadata?: boolean,
     customMetadata?: string | Record<string, string | number | boolean | Array<string | number | boolean>>;
-    inputRef?: LegacyRef<HTMLInputElement>;
     onError?: (err: Error) => void;
     onSuccess?: (res: UploadResponse) => void;
     onUploadStart?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
