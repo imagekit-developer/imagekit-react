@@ -193,7 +193,7 @@ function App() {
           folder={"/sample-folder"}
           onError={onError}
           onSuccess={onSuccess}
-          inputRef={reftest}
+          ref={reftest}
           className="file-upload-ik"
         />
         <p>Custom Upload Button</p>
