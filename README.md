@@ -12,7 +12,7 @@ ImageKit React SDK allows you to resize, optimize, deliver and upload images and
 
 ImageKit is a complete media storage, optimization, and transformation solution that comes with an image and video CDN. It can be integrated with your existing infrastructure - storage like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
-## Changelog - SDK Version 2.0.0
+## Changelog - SDK Version 3.0.0
 ### Breaking changes
 **1. Authentication Process Update:**
 * Previously, when using this SDK, we had to pass `authenticationEndpoint` which is used by SDK internally for fetching security parameters i.e `signature`, `token`, and `expire`.
