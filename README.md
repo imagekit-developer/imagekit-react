@@ -152,7 +152,7 @@ The library includes 5 Components:
 
 ## IKContext
 
-To use the SDK, you need to provide it with a few configuration parameters. You can use a parent `IKContext` component to define common options for all children `IKImage`, `IKVideo` or `IKupload` components. For example:
+To use this SDK, you need to provide it with a few configuration parameters. You can use a parent `IKContext` component to define common options for all children `IKImage`, `IKVideo` or `IKupload` components. For example:
 
 ```js
 <IKContext
