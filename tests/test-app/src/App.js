@@ -44,43 +44,29 @@ function App() {
 
   const authenticator = () => {
     return new Promise((resolve, reject) => {
-      var xhr = new XMLHttpRequest();
-      xhr.timeout = 6000; //modify if required
-      var url = authenticationEndpoint;
-      if (url.indexOf("?") === -1) {
-        url += `?t=${Math.random().toString()}`;
-      } else {
-        url += `&t=${Math.random().toString()}`;
-      }
-      xhr.open('GET', url);
-      xhr.ontimeout = function (e) {
-        reject(["Authentication request timed out in 60 seconds", xhr]);
-      };
-      xhr.addEventListener("load", () => {
-        if (xhr.status === 200) {
-          try {
-            var body = JSON.parse(xhr.responseText);
-            var obj = {
-              signature: body.signature,
-              expire: body.expire,
-              token: body.token
-            }
-            resolve(obj);
-          } catch (ex) {
-            reject([ex, xhr]);
+      var url = authenticationEndpoint; // Use the full URL with the protocol
+
+      // Make the Fetch API request
+      fetch(url, { method: "GET", mode: "cors" }) // Enable CORS mode
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
           }
-        } else {
-          try {
-            var error = JSON.parse(xhr.responseText);
-            reject([error, xhr]);
-          } catch (ex) {
-            reject([ex, xhr]);
-          }
-        }
-      });
-      xhr.send();
-    })
-  }
+          return response.json();
+        })
+        .then((body) => {
+          var obj = {
+            signature: body.signature,
+            expire: body.expire,
+            token: body.token,
+          };
+          resolve(obj);
+        })
+        .catch((error) => {
+          reject([error]);
+        });
+    });
+  };
 
   const onUploadStart = (_) => {
     setIsUploading(true)
