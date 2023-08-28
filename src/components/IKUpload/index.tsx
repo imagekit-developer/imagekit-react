@@ -87,15 +87,6 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
       return;
     }
 
-    if (authenticator.length !== 0) {
-      if (onError && typeof onError === "function") {
-        onError({
-          message: "The authenticator function should not accept any parameters. Please provide a parameterless function reference."
-        });
-      }
-      return;
-    }
-
     if (!urlEndpoint || urlEndpoint.trim() === "") {
       if (onError && typeof onError === "function") {
         onError({
@@ -128,6 +119,25 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     };
 
     xhr.upload.addEventListener('progress', progressCb);
+
+    const allowedImageTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/bmp',
+      'image/webp',
+      'image/tiff',
+      'image/svg+xml'
+    ];
+    const allowedVideoTypes = ['video/mp4', 'video/mpeg', 'video/quicktime'];
+    if (!(allowedImageTypes.includes(file.type) || allowedVideoTypes.includes(file.type))) {
+      if (onError && typeof onError === "function") {
+        onError({
+          message: "'Invalid file type. Please upload an image or a video.'"
+        });
+      }
+      return;
+    }
 
     var params = {
       file: file,

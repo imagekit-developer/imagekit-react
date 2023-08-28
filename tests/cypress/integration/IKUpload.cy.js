@@ -20,7 +20,7 @@ describe('IKUpload Element', () => {
             cy.get('.uploaded-img-ik').invoke('attr', 'src').should('not.equal', '');
         });
 
-        it.skip('should upload non-image file and try to get error element', () => {
+        it('should upload non-image file and try to get error element', () => {
             //static file
             const p = 'example.json'
 

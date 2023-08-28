@@ -99,11 +99,4 @@ const IKImage = (props: IKImageProps) => {
 
 IKImage.propTypes = COMBINED_PROP_TYPES;
 
-// IKImage.defaultProps = {
-//   loading: "lazy",
-//   lqip: {
-//     active: true
-//   }
-// };
-
 export default IKImage;
