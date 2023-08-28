@@ -16,7 +16,7 @@ ImageKit is a complete media storage, optimization, and transformation solution 
 ### Breaking changes
 **1. Authentication Process Update:**
 * Previously, when using this SDK, we had to pass `authenticationEndpoint` which is used by SDK internally for fetching security parameters i.e `signature`, `token`, and `expire`.
-* In version 2.0.0, we have deprecated the use of the `authenticationEndpoint` parameter. Instead, the SDK now introduces a new parameter named `authenticator`. This parameter expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
+* In version 3.0.0, we have deprecated the use of the `authenticationEndpoint` parameter. Instead, the SDK now introduces a new parameter named `authenticator`. This parameter expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 * Now `ref` needs to passed instead of `inputRef` in IKUpload component
 
 Example implementation for `authenticator` using `XMLHttpRequest`.
