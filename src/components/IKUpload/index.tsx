@@ -87,15 +87,6 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
       return;
     }
 
-    if (authenticator.length !== 0) {
-      if (onError && typeof onError === "function") {
-        onError({
-          message: "The authenticator function should not accept any parameters. Please provide a parameterless function reference."
-        });
-      }
-      return;
-    }
-
     if (!urlEndpoint || urlEndpoint.trim() === "") {
       if (onError && typeof onError === "function") {
         onError({
