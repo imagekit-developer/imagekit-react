@@ -19,7 +19,7 @@ ImageKit is a complete media storage, optimization, and transformation solution 
 * In version 3.0.0, we have deprecated the use of the `authenticationEndpoint` parameter. Instead, the SDK now introduces a new parameter named `authenticator`. This parameter expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 * Now `ref` needs to passed instead of `inputRef` in IKUpload component
 
-Example implementation for `authenticator` using `XMLHttpRequest`.
+Example implementation for `authenticator` using `Fetch API`.
 
 ``` javascript
 
