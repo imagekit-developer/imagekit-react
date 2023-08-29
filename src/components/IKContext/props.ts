@@ -5,9 +5,9 @@ import IK_UPLOAD_PROPS from "../IKUpload/props";
 import IK_VIDEO_PROPS from "../IKUpload/props";
 
 const Props = {
-    publicKey: PropTypes.string,
-    urlEndpoint: PropTypes.string,
-    authenticationEndpoint: PropTypes.string,
+  publicKey: PropTypes.string,
+  urlEndpoint: PropTypes.string,
+  authenticator: PropTypes.func
 };
 
 export const IKContextCombinedProps = {

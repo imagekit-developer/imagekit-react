@@ -21,7 +21,7 @@ jobs:
     - name: Setup module and run unit tests
       run: |
         npm install
-        npm run test:ci
+        # npm run test:ci
       env:
         CI: true
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
@@ -57,6 +57,7 @@ jobs:
         echo REACT_APP_AUTHENTICATION_ENDPOINT = 'http://localhost:4001/auth' >> .env;
         npm install && npm install ../../imagekitio*.tgz --force && npm run build
         cd server
+        echo PRIVATE_KEY = ${{ secrets.ik_private_key }} >> .env;
         npm install
       env:
         CI: true

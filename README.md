@@ -12,6 +12,46 @@ ImageKit React SDK allows you to resize, optimize, deliver and upload images and
 
 ImageKit is a complete media storage, optimization, and transformation solution that comes with an image and video CDN. It can be integrated with your existing infrastructure - storage like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
+## Changelog - SDK Version 3.0.0
+### Breaking changes
+**1. Authentication Process Update:**
+* Previously, when using this SDK, we had to pass `authenticationEndpoint` which is used by SDK internally for fetching security parameters i.e `signature`, `token`, and `expire`.
+* In version 3.0.0, we have deprecated the use of the `authenticationEndpoint` parameter. Instead, the SDK now introduces a new parameter named `authenticator`. This parameter expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
+* Now `ref` needs to passed instead of `inputRef` in IKUpload component
+
+Example implementation for `authenticator` using `Fetch API`.
+
+``` javascript
+
+ const authenticator = async () => {
+    try {
+
+        // You can pass headers as well and later validate the request source in the backend, or you can use headers for any other use case.
+        const headers = {
+          'Authorization': 'Bearer your-access-token',
+          'CustomHeader': 'CustomValue'
+        };
+
+        const response = await fetch('server_endpoint', {
+            headers
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        const { signature, expire, token } = data;
+        return { signature, expire, token };
+    } catch (error) {
+        throw new Error(`Authentication request failed: ${error.message}`);
+    }
+};
+```
+
+*Note*: Avoid generating security parameters on the client side. Always send a request to your backend to retrieve security parameters, as the generation of these parameters necessitates the use of your Imagekit `privateKey`, which must not be included in client-side code.
+
 ## Installation
 
 ```shell
@@ -114,7 +154,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
   />
 </IKContext>
 
-<IKContext publicKey="your_public_api_key" authenticationEndpoint="https://www.your-server.com/auth">
+<IKContext publicKey="your_public_api_key">
   // Simple file upload and response handling
   <IKUpload
     onError={onError}
@@ -130,7 +170,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
     useUniqueFileName={true}
     responseFields={["tags"]}
     folder={"/sample-folder"}
-    inputRef={uploadRef}
+    ref={uploadRef}
     onError={onError} onSuccess={onSuccess}
   />
 </IKContext>
@@ -144,7 +184,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
 
 The library includes 5 Components:
 
-* [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticationEndpoint` to all children elements. This component does not render anything.
+* [`IKContext`](#IKContext) for defining options like `urlEndpoint`, `publicKey` or `authenticator` to all children elements. This component does not render anything.
 * `IKImage` for [image resizing](#image-resizing). This renders a `<img>` tag.
 * `IKVideo` for [video resizing](#video-resizing). This renders a `<video>` tag.
 * `IKUpload`for client-side [file uploading](#file-upload). This renders a `<input type="file">` tag.
@@ -159,7 +199,7 @@ To use this SDK, you need to provide it with a few configuration parameters. You
   urlEndpoint="https://ik.imagekit.io/your_imagekit_id"  // Required. Default URL-endpoint is https://ik.imagekit.io/your_imagekit_id
   publicKey="your_public_api_key" // optional
   transformationPosition="path" // optional
-  authenticationEndpoint="http://www.yourserver.com/auth"> // optional
+  authenticator={()=>Promise} // optional
   <IKImage path="/default-image.jpg" />
 </IKContext>
 ```
@@ -171,7 +211,7 @@ will render:
 ```
 
 * `urlEndpoint` is required to use the SDK. You can get URL-endpoint from your ImageKit dashboard - https://imagekit.io/dashboard/url-endpoints.
-* `publicKey` and `authenticationEndpoint` parameters are required if you want to use the SDK for client-side file upload. You can get these parameters from the developer section in your ImageKit dashboard - https://imagekit.io/dashboard/developer/api-keys.
+* `publicKey` and `authenticator` parameters are required if you want to use the SDK for client-side file upload. You can get these parameters from the developer section in your ImageKit dashboard - https://imagekit.io/dashboard/developer/api-keys.
 * `transformationPosition` is optional. The default value for this parameter is `path`. Acceptable values are `path` & `query`
 
 > Note: Do not include your [private key](https://docs.imagekit.io/api-reference/api-introduction/api-keys#private-key) in any client-side code.
@@ -491,7 +531,7 @@ The SDK provides the `IKUpload` component to upload files to the [ImageKit Media
 | overwriteAITags   | Boolean | Optional. Default is true. If set to true and a file already exists at the exact location, its AITags will be removed. Set overwriteAITags to false to preserve AITags. |
 | overwriteCustomMetadata   | Boolean | Optional. Default is true. If the request does not have customMetadata , overwriteCustomMetadata is set to true and a file already exists at the exact location, exiting customMetadata will be removed. In case the request body has customMetadata, setting overwriteCustomMetadata to false has no effect and request's customMetadata is set on the asset. |
 | customMetadata   | Object | Optional. JSON key-value data to be associated with the asset. |
-| inputRef   | Reference | Optional. Forward reference to the core HTMLInputElement.|
+| ref   | Reference | Optional. Forward reference to the core HTMLInputElement.|
 | onUploadStart | Function callback | Optional. Called before the upload is started. The first and only argument is the HTML input's change event |
 | onUploadProgress | Function callback | Optional. Called while an upload is in progress. The first and only argument is the ProgressEvent |
 | validateFile | Function callback | Optional. Called before the upload is started to run custom validation. The first and only argument is the file selected for upload. If the callback returns `true`, the upload is allowed to continue. But, if it returns `false`, the upload is not done |
@@ -499,9 +539,9 @@ The SDK provides the `IKUpload` component to upload files to the [ImageKit Media
 | onError   | Function callback | Optional. Called if upload results in an error. The first and only argument is the error received from the upload API |
 | urlEndpoint      | String | Optional. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
 | publicKey      | String | Optional. If not specified, the `publicKey` specified in the parent `IKContext` component is used.|
-| authenticationEndpoint      | String | Optional. If not specified, the `authenticationEndpoint` specified in the parent `IKContext` component is used. |
+| authenticator      | ()=>Promise<{signature:string,token:string,expiry:number}> | Optional. If not specified, the `authenticator` specified in the parent `IKContext` component is used. |
 
-> Make sure that you have specified `authenticationEndpoint` and `publicKey` in `IKUpload` or in the parent `IKContext` component as a prop. The SDK makes an HTTP GET request to this endpoint and expects a JSON response with three fields i.e. `signature`, `token`, and `expire`. [Learn how to implement authenticationEndpoint](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#how-to-implement-authenticationendpoint-endpoint) on your server. Refer to [demo application](#demo-application) for an example implementation.
+> Make sure that you have specified `authenticator` and `publicKey` in `IKUpload` or in the parent `IKContext` component as a prop. The authenticator expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 
 #### Abort upload
 
@@ -531,7 +571,8 @@ const onSuccess = (res) => {
 <IKContext
   publicKey="your_public_api_key"
   urlEndpoint="https://ik.imagekit.io/your_imagekit_id"
-  authenticationEndpoint="http://www.yourserver.com/auth"
+  authenticator={()=>Promise} 
+  // This promise  resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 >
   <IKUpload
     onError={onError}
@@ -542,7 +583,7 @@ const onSuccess = (res) => {
 </IKContext>;
 ```
 
-Custom Button Example, using inputRef
+Custom Button Example, using ref
 
 ```js
 const reftest = useRef(null);
@@ -560,12 +601,13 @@ const onSuccess = (res) => {
 <IKContext
   publicKey="your_public_api_key"
   urlEndpoint="https://ik.imagekit.io/your_imagekit_id"
-  authenticationEndpoint="http://www.yourserver.com/auth"
+  authenticator={()=>Promise} 
+  // This promise  resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 >
   <IKUpload
     onError={onError}
     onSuccess={onSuccess}
-    inputRef={reftest}
+    ref={reftest}
     style={{display: 'none'}} // hide default button
   />
   <h1>Custom Upload Button</h1>
@@ -583,7 +625,6 @@ import { IKCore } from "imagekitio-react"
 var imagekit = new IKCore({
     publicKey: "your_public_api_key",
     urlEndpoint: "https://ik.imagekit.io/your_imagekit_id",
-    authenticationEndpoint: "http://www.yourserver.com/auth",
 });
 //https://ik.imagekit.io/your_imagekit_id/endpoint/tr:h-300,w-400/default-image.jpg
 var imageURL = imagekit.url({
