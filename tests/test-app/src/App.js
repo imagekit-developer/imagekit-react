@@ -42,30 +42,23 @@ function App() {
     setIsUploading(false)
   };
 
-  const authenticator = () => {
-    return new Promise((resolve, reject) => {
-      var url = authenticationEndpoint; // Use the full URL with the protocol
+  const authenticator = async () => {
+    try {
 
-      // Make the Fetch API request
-      fetch(url, { method: "GET", mode: "cors" }) // Enable CORS mode
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((body) => {
-          var obj = {
-            signature: body.signature,
-            expire: body.expire,
-            token: body.token,
-          };
-          resolve(obj);
-        })
-        .catch((error) => {
-          reject([error]);
-        });
-    });
+      // You can pass headers as well and later validate the request source in the backend, or you can use headers for any other use case.
+      const response = await fetch(authenticationEndpoint);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Request failed with status ${response.status}: ${errorText}`);
+      }
+
+      const data = await response.json();
+      const { signature, expire, token } = data;
+      return { signature, expire, token };
+    } catch (error) {
+      throw new Error(`Authentication request failed: ${error.message}`);
+    }
   };
 
   const onUploadStart = (_) => {
