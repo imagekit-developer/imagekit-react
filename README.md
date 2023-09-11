@@ -241,6 +241,15 @@ transformation = [
 
 See the complete list of transformations supported in ImageKit [here](https://docs.imagekit.io/features/image-transformations). The SDK gives a name to each transformation parameter e.g. `height` for `h` and `width` for `w` parameter. It makes your code more readable. If the property does not match any of the following supported options, it is added as it is.
 
+<br/>
+
+> #### Deprecation notice
+> The list below mentions the old overlay syntax parameters such as `oi`, `ot`, `obg`, and more. These parameters will be deprecated on 31st Oct 2023 and will start returning errors when used in URLs. Please migrate to the new Layers syntax that supports overlay nesting, provides better positional control, and allows more transformations at the layer level. You can start with [examples](https://docs.imagekit.io/features/image-transformations/overlay-using-layers#examples) to learn quickly.
+> If you create overlay transformations using the JavaScript SDK, you can migrate to the new Layers syntax using the `raw` transformation parameter, as given in the example below.
+> `transformation : [{ "width" : 300, "height" : 300 },{ "raw": "l-image,i-logo.png,w-10,rt-90,l-end" }]`
+
+<br/>
+
 ### List of supported transformations
 <details>
 <summary>Expand</summary>
