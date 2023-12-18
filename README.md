@@ -99,6 +99,12 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
     "rotation": "90"
   }]} />
 
+  // Renders an image with text overlaid.
+  <IKImage
+    path="/default-image.jpg"
+    transformation={[{ "width": 300, "height": 300 },{ "raw": "l-text,i-Imagekit,rt-90,co-0651D5,fs-50,l-end" }]}
+  />
+
   // Lazy loading image
   <IKImage
     path="/default-image.jpg"
@@ -300,34 +306,6 @@ See the complete list of transformations supported in ImageKit [here](https://do
 | rotation | rt |
 | blur | bl |
 | named | n |
-| overlayX | ox |
-| overlayY | oy |
-| overlayFocus | ofo |
-| overlayHeight | oh |
-| overlayWidth | ow |
-| overlayImage | oi |
-| overlayImageTrim | oit |
-| overlayImageAspectRatio | oiar |
-| overlayImageBackground | oibg |
-| overlayImageBorder | oib |
-| overlayImageDPR | oidpr |
-| overlayImageQuality | oiq |
-| overlayImageCropping | oic |
-| overlayImageTrim | oit |
-| overlayText | ot |
-| overlayTextFontSize | ots |
-| overlayTextFontFamily | otf |
-| overlayTextColor | otc |
-| overlayTextTransparency | oa |
-| overlayAlpha | oa |
-| overlayTextTypography | ott |
-| overlayBackground | obg |
-| overlayTextEncoded | ote |
-| overlayTextWidth | otw |
-| overlayTextBackground | otbg |
-| overlayTextPadding | otp |
-| overlayTextInnerAlignment | otia |
-| overlayRadius | or |
 | progressive | pr |
 | lossless | lo |
 | trim | t |
