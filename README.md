@@ -291,7 +291,7 @@ For example:
 ```js
 <IKImage
     path="/default-image.jpg"
-    transformation={[{ "width": 300, "height": 400 },{ "raw": "l-text,i-Imagekit,fs-50,l-end" }]}
+    transformation={[{ "width": 400, "height": 300 },{ "raw": "l-text,i-Imagekit,fs-50,l-end" }]}
 />
 ```
 **Sample Result URL**
@@ -308,7 +308,7 @@ For example:
 ```js
 <IKImage
     path="/default-image.jpg"
-    transformation={[{ "width": 300, "height": 400 },{ "raw": "l-image,i-default-image.jpg,w-100,b-10_CDDC39,l-end" }]}
+    transformation={[{ "width": 400, "height": 300 },{ "raw": "l-image,i-default-image.jpg,w-100,b-10_CDDC39,l-end" }]}
 />
 ```
 **Sample Result URL**
@@ -325,7 +325,7 @@ For example:
 ```js
 <IKVideo
     path="/img/sample-video.mp4"
-    transformation={[{ "width": 300, "height": 400 },{ "raw": "l-image,i-ik_canvas,bg-FF0000,w-300,h-100,l-end" }]}
+    transformation={[{ "width": 400, "height": 300 },{ "raw": "l-image,i-ik_canvas,bg-FF0000,w-300,h-100,l-end" }]}
 />
 ```
 **Sample Result URL**
