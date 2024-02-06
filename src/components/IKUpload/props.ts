@@ -2,8 +2,32 @@ import { UploadResponse } from 'imagekit-javascript/dist/src/interfaces';
 import PropTypes, { InferProps } from 'prop-types';
 import React from 'react';
 
+type TransformationObject = {
+  type: "transformation";
+  value: string;
+};
+
+type GifToVideoOrThumbnailObject = {
+  type: "gif-to-video" | "thumbnail";
+  value?: string;
+};
+
+type AbsObject = {
+  type: "abs";
+  value: string;
+  protocol: "hls" | "dash";
+};
+
+type PostTransformation = TransformationObject | GifToVideoOrThumbnailObject | AbsObject;
+
+type TransformationType = {
+  pre?: string;
+  post?: PostTransformation[];
+};
+
 const Props = {
     fileName: PropTypes.string,
+    transformation: PropTypes.object,
     tags: PropTypes.arrayOf(PropTypes.string.isRequired),
     useUniqueFileName: PropTypes.bool,
     responseFields: PropTypes.array,
@@ -44,6 +68,7 @@ export type IKUploadProps = InferProps<typeof Props> & {
     onUploadStart?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
     onUploadProgress?: (evt: ProgressEvent<XMLHttpRequestEventTarget>) => void;
     validateFile?: (file: File) => boolean;
+    transformation?: TransformationType;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default Props;

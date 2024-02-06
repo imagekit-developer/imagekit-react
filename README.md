@@ -12,7 +12,16 @@ ImageKit React SDK allows you to resize, optimize, deliver, and upload images an
 
 ImageKit is a complete media storage, optimization, and transformation solution that comes with an image and video CDN. It can be integrated with your existing infrastructure - storage like AWS S3, web servers, your CDN, and custom domain names, allowing you to deliver optimized images in minutes with minimal code changes.
 
-## Breaking changes - Upgrading from 2.x to 3.x version
+## Breaking changes
+
+### Upgrading from 3.x to 4.x version
+
+1. Overlay syntax update
+
+* In version 4.0.0, we've removed the old overlay syntax parameters for transformations, such as `oi`, `ot`, `obg`, and [more](https://docs.imagekit.io/features/image-transformations/overlay). These parameters are deprecated and will start returning errors when used in URLs. Please migrate to the new layers syntax that supports overlay nesting, provides better positional control, and allows more transformations at the layer level. You can start with [examples](https://docs.imagekit.io/features/image-transformations/overlay-using-layers#examples) to learn quickly.
+* You can migrate to the new layers syntax using the `raw` transformation parameter.
+
+### Upgrading from 2.x to 3.x version
 3.x version has breaking changes as listed below.
 * In version 3.0.0, we have deprecated the use of the `authenticationEndpoint` parameter. Instead, the SDK now introduces a new parameter named `authenticator`. This parameter expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 * Now `ref` needs to be passed instead of `inputRef` in the IKUpload component
@@ -169,6 +178,15 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
     folder={"/sample-folder"}
     ref={uploadRef}
     onError={onError} onSuccess={onSuccess}
+    transformation={{
+      pre: 'l-text,i-Imagekit,fs-50,l-end', 
+      post: [
+        {
+          'type': 'transformation', 
+          'value': 'w-100'
+        }
+      ]
+    }}
   />
 </IKContext>
 ```
@@ -333,6 +351,29 @@ For example:
 https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400,l-image,i-ik_canvas,bg-FF0000,w-300,h-100,l-end/img/sample-video.mp4
 ```
 
+
+### Arithmetic expressions in transformations
+
+ImageKit allows use of [arithmetic expressions](https://docs.imagekit.io/features/arithmetic-expressions-in-transformations) in certain dimension and position-related parameters, making media transformations more flexible and dynamic.
+
+For example:
+
+```js
+<IKImage
+    path="/default-image.jpg"
+    transformation={[{
+        "height": "ih_div_2",
+        "width": "iw_div_4",
+        "border": "cw_mul_0.05_yellow"
+    }]}
+/>
+```
+
+**Sample Result URL**
+```
+https://ik.imagekit.io/your_imagekit_id/default-image.jpg?tr=w-iw_div_4,h-ih_div_2,b-cw_mul_0.05_yellow
+```
+
 ### List of supported transformations
 <details>
 <summary>Expand</summary>
@@ -366,6 +407,8 @@ https://ik.imagekit.io/your_imagekit_id/tr:h-300,w-400,l-image,i-ik_canvas,bg-FF
 | effectUSM | e-usm |
 | effectContrast | e-contrast |
 | effectGray | e-grayscale |
+| effectShadow | e-shadow |
+| effectGradient | e-gradient |
 | original | orig |
 | raw | The string provided in raw will be added to the URL as it is. |
 
@@ -603,6 +646,15 @@ const onSuccess = (res) => {
     onSuccess={onSuccess}
     onUploadStart={onUploadStart}
     onUploadProgress={onUploadProgress}
+    transformation={{
+      pre: 'l-text,i-Imagekit,fs-50,l-end', 
+      post: [
+        {
+          'type': 'transformation', 
+          'value': 'w-100'
+        }
+      ]
+    }}
   />
 </IKContext>;
 ```
@@ -633,6 +685,15 @@ const onSuccess = (res) => {
     onSuccess={onSuccess}
     ref={reftest}
     style={{display: 'none'}} // hide default button
+    transformation={{
+      pre: 'l-text,i-Imagekit,fs-50,l-end', 
+      post: [
+        {
+          'type': 'transformation', 
+          'value': 'w-100'
+        }
+    ]
+    }}
   />
   <h1>Custom Upload Button</h1>
   {reftest && <button className='custom-button-style' onClick={() => reftest.current.click()}>Upload</button>}

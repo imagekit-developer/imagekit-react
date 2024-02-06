@@ -51,6 +51,7 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     overwriteCustomMetadata,
     extensions,
     customMetadata,
+    transformation,
     ...restProps
   } = props;
 
@@ -140,6 +141,7 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
       expire: 0,
       token: '',
       xhr,
+      transformation,
     };
 
     const authPromise = authenticator();

@@ -3,6 +3,7 @@ import { TransformationPosition, UrlOptions } from "imagekit-javascript/dist/src
 import { IKContextCombinedProps, IKContextBaseProps } from "../components/IKContext/props";
 import { IKImageProps, IKImageBaseProps } from "../components/IKImage/combinedProps";
 import { IKVideoBaseProps } from "../components/IKVideo/combinedProps";
+import { Transformation } from "imagekit-javascript/dist/src/interfaces/Transformation";
 
 
 export type IKImageState = {
@@ -42,7 +43,7 @@ export const getSrc = ({ urlEndpoint, lqip, src, path, transformation, transform
     urlEndpoint: urlEndpoint || contextOptions.urlEndpoint,
     src: src || contextOptions.src || undefined,
     path: path || contextOptions.path || undefined,
-    transformation: transformation || contextOptions.transformation,
+    transformation: (transformation || contextOptions.transformation) as Array<Transformation>,
     transformationPosition: ((transformationPosition || contextOptions.transformationPosition || undefined) as TransformationPosition),
     queryParameters: queryParameters || contextOptions.queryParameters || {}
   };
