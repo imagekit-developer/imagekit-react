@@ -3,10 +3,12 @@ import COMMON_PROPS, { IKContextBaseProps } from "../IKContext/props";
 import IK_UPLOAD_PROPS, { IKUploadProps } from "./props";
 import { ImageKitContext } from '../IKContext';
 import useImageKitComponent from '../ImageKitComponent';
+import PropTypes from 'prop-types';
 
 const PROP_TYPES = {
   ...COMMON_PROPS,
-  ...IK_UPLOAD_PROPS
+  ...IK_UPLOAD_PROPS,
+  transformation: PropTypes.object,
 };
 
 type IKUploadState = {

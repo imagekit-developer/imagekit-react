@@ -27,7 +27,6 @@ type TransformationType = {
 
 const Props = {
     fileName: PropTypes.string,
-    transformation: PropTypes.object,
     tags: PropTypes.arrayOf(PropTypes.string.isRequired),
     useUniqueFileName: PropTypes.bool,
     responseFields: PropTypes.array,
