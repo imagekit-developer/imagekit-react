@@ -46,6 +46,7 @@ const Props = {
     onUploadProgress: PropTypes.func,
     validateFile: PropTypes.func,
     ref: PropTypes.any,
+    transformation: PropTypes.object,
 }
 
 export type IKUploadProps = InferProps<typeof Props> & {

@@ -10,7 +10,7 @@ const Props = {
   authenticator: PropTypes.func
 };
 
-export const IKContextCombinedProps = {
+const IKContextCombinedProps = {
   ...Props,
   ...IK_IMAGE_PROPS,
   ...IK_UPLOAD_PROPS,
@@ -18,11 +18,14 @@ export const IKContextCombinedProps = {
   ikClient: PropTypes.instanceOf(ImageKit),
 };
 
-export type IKContextCombinedProps = InferProps<typeof IKContextCombinedProps> & {
+type IKContextCombinedPropsOmit = Omit<typeof IKContextCombinedProps, "src" | "path" | "transformation"> & {
   src?: string;
   path?: string;
-  urlEndpoint?: string;
   transformation?: Array<string>;
+};
+
+export type IKContextCombinedProps = InferProps<IKContextCombinedPropsOmit> & {
+  urlEndpoint?: string;
 };
 
 export type IKContextBaseProps = InferProps<typeof Props>;
