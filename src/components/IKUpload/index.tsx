@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useState } from 'react';
+import React, { forwardRef, useContext, useEffect, useState } from 'react';
 import COMMON_PROPS, { IKContextBaseProps } from "../IKContext/props";
 import IK_UPLOAD_PROPS, { IKUploadProps } from "./props";
 import { ImageKitContext } from '../IKContext';
@@ -18,15 +18,18 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
   const contextOptions = useContext(ImageKitContext);
   const { getIKClient } = useImageKitComponent({ ...props });
 
-  const abort = () => {
-    if (state.xhr) {
-      state.xhr.abort();
-    }
-  }
 
-  if (ref && (ref as any).current) {
-    (ref as any).current = { ...(ref as any).current, abort }
-  }
+  useEffect(() => {
+    const abort = () => {
+      if (state.xhr) {
+        state.xhr.abort();
+      }
+    };
+    if (ref && typeof ref === "object" && ref.hasOwnProperty("current")) {
+      const refObject = ref as any;
+      refObject.current.abort = abort;
+    }
+  }, [state.xhr, ref]);
 
   const {
     publicKey,
