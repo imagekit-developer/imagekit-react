@@ -10,7 +10,7 @@ const Props = {
   authenticator: PropTypes.func
 };
 
-const IKContextCombinedProps = {
+export const IKContextCombinedProps = {
   ...Props,
   ...IK_IMAGE_PROPS,
   ...IK_UPLOAD_PROPS,
