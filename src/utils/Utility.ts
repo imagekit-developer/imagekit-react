@@ -55,9 +55,8 @@ export const getSrc = ({ urlEndpoint, lqip, src, path, transformation, transform
       transformationPosition: ((transformationPosition || contextOptions.transformationPosition || undefined) as TransformationPosition),
       queryParameters: queryParameters || {},
     };
-  } else{
-    throw new Error("Either src and path is required");
-  }
+  } else
+    return { originalSrc: "" };
 
   const result: GetSrcReturnType = {originalSrc: ikClient.url(options)};
 
