@@ -25,6 +25,24 @@ type TransformationType = {
   post?: PostTransformation[];
 };
 
+interface BgRemoval {
+  name: string
+  options: {
+    bg_color?: string
+    bg_image_url?: string
+    add_shadow: boolean
+    semitransparency: boolean
+  }
+}
+
+interface AutoTag {
+  name: string
+  maxTags: number
+  minConfidence: number
+}
+
+export type Extension = (BgRemoval | AutoTag)[];
+
 const Props = {
     fileName: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string.isRequired),
@@ -56,7 +74,7 @@ export type IKUploadProps = InferProps<typeof Props> & {
     isPrivateFile?: boolean;
     customCoordinates?: string;
     responseFields?: Array<string>;
-    extensions?: object[];
+    extensions?: Extension;
     webhookUrl?: string;
     overwriteFile?: boolean,
     overwriteAITags?: boolean,

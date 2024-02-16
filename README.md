@@ -21,6 +21,10 @@ ImageKit is a complete media storage, optimization, and transformation solution 
 * In version 4.0.0, we've removed the old overlay syntax parameters for transformations, such as `oi`, `ot`, `obg`, and [more](https://docs.imagekit.io/features/image-transformations/overlay). These parameters are deprecated and will start returning errors when used in URLs. Please migrate to the new layers syntax that supports overlay nesting, provides better positional control, and allows more transformations at the layer level. You can start with [examples](https://docs.imagekit.io/features/image-transformations/overlay-using-layers#examples) to learn quickly.
 * You can migrate to the new layers syntax using the `raw` transformation parameter.
 
+2. IKContext props update
+
+* In version 4.0.0, we've narrowed down the options you can use with `IKContext`. Now, you can only use `urlEndpoint`, `publicKey`, `authenticator`, and `transformationPosition` as props.
+
 ### Upgrading from 2.x to 3.x version
 3.x version has breaking changes as listed below.
 * In version 3.0.0, we have deprecated the use of the `authenticationEndpoint` parameter. Instead, the SDK now introduces a new parameter named `authenticator`. This parameter expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.

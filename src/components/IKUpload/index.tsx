@@ -1,13 +1,8 @@
 import React, { forwardRef, useContext, useEffect, useState } from 'react';
-import COMMON_PROPS, { IKContextBaseProps } from "../IKContext/props";
-import IK_UPLOAD_PROPS, { IKUploadProps } from "./props";
+import { IKContextBaseProps } from "../IKContext/props";
+import { IKUploadProps } from "./props";
 import { ImageKitContext } from '../IKContext';
 import useImageKitComponent from '../ImageKitComponent';
-
-const PROP_TYPES = {
-  ...COMMON_PROPS,
-  ...IK_UPLOAD_PROPS,
-};
 
 type IKUploadState = {
   xhr?: XMLHttpRequest;
@@ -212,7 +207,5 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     />
   );
 });
-
-IKUpload.propTypes = { ...PROP_TYPES };
 
 export default IKUpload;

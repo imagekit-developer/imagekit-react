@@ -36,15 +36,28 @@ export const areObjectsDifferent = <T>(prevProps: T, newProps: T, propsAffecting
 type GetSrcReturnType = {originalSrc: string; lqipSrc?: string;};
 
 export const getSrc = ({ urlEndpoint, lqip, src, path, transformation, transformationPosition, queryParameters }: IKImageBaseProps & IKVideoBaseProps & IKContextBaseProps,
-  ikClient: ImageKit, contextOptions: IKContextCombinedProps): GetSrcReturnType => {
-  let options: UrlOptions = {
-    urlEndpoint: urlEndpoint || contextOptions.urlEndpoint,
-    src: src || contextOptions.src || undefined,
-    path: path || contextOptions.path || undefined,
-    transformation: transformation || contextOptions.transformation,
-    transformationPosition: ((transformationPosition || contextOptions.transformationPosition || undefined) as TransformationPosition),
-    queryParameters: queryParameters || contextOptions.queryParameters || {}
-  };
+  ikClient: ImageKit, contextOptions: IKContextCombinedProps): GetSrcReturnType  => {
+
+  let options: UrlOptions;
+  if (src) {
+    options = {
+      urlEndpoint: urlEndpoint || contextOptions.urlEndpoint,
+      src,
+      transformation: transformation || undefined,
+      transformationPosition: ((transformationPosition || contextOptions.transformationPosition || undefined) as TransformationPosition),
+      queryParameters: queryParameters || {},
+    };
+  } else if (path) {
+    options = {
+      urlEndpoint: urlEndpoint || contextOptions.urlEndpoint,
+      path,
+      transformation: transformation || undefined,
+      transformationPosition: ((transformationPosition || contextOptions.transformationPosition || undefined) as TransformationPosition),
+      queryParameters: queryParameters || {},
+    };
+  } else{
+    throw new Error("Either src and path is required");
+  }
 
   const result: GetSrcReturnType = {originalSrc: ikClient.url(options)};
 
