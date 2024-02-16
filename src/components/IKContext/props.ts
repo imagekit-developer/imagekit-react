@@ -10,6 +10,10 @@ const Props = {
 export const IKContextCombinedProps = {
   ...Props,
   transformationPosition: PropTypes.oneOf(['path', 'query']),
+};
+
+export const IKContextExtractedProps = {
+  ...IKContextCombinedProps,
   ikClient: PropTypes.instanceOf(ImageKit),
 };
 
@@ -18,5 +22,9 @@ export type IKContextCombinedProps = InferProps<typeof IKContextCombinedProps> &
 };
 
 export type IKContextBaseProps = InferProps<typeof Props>;
+
+export type IKContextExtractedProps = InferProps<typeof IKContextExtractedProps> & {
+  urlEndpoint?: string;
+};
 
 export default Props;
