@@ -57,7 +57,7 @@ const Props = {
     overwriteAITags: PropTypes.bool,
     overwriteTags: PropTypes.bool,
     overwriteCustomMetadata: PropTypes.bool,
-    customMetadata: PropTypes.any,
+    customMetadata: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
     onError: PropTypes.func,
     onSuccess: PropTypes.func,
     onUploadStart: PropTypes.func,
@@ -67,7 +67,7 @@ const Props = {
     transformation: PropTypes.object,
 }
 
-export type IKUploadProps = InferProps<typeof Props> & {
+export type IKUploadProps = Omit<InferProps<typeof Props>, "customMetadata" | "transformation"> & {
     useUniqueFileName?: boolean;
     tags?: Array<string>;
     folder?: string;
