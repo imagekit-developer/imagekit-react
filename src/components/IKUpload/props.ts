@@ -7,18 +7,23 @@ type TransformationObject = {
   value: string;
 };
 
-type GifToVideoOrThumbnailObject = {
-  type: "gif-to-video" | "thumbnail";
+type GifToVideoObject = {
+  type: "gif-to-video";
   value?: string;
 };
 
-type AbsObject = {
+type ThumbnailObject = {
+  type: "thumbnail";
+  value?: string;
+};
+
+type ABSObject = {
   type: "abs";
   value: string;
   protocol: "hls" | "dash";
 };
 
-type PostTransformation = TransformationObject | GifToVideoOrThumbnailObject | AbsObject;
+type PostTransformation = TransformationObject | GifToVideoObject | ThumbnailObject | ABSObject;
 
 type TransformationType = {
   pre?: string;
