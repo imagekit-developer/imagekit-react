@@ -27,11 +27,11 @@ type TransformationType = {
 
 interface BgRemoval {
   name: string
-  options: {
+  options?: {
     bg_color?: string
     bg_image_url?: string
-    add_shadow: boolean
-    semitransparency: boolean
+    add_shadow?: boolean
+    semitransparency?: boolean
   }
 }
 
