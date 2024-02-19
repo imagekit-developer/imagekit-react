@@ -2,7 +2,7 @@
 import React, { createContext } from 'react';
 import { InferProps } from 'prop-types';
 import ImageKit from 'imagekit-javascript';
-import { IKContextCombinedProps, IKContextExtractedProps } from "./props";
+import { IKContextProps, IKContextExtractedProps } from "./props";
 
 // Create the context
 export const ImageKitContext = createContext<IKContextExtractedProps>({});
@@ -16,7 +16,7 @@ export const ImageKitContext = createContext<IKContextExtractedProps>({});
  *    <Image src={link}/>
  *</IKContext>
  */
-const IKContext = (props: React.PropsWithChildren<IKContextCombinedProps>) => {
+const IKContext = (props: React.PropsWithChildren<IKContextProps>) => {
 
   const extractContextOptions = (mergedOptions: InferProps<IKContextExtractedProps>) => {
     var result: IKContextExtractedProps = {};

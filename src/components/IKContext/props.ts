@@ -7,17 +7,17 @@ const Props = {
   authenticator: PropTypes.func
 };
 
-export const IKContextCombinedProps = {
+export const IKContextProps = {
   ...Props,
   transformationPosition: PropTypes.oneOf(['path', 'query']),
 };
 
 export const IKContextExtractedProps = {
-  ...IKContextCombinedProps,
+  ...IKContextProps,
   ikClient: PropTypes.instanceOf(ImageKit),
 };
 
-export type IKContextCombinedProps = InferProps<typeof IKContextCombinedProps> & {
+export type IKContextProps = InferProps<typeof IKContextProps> & {
   urlEndpoint?: string;
 };
 
