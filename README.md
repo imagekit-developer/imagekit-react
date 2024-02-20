@@ -23,7 +23,7 @@ ImageKit is a complete media storage, optimization, and transformation solution 
 
 2. IKContext props update
 
-* `IKContext` has been updated to only include `urlEndpoint`, `publicKey`, `authenticator`, and `transformationPosition` props, removing others that were more specific to image, video, and upload, and not typically set globally..
+* `IKContext` has been updated to only include `urlEndpoint`, `publicKey`, `authenticator`, and `transformationPosition` props, removing others that were more specific to image, video, and upload, and not typically set globally.
 
 ### Upgrading from 2.x to 3.x version
 3.x version has breaking changes as listed below.
