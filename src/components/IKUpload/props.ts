@@ -2,6 +2,52 @@ import { UploadResponse } from 'imagekit-javascript/dist/src/interfaces';
 import PropTypes, { InferProps } from 'prop-types';
 import React from 'react';
 
+type TransformationObject = {
+  type: "transformation";
+  value: string;
+};
+
+type GifToVideoObject = {
+  type: "gif-to-video";
+  value?: string;
+};
+
+type ThumbnailObject = {
+  type: "thumbnail";
+  value?: string;
+};
+
+type ABSObject = {
+  type: "abs";
+  value: string;
+  protocol: "hls" | "dash";
+};
+
+type PostTransformation = TransformationObject | GifToVideoObject | ThumbnailObject | ABSObject;
+
+type TransformationType = {
+  pre?: string;
+  post?: PostTransformation[];
+};
+
+interface BgRemoval {
+  name: string
+  options?: {
+    bg_color?: string
+    bg_image_url?: string
+    add_shadow?: boolean
+    semitransparency?: boolean
+  }
+}
+
+interface AutoTag {
+  name: string
+  maxTags: number
+  minConfidence: number
+}
+
+export type Extension = (BgRemoval | AutoTag)[];
+
 const Props = {
     fileName: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string.isRequired),
@@ -16,23 +62,24 @@ const Props = {
     overwriteAITags: PropTypes.bool,
     overwriteTags: PropTypes.bool,
     overwriteCustomMetadata: PropTypes.bool,
-    customMetadata: PropTypes.any,
+    customMetadata: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
     onError: PropTypes.func,
     onSuccess: PropTypes.func,
     onUploadStart: PropTypes.func,
     onUploadProgress: PropTypes.func,
     validateFile: PropTypes.func,
     ref: PropTypes.any,
+    transformation: PropTypes.object,
 }
 
-export type IKUploadProps = InferProps<typeof Props> & {
+export type IKUploadProps = Omit<InferProps<typeof Props>, "customMetadata" | "transformation"> & {
     useUniqueFileName?: boolean;
     tags?: Array<string>;
     folder?: string;
     isPrivateFile?: boolean;
     customCoordinates?: string;
     responseFields?: Array<string>;
-    extensions?: object[];
+    extensions?: Extension;
     webhookUrl?: string;
     overwriteFile?: boolean,
     overwriteAITags?: boolean,
@@ -44,6 +91,7 @@ export type IKUploadProps = InferProps<typeof Props> & {
     onUploadStart?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
     onUploadProgress?: (evt: ProgressEvent<XMLHttpRequestEventTarget>) => void;
     validateFile?: (file: File) => boolean;
+    transformation?: TransformationType;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default Props;

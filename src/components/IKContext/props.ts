@@ -1,8 +1,5 @@
 import ImageKit from 'imagekit-javascript';
 import PropTypes, { InferProps } from 'prop-types';
-import IK_IMAGE_PROPS from "../IKImage/props";
-import IK_UPLOAD_PROPS from "../IKUpload/props";
-import IK_VIDEO_PROPS from "../IKUpload/props";
 
 const Props = {
   publicKey: PropTypes.string,
@@ -10,21 +7,24 @@ const Props = {
   authenticator: PropTypes.func
 };
 
-export const IKContextCombinedProps = {
+export const IKContextProps = {
   ...Props,
-  ...IK_IMAGE_PROPS,
-  ...IK_UPLOAD_PROPS,
-  ...IK_VIDEO_PROPS,
+  transformationPosition: PropTypes.oneOf(['path', 'query']),
+};
+
+export const IKContextExtractedProps = {
+  ...IKContextProps,
   ikClient: PropTypes.instanceOf(ImageKit),
 };
 
-export type IKContextCombinedProps = InferProps<typeof IKContextCombinedProps> & {
-  src?: string;
-  path?: string;
+export type IKContextProps = InferProps<typeof IKContextProps> & {
   urlEndpoint?: string;
-  transformation?: Array<string>;
 };
 
 export type IKContextBaseProps = InferProps<typeof Props>;
+
+export type IKContextExtractedProps = InferProps<typeof IKContextExtractedProps> & {
+  urlEndpoint?: string;
+};
 
 export default Props;

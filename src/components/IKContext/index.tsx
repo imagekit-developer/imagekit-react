@@ -2,10 +2,10 @@
 import React, { createContext } from 'react';
 import { InferProps } from 'prop-types';
 import ImageKit from 'imagekit-javascript';
-import { IKContextCombinedProps } from "./props";
+import { IKContextProps, IKContextExtractedProps } from "./props";
 
 // Create the context
-export const ImageKitContext = createContext<IKContextCombinedProps>({});
+export const ImageKitContext = createContext<IKContextExtractedProps>({});
 
 /**
  * Provides a container for ImageKit components. Any option set in IKContext will be passed to the children.
@@ -16,18 +16,18 @@ export const ImageKitContext = createContext<IKContextCombinedProps>({});
  *    <Image src={link}/>
  *</IKContext>
  */
-const IKContext = (props: React.PropsWithChildren<IKContextCombinedProps>) => {
+const IKContext = (props: React.PropsWithChildren<IKContextProps>) => {
 
-  const extractContextOptions = (mergedOptions: InferProps<IKContextCombinedProps>) => {
-    var result: IKContextCombinedProps = {};
+  const extractContextOptions = (mergedOptions: InferProps<IKContextExtractedProps>) => {
+    var result: IKContextExtractedProps = {};
 
-    const propKeys = Object.keys(IKContextCombinedProps);
+    const propKeys = Object.keys(IKContextExtractedProps);
 
     for (var i = 0; i < propKeys.length; i++) {
       var key = propKeys[i];
-      const value = mergedOptions[key as keyof IKContextCombinedProps];
+      const value = mergedOptions[key as keyof IKContextExtractedProps];
       if (value) {
-        result[key as keyof IKContextCombinedProps] = value;
+        result[key as keyof IKContextExtractedProps] = value;
       }
     }
 
