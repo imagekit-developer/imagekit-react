@@ -61,7 +61,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "codecov": "^3.8.0",
-    "cypress": "^10.4.0",
+    "cypress": "^13.6.4",
     "cypress-file-upload": "^5.0.8",
     "cypress-log-to-output": "^1.1.2",
     "enzyme": "^3.11.0",
