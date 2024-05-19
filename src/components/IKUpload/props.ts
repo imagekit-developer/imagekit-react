@@ -70,7 +70,25 @@ const Props = {
     validateFile: PropTypes.func,
     ref: PropTypes.any,
     transformation: PropTypes.object,
+    overrideParameters: PropTypes.func,
 }
+
+export type OverrideValues = {
+  fileName?: IKUploadProps['fileName'];
+  useUniqueFileName?: IKUploadProps['useUniqueFileName'];
+  tags?: IKUploadProps['tags'];
+  folder?: IKUploadProps['folder'];
+  isPrivateFile?: IKUploadProps['isPrivateFile'];
+  customCoordinates?: IKUploadProps['customCoordinates'];
+  extensions?: IKUploadProps['extensions'];
+  webhookUrl?: IKUploadProps['webhookUrl'];
+  overwriteFile?: IKUploadProps['overwriteFile'];
+  overwriteAITags?: IKUploadProps['overwriteAITags'];
+  overwriteTags?: IKUploadProps['overwriteTags'];
+  overwriteCustomMetadata?: IKUploadProps['overwriteCustomMetadata'];
+  customMetadata?: IKUploadProps['customMetadata'];
+  transformation?: IKUploadProps['transformation'];
+};
 
 export type IKUploadProps = Omit<InferProps<typeof Props>, "customMetadata" | "transformation"> & {
     useUniqueFileName?: boolean;
@@ -92,6 +110,7 @@ export type IKUploadProps = Omit<InferProps<typeof Props>, "customMetadata" | "t
     onUploadProgress?: (evt: ProgressEvent<XMLHttpRequestEventTarget>) => void;
     validateFile?: (file: File) => boolean;
     transformation?: TransformationType;
+    overrideParameters?: (file: File) => OverrideValues;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default Props;

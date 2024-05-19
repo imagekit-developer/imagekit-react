@@ -1,6 +1,6 @@
 import React, { forwardRef, useContext, useEffect, useState } from 'react';
 import { IKContextBaseProps } from "../IKContext/props";
-import { IKUploadProps } from "./props";
+import { IKUploadProps, OverrideValues } from "./props";
 import { ImageKitContext } from '../IKContext';
 import useImageKitComponent from '../ImageKitComponent';
 
@@ -50,6 +50,7 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     extensions,
     customMetadata,
     transformation,
+    overrideParameters,
     ...restProps
   } = props;
 
@@ -60,6 +61,7 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     const urlEndpoint = props.urlEndpoint || contextOptions.urlEndpoint;
 
     if (!publicKey || publicKey.trim() === "") {
+      console.error("Missing publicKey");
       if (onError && typeof onError === "function") {
         onError({
           message: "Missing publicKey"
@@ -69,6 +71,7 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     }
 
     if (!authenticator) {
+      console.error("The authenticator function is not provided.");
       if (onError && typeof onError === "function") {
         onError({
           message: "The authenticator function is not provided."
@@ -78,6 +81,7 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     }
 
     if (typeof authenticator !== 'function') {
+      console.error("The provided authenticator is not a function.");
       if (onError && typeof onError === "function") {
         onError({
           message: "The provided authenticator is not a function."
@@ -87,6 +91,7 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     }
 
     if (!urlEndpoint || urlEndpoint.trim() === "") {
+      console.error("Missing urlEndpoint");
       if (onError && typeof onError === "function") {
         onError({
           message: "Missing urlEndpoint"
@@ -110,6 +115,12 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
       props.onUploadStart(e);
     }
 
+    let overrideValues: OverrideValues = {};
+
+    if (props.overrideParameters && typeof props.overrideParameters === 'function') {
+      overrideValues = props.overrideParameters(file);
+    }
+
     const xhr = new XMLHttpRequest();
     const progressCb = (e: ProgressEvent<XMLHttpRequestEventTarget>) => {
       if (props.onUploadProgress && typeof props.onUploadProgress === 'function') {
@@ -121,25 +132,25 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
 
     var params = {
       file: file,
-      fileName: fileName || file.name,
-      useUniqueFileName,
-      tags,
-      folder,
-      isPrivateFile,
-      customCoordinates,
+      fileName: overrideValues.fileName || fileName || file.name,
+      useUniqueFileName:  overrideValues.useUniqueFileName || useUniqueFileName,
+      tags: overrideValues.tags || tags,
+      folder: overrideValues.folder || folder,
+      isPrivateFile: overrideValues.isPrivateFile || isPrivateFile,
+      customCoordinates: overrideValues.customCoordinates || customCoordinates,
       responseFields,
-      extensions,
-      webhookUrl,
-      overwriteFile,
-      overwriteAITags,
-      overwriteTags,
-      overwriteCustomMetadata,
-      customMetadata,
+      extensions: overrideValues.extensions || extensions,
+      webhookUrl: overrideValues.webhookUrl || webhookUrl,
+      overwriteFile: overrideValues.overwriteFile || overwriteFile,
+      overwriteAITags: overrideValues.overwriteAITags || overwriteAITags,
+      overwriteTags: overrideValues.overwriteTags || overwriteTags,
+      overwriteCustomMetadata: overrideValues.overwriteCustomMetadata || overwriteCustomMetadata,
+      customMetadata: overrideValues.customMetadata || customMetadata,
       signature: '',
       expire: 0,
       token: '',
       xhr,
-      transformation,
+      transformation: overrideValues.transformation || transformation,
     };
 
     const authPromise = authenticator();
