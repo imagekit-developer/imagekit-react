@@ -86,6 +86,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
 
 ### Quick examples
 
+#### Image & video rendering and transformations
 ```js
 <IKContext urlEndpoint="https://ik.imagekit.io/your_imagekit_id">
   // Render an image using a relative path - https://ik.imagekit.io/your_imagekit_id/default-image.jpg
@@ -112,6 +113,18 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
     "rotation": "90"
   }]} />
 
+  // Video element with basic transformation, reduced quality by 50% using q:50
+  <IKVideo
+    path={'/default-video.mp4'}
+    transformation={[{ height: 200, width: 200, q: 50 }]}
+    controls={true}
+  />
+</IKContext>
+```
+
+#### Image lazy loading and low-quality placeholder
+```js
+<IKContext urlEndpoint="https://ik.imagekit.io/your_imagekit_id">
   // Lazy loading image
   <IKImage
     path="/default-image.jpg"
@@ -155,17 +168,18 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
     loading="lazy"
     lqip={{ active: true }}
   />
-
-  // Video element with basic transformation, reduced quality by 50% using q:50
-  <IKVideo
-    path={'/default-video.mp4'}
-    transformation={[{ height: 200, width: 200, q: 50 }]}
-    controls={true}
-  />
 </IKContext>
+```
 
-<IKContext publicKey="your_public_api_key">
-  // Simple file upload and response handling
+#### File upload
+```js
+// Ensure you pass publicKey, urlEndpoint, and authenticator function to the parent IKContext component or to the IKUpload component directly.
+<IKContext
+  publicKey="your_public_api_key"
+  urlEndpoint="https://ik.imagekit.io/your_imagekit_id"
+  authenticator={()=>Promise} 
+  // This promise  resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
+  >
   <IKUpload
     onError={onError}
     onSuccess={onSuccess}
@@ -239,16 +253,16 @@ will render:
 
 The `IKImage` component renders an `img` tag. It is used for rendering and manipulating images in real time. `IKImage` component accepts the following props:
 
-| Prop             | Type | Description                    |
-| :----------------| :----|:----------------------------- |
-| urlEndpoint      | String | Optional. The base URL to be appended before the path of the image. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
-| path             | String |Conditional. This is the path at which the image exists. For example, `/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation. |
-| src              | String |Conditional. This is the complete URL of an image already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation. |
-| transformation   | Array of objects |Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as the Array's different objects. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it is applied in the URL as it is. |
-| transformationPosition | String |Optional. The default value is `path`, which places the transformation string as a URL path parameter. It can also be specified as `query`, which adds the transformation string as the URL's query parameter i.e.`tr`. If you use the `src` parameter to create the URL, then the transformation string is always added as a query parameter. |
-| queryParameters  | Object |Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and are not necessarily related to ImageKit. Especially useful if you want to add some versioning parameters to your URLs. |
-| loading  | String |Optional. Pass `lazy` to lazy load images. Note: Component does not accept change in this value after it has mounted. |
-| lqip  | Object |Optional. You can use this to show a low-quality blurred placeholder while the original image is being loaded e.g. `{active:true, quality: 20, blur: 6, raw: "n-lqip_named_transformation"`}. The default value of `quality` is `20`, and `blur` is `6`. If `raw` transformation is provided, SDK uses that and ignores the `quality` and `blur` parameters. <br /> Note: Component does not accept change in this value after it has mounted.|
+| Prop                   | Type             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| :--------------------- | :--------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| urlEndpoint            | String           | Optional. The base URL to be appended before the path of the image. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| path                   | String           | Conditional. This is the path at which the image exists. For example, `/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| src                    | String           | Conditional. This is the complete URL of an image already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/image.jpg`. Either the `path` or `src` parameter needs to be specified for URL generation.                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| transformation         | Array of objects | Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). Different steps of a [chained transformation](https://docs.imagekit.io/features/image-transformations/chained-transformations) can be specified as the Array's different objects. The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it is applied in the URL as it is. |
+| transformationPosition | String           | Optional. The default value is `path`, which places the transformation string as a URL path parameter. It can also be specified as `query`, which adds the transformation string as the URL's query parameter i.e.`tr`. If you use the `src` parameter to create the URL, then the transformation string is always added as a query parameter.                                                                                                                                                                                                                                                                                                                    |
+| queryParameters        | Object           | Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and are not necessarily related to ImageKit. Especially useful if you want to add some versioning parameters to your URLs.                                                                                                                                                                                                                                                                                                                                                                                                                |
+| loading                | String           | Optional. Pass `lazy` to lazy load images. Note: Component does not accept change in this value after it has mounted.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| lqip                   | Object           | Optional. You can use this to show a low-quality blurred placeholder while the original image is being loaded e.g. `{active:true, quality: 20, blur: 6, raw: "n-lqip_named_transformation"`}. The default value of `quality` is `20`, and `blur` is `6`. If `raw` transformation is provided, SDK uses that and ignores the `quality` and `blur` parameters. <br /> Note: Component does not accept change in this value after it has mounted.                                                                                                                                                                                                                    |
 
 ### Basic resizing examples
 
@@ -382,39 +396,39 @@ https://ik.imagekit.io/your_imagekit_id/default-image.jpg?tr=w-iw_div_4,h-ih_div
 <details>
 <summary>Expand</summary>
 
-| Supported Transformation Name | Translates to parameter |
-|-------------------------------|-------------------------|
-| height | h |
-| width | w |
-| aspectRatio | ar |
-| quality | q |
-| crop | c |
-| cropMode | cm |
-| x | x |
-| y | y |
-| focus | fo |
-| format | f |
-| radius | r |
-| background | bg |
-| border | b |
-| rotation | rt |
-| blur | bl |
-| named | n |
-| progressive | pr |
-| lossless | lo |
-| trim | t |
-| metadata | md |
-| colorProfile | cp |
-| defaultImage | di |
-| dpr | dpr |
-| effectSharpen | e-sharpen |
-| effectUSM | e-usm |
-| effectContrast | e-contrast |
-| effectGray | e-grayscale |
-| effectShadow | e-shadow |
-| effectGradient | e-gradient |
-| original | orig |
-| raw | The string provided in raw will be added to the URL as it is. |
+| Supported Transformation Name | Translates to parameter                                       |
+| ----------------------------- | ------------------------------------------------------------- |
+| height                        | h                                                             |
+| width                         | w                                                             |
+| aspectRatio                   | ar                                                            |
+| quality                       | q                                                             |
+| crop                          | c                                                             |
+| cropMode                      | cm                                                            |
+| x                             | x                                                             |
+| y                             | y                                                             |
+| focus                         | fo                                                            |
+| format                        | f                                                             |
+| radius                        | r                                                             |
+| background                    | bg                                                            |
+| border                        | b                                                             |
+| rotation                      | rt                                                            |
+| blur                          | bl                                                            |
+| named                         | n                                                             |
+| progressive                   | pr                                                            |
+| lossless                      | lo                                                            |
+| trim                          | t                                                             |
+| metadata                      | md                                                            |
+| colorProfile                  | cp                                                            |
+| defaultImage                  | di                                                            |
+| dpr                           | dpr                                                           |
+| effectSharpen                 | e-sharpen                                                     |
+| effectUSM                     | e-usm                                                         |
+| effectContrast                | e-contrast                                                    |
+| effectGray                    | e-grayscale                                                   |
+| effectShadow                  | e-shadow                                                      |
+| effectGradient                | e-gradient                                                    |
+| original                      | orig                                                          |
+| raw                           | The string provided in raw will be added to the URL as it is. |
 
 </details>
 
@@ -529,14 +543,14 @@ You can use `urlEndpoint` prop in an individual `IKImage` to change url for that
 
 The `IKVideo` component renders a `video` tag. It is used for rendering and manipulating videos in real-time. `IKVideo` component accepts the following props:
 
-| Prop             | Type | Description                    |
-| :----------------| :----|:----------------------------- |
-| urlEndpoint      | String | Optional. The base URL to be appended before the path of the video. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
-| path             | String |Conditional. This is the path at which the video exists. For example, `/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation. |
-| src              | String |Conditional. This is the complete URL of a video already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation. |
-| transformation   | Array of objects |Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |
-| transformationPosition | String |Optional. The default value is `path`, which places the transformation string as a path parameter in the URL. It can also be `query`, which adds the transformation string as the query parameter tr in the URL. If you use the src parameter to create the URL, then the transformation string is always added as a query parameter. |
-| queryParameters  | Object |Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and are not necessarily related to ImageKit. Especially useful if you want to add some versioning parameters to your URLs. |
+| Prop                   | Type             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| :--------------------- | :--------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| urlEndpoint            | String           | Optional. The base URL to be appended before the path of the video. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/                                                                                                                                                                                                                                                      |
+| path                   | String           | Conditional. This is the path at which the video exists. For example, `/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation.                                                                                                                                                                                                                                                                                                        |
+| src                    | String           | Conditional. This is the complete URL of a video already mapped to ImageKit. For example, `https://ik.imagekit.io/your_imagekit_id/endpoint/path/to/video.mp4`. Either the `path` or `src` parameter needs to be specified for URL generation.                                                                                                                                                                                                                                    |
+| transformation         | Array of objects | Optional. An array of objects specifying the transformation to be applied in the URL. The transformation name and the value should be specified as a key-value pair in the object. See list of [different tranformations](#list-of-supported-transformations). The complete list of supported transformations in the SDK and some examples of using them are given later. If you use a transformation name that is not specified in the SDK, it gets applied as it is in the URL. |
+| transformationPosition | String           | Optional. The default value is `path`, which places the transformation string as a path parameter in the URL. It can also be `query`, which adds the transformation string as the query parameter tr in the URL. If you use the src parameter to create the URL, then the transformation string is always added as a query parameter.                                                                                                                                             |
+| queryParameters        | Object           | Optional. These are the other query parameters that you want to add to the final URL. These can be any query parameters and are not necessarily related to ImageKit. Especially useful if you want to add some versioning parameters to your URLs.                                                                                                                                                                                                                                |
 
 ### Basic video resizing examples
 
@@ -587,30 +601,32 @@ The SDK provides the `IKUpload` component to upload files to the [ImageKit Media
 
 `IKUpload` component accepts the following props. These options are better explained in the [ImageKit Upload API](https://docs.imagekit.io/api-reference/upload-file-api/client-side-file-upload#request-structure-multipart-form-data) documentation.
 
-| Prop             | Type | Description                    |
-| :----------------| :----|:----------------------------- |
-| fileName | String | Optional. If not specified, the file system name is picked. 
-| useUniqueFileName  | Boolean | Optional. Accepts `true` of `false`. The default value is `true`. Specify whether to use a unique filename for this file or not. |
-| tags     | Array of string | Optional. Set the tags while uploading the file e.g. ["tag1","tag2"] |
-| folder        | String | Optional. The folder path (e.g. `/images/folder/`) in which the file has to be uploaded. If the folder doesn't exist before, a new folder is created.|
-| isPrivateFile | Boolean | Optional. Accepts `true` of `false`. The default value is `false`. Specify whether to mark the file as private or not. This is only relevant for image type files|
-| customCoordinates   | String | Optional. Define an important area in the image. This is only relevant for image-type files. To be passed as a string with the `x` and `y` coordinates of the top-left corner and `width` and `height` of the area of interest in the format `x,y,width,height`. For example - `10,10,100,100` |
-| responseFields   | Array of string | Optional. Values of the fields that you want upload API to return in the response. For example, set the value of this field to `["tags", "customCoordinates", "isPrivateFile"]` to get value of `tags`, `customCoordinates`, and `isPrivateFile` in the response. |
-| extensions   | Array of object | Optional. Array of object for [applying extensions](https://docs.imagekit.io/extensions/overview) on the image. |
-| webhookUrl   | String | Optional. Final status of pending extensions will be sent to this URL. |
-| overwriteFile   | Boolean | Optional. Default is true. If overwriteFile is set to false and useUniqueFileName is also false, and a file already exists at the exact location, upload API will return an error immediately. |
-| overwriteAITags   | Boolean | Optional. Default is true. If set to true and a file already exists at the exact location, its AITags will be removed. Set overwriteAITags to false to preserve AITags. |
-| overwriteCustomMetadata   | Boolean | Optional. Default is true. If the request does not have customMetadata , overwriteCustomMetadata is set to true and a file already exists at the exact location, exiting customMetadata will be removed. In case the request body has customMetadata, setting overwriteCustomMetadata to false has no effect and request's customMetadata is set on the asset. |
-| customMetadata   | Object | Optional. JSON key-value data to be associated with the asset. |
-| ref   | Reference | Optional. Forward reference to the core HTMLInputElement.|
-| onUploadStart | Function callback | Optional. Called before the upload is started. The first and only argument is the HTML input's change event |
-| onUploadProgress | Function callback | Optional. Called while an upload is in progress. The first and only argument is the ProgressEvent |
-| validateFile | Function callback | Optional. Called before the upload is started to run custom validation. The first and only argument is the file selected for upload. If the callback returns `true`, the upload is allowed to continue. But, if it returns `false`, the upload is not done |
-| onSuccess   | Function callback | Optional. Called if the upload is successful. The first and only argument is the response JSON from the upload API. The request-id, response headers, and HTTP status code are also accessible using the $ResponseMetadata key that is exposed from the [javascript sdk](https://github.com/imagekit-developer/imagekit-javascript#access-request-id-other-response-headers-and-http-status-code) |
-| onError   | Function callback | Optional. Called if upload results in an error. The first and only argument is the error received from the upload API |
-| urlEndpoint      | String | Optional. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/ |
-| publicKey      | String | Optional. If not specified, the `publicKey` specified in the parent `IKContext` component is used.|
-| authenticator      | ()=>Promise<{signature:string,token:string,expiry:number}> | Optional. If not specified, the `authenticator` specified in the parent `IKContext` component is used. |
+| Prop                    | Type                                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                             |
+| :---------------------- | :--------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| fileName                | String                                                     | Optional. If not specified, the file system name is picked.                                                                                                                                                                                                                                                                                                                                                             |
+| useUniqueFileName       | Boolean                                                    | Optional. Accepts `true` of `false`. The default value is `true`. Specify whether to use a unique filename for this file or not.                                                                                                                                                                                                                                                                                        |
+| tags                    | Array of string                                            | Optional. Set the tags while uploading the file e.g. ["tag1","tag2"]                                                                                                                                                                                                                                                                                                                                                    |
+| folder                  | String                                                     | Optional. The folder path (e.g. `/images/folder/`) in which the file has to be uploaded. If the folder doesn't exist before, a new folder is created.                                                                                                                                                                                                                                                                   |
+| isPrivateFile           | Boolean                                                    | Optional. Accepts `true` of `false`. The default value is `false`. Specify whether to mark the file as private or not. This is only relevant for image type files                                                                                                                                                                                                                                                       |
+| customCoordinates       | String                                                     | Optional. Define an important area in the image. This is only relevant for image-type files. To be passed as a string with the `x` and `y` coordinates of the top-left corner and `width` and `height` of the area of interest in the format `x,y,width,height`. For example - `10,10,100,100`                                                                                                                          |
+| responseFields          | Array of string                                            | Optional. Values of the fields that you want upload API to return in the response. For example, set the value of this field to `["tags", "customCoordinates", "isPrivateFile"]` to get value of `tags`, `customCoordinates`, and `isPrivateFile` in the response.                                                                                                                                                       |
+| extensions              | Array of object                                            | Optional. Array of object for [applying extensions](https://docs.imagekit.io/extensions/overview) on the image.                                                                                                                                                                                                                                                                                                         |
+| webhookUrl              | String                                                     | Optional. Final status of pending extensions will be sent to this URL.                                                                                                                                                                                                                                                                                                                                                  |
+| overwriteFile           | Boolean                                                    | Optional. Default is true. If overwriteFile is set to false and useUniqueFileName is also false, and a file already exists at the exact location, upload API will return an error immediately.                                                                                                                                                                                                                          |
+| overwriteAITags         | Boolean                                                    | Optional. Default is true. If set to true and a file already exists at the exact location, its AITags will be removed. Set overwriteAITags to false to preserve AITags.                                                                                                                                                                                                                                                 |
+| overwriteCustomMetadata | Boolean                                                    | Optional. Default is true. If the request does not have customMetadata , overwriteCustomMetadata is set to true and a file already exists at the exact location, exiting customMetadata will be removed. In case the request body has customMetadata, setting overwriteCustomMetadata to false has no effect and request's customMetadata is set on the asset.                                                          |
+| customMetadata          | Object                                                     | Optional. JSON key-value data to be associated with the asset.                                                                                                                                                                                                                                                                                                                                                          |
+| ref                     | Reference                                                  | Optional. Forward reference to the core HTMLInputElement.                                                                                                                                                                                                                                                                                                                                                               |
+| onUploadStart           | Function callback                                          | Optional. Called before the upload is started. The first and only argument is the HTML input's change event                                                                                                                                                                                                                                                                                                             |
+| onUploadProgress        | Function callback                                          | Optional. Called while an upload is in progress. The first and only argument is the ProgressEvent                                                                                                                                                                                                                                                                                                                       |
+| validateFile            | Function callback                                          | Optional. This function accepts the `File` object as an argument and exoects a Boolean return value. This is called before the upload is started to run custom validation. The first and only argument is the file selected for upload. If the callback returns `true`, the upload is allowed to continue. But, if it returns `false`, the upload is not done                                                           |
+| overrideParameters      | Function callback                                          | Optional. This function accepts the `File` object as an argument and should return a JSON value, e.g., `{fileName: "new-file-name.jpg"}.` Use this to programmatically override `fileName`, `useUniqueFileName`, `tags`, `folder`, `isPrivateFile`, `customCoordinates`, `extensions`, `webhookUrl`, `overwriteFile`, `overwriteAITags`, `overwriteTags`, `overwriteCustomMetadata`, `customMetadata`, and `transformation` parameters. |
+| onSuccess               | Function callback                                          | Optional. Called if the upload is successful. The first and only argument is the response JSON from the upload API. The request-id, response headers, and HTTP status code are also accessible using the $ResponseMetadata key that is exposed from the [javascript sdk](https://github.com/imagekit-developer/imagekit-javascript#access-request-id-other-response-headers-and-http-status-code)                       |
+| onError                 | Function callback                                          | Optional. Called if upload results in an error. The first and only argument is the error received from the upload API                                                                                                                                                                                                                                                                                                   |
+| urlEndpoint             | String                                                     | Optional. If not specified, the URL-endpoint specified in the parent `IKContext` component is used. For example, https://ik.imagekit.io/your_imagekit_id/endpoint/                                                                                                                                                                                                                                                      |
+| publicKey               | String                                                     | Optional. If not specified, the `publicKey` specified in the parent `IKContext` component is used.                                                                                                                                                                                                                                                                                                                      |
+| authenticator           | ()=>Promise<{signature:string,token:string,expiry:number}> | Optional. If not specified, the `authenticator` specified in the parent `IKContext` component is used.                                                                                                                                                                                                                                                                                                                  |
+
 
 > Make sure that you have specified `authenticator` and `publicKey` in `IKUpload` or in the parent `IKContext` component as a prop. The authenticator expects an asynchronous function that resolves with an object containing the necessary security parameters i.e `signature`, `token`, and `expire`.
 
