@@ -27,6 +27,7 @@ describe('IKUpload Element', () => {
                 const stateValue = JSON.parse(val);
                 expect(stateValue.overrideParametersValue.fileNameOnLocalSystem).to.be.eq("sample.jpeg"); // This asserts that the file object was passed to the onOverrideParameters callback
                 expect(stateValue.uploadedImageSource).contains("sample-folder/overridden-file-name"); // This asserts that onOverrideParameters changed fileName parameter before upload
+                expect(stateValue.uploadedImageSource).contains("failed"); // Temp to see if assertions are working
             });
         });
 
