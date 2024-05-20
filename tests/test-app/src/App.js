@@ -72,8 +72,11 @@ function App() {
 
   const onOverrideParameters = (file) => {
     setoverrideParametersValue({
-      fileName: file.name,
+      fileNameOnLocalSystem: file.name,
     })
+    return {
+      fileName: 'overridden-file-name.jpg'
+    }
   }
 
   return (

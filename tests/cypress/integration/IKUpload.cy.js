@@ -19,14 +19,14 @@ describe('IKUpload Element', () => {
             cy.get('.uploaded-img-ik').should('have.attr', 'src');
             cy.get('.uploaded-img-ik').invoke('attr', 'src').should('not.equal', '');
 
-            console.log(cy.get('.uploaded-img-ik').invoke('attr', 'src'));
 
             // wait for 4 secs
             cy.wait(4000);
 
             cy.get('.state-value').invoke('val').then((val) => {
-                console.log(JSON.stringify(val, null, 2));
-                expect(val).to.be.eq('uploaded');
+                const stateValue = JSON.parse(val);
+                expect(stateValue.overrideParametersValue.fileNameOnLocalSystem).to.be.eq("sample.jpeg"); // This asserts that the file object was passed to the onOverrideParameters callback
+                expect(stateValue.uploadedImageSource).contains("sample-folder/overridden-file-name"); // This asserts that onOverrideParameters changed fileName parameter before upload
             });
         });
 
