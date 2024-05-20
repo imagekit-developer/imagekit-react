@@ -72,7 +72,7 @@ function App() {
 
   const onOverrideParameters = (file) => {
     setoverrideParametersValue({
-      file
+      fileName: file.name,
     })
   }
 

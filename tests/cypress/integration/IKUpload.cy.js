@@ -12,12 +12,17 @@ describe('IKUpload Element', () => {
             //upload file with attachFile
             cy.get('.file-upload-ik').attachFile(p)
 
-            // wait for 2 secs
+            // wait for 4 secs
             cy.wait(4000);
 
             //Verify uploaded file
             cy.get('.uploaded-img-ik').should('have.attr', 'src');
             cy.get('.uploaded-img-ik').invoke('attr', 'src').should('not.equal', '');
+
+            console.log(cy.get('.uploaded-img-ik').invoke('attr', 'src'));
+
+            // wait for 4 secs
+            cy.wait(4000);
 
             cy.get('.state-value').invoke('val').then((val) => {
                 console.log(JSON.stringify(val, null, 2));
