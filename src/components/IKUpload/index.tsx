@@ -118,7 +118,7 @@ const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps
     let overrideValues: OverrideValues = {};
 
     if (props.overrideParameters && typeof props.overrideParameters === 'function') {
-      overrideValues = props.overrideParameters(file);
+      overrideValues = props.overrideParameters(file) || {};
     }
 
     const xhr = new XMLHttpRequest();
