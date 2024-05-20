@@ -88,7 +88,7 @@ export type OverrideValues = {
   overwriteCustomMetadata?: IKUploadProps['overwriteCustomMetadata'];
   customMetadata?: IKUploadProps['customMetadata'];
   transformation?: IKUploadProps['transformation'];
-} | undefined;
+};
 
 export type IKUploadProps = Omit<InferProps<typeof Props>, "customMetadata" | "transformation"> & {
     useUniqueFileName?: boolean;
