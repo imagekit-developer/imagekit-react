@@ -18,6 +18,11 @@ describe('IKUpload Element', () => {
             //Verify uploaded file
             cy.get('.uploaded-img-ik').should('have.attr', 'src');
             cy.get('.uploaded-img-ik').invoke('attr', 'src').should('not.equal', '');
+
+            cy.get('.state-value').invoke('val').then((val) => {
+                console.log(JSON.stringify(val, null, 2));
+                expect(val).to.be.eq('uploaded');
+            });
         });
 
         it.skip('should upload non-image file and try to get error element', () => {
