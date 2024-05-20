@@ -19,6 +19,7 @@ function App() {
     "height": "300",
     "width": "300"
   }]);
+  const [overrideParametersValue, setoverrideParametersValue] = useState();
 
   const path = "default-image.jpg";
   const videoUrlEndpoint = 'https://ik.imagekit.io/demo/';
@@ -69,8 +70,25 @@ function App() {
     setUploadProgress(e)
   }
 
+  const onOverrideParameters = (file) => {
+    setoverrideParametersValue({
+      fileNameOnLocalSystem: file.name,
+    })
+    return {
+      fileName: 'overridden-file-name.jpg'
+    }
+  }
+
   return (
     <div className="App">
+      <input type="text" className="state-value" value={JSON.stringify({
+        error,
+        isUploading,
+        uploadProgress,
+        uploadedImageSource,
+        imageTr,
+        overrideParametersValue
+      })} style={{ display: 'none' }}></input>
       <h1>Hi! This is an ImageKit React SDK Demo!</h1>
 
       <p>Directly using <code>IkImage</code></p>
@@ -185,6 +203,7 @@ function App() {
           className="file-upload-ik"
           onUploadProgress={onUploadProgress}
           onUploadStart={onUploadStart}
+          overrideParameters={onOverrideParameters}
         />
         {isUploading !== null ? <p>{isUploading ? `...Uploading (${uploadProgress ? uploadProgress.type ? (uploadProgress.loaded / uploadProgress.total * 100).toFixed(2) + '%)' : '' : ''}` : 'uploaded'}</p> : <></>}
         {isUploading ? <button onClick={() => {
