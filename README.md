@@ -171,7 +171,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
 </IKContext>
 ```
 
-#### File upload
+#### File upload example
 ```js
 // Ensure you pass publicKey, urlEndpoint, and authenticator function to the parent IKContext component or to the IKUpload component directly.
 <IKContext
