@@ -1,6 +1,6 @@
 {
   "name": "imagekitio-react",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "scripts": {
     "build:js": "rollup -c",
@@ -80,7 +80,7 @@
     "typescript": "^4.8.2"
   },
   "dependencies": {
-    "imagekit-javascript": "^3.0.0",
+    "imagekit-javascript": "^3.0.2",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {

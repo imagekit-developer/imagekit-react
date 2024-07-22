@@ -71,6 +71,7 @@ const Props = {
     ref: PropTypes.any,
     transformation: PropTypes.object,
     overrideParameters: PropTypes.func,
+    checks: PropTypes.string
 }
 
 export type OverrideValues = {
@@ -88,6 +89,7 @@ export type OverrideValues = {
   overwriteCustomMetadata?: IKUploadProps['overwriteCustomMetadata'];
   customMetadata?: IKUploadProps['customMetadata'];
   transformation?: IKUploadProps['transformation'];
+  checks?: IKUploadProps['checks'];
 };
 
 export type IKUploadProps = Omit<InferProps<typeof Props>, "customMetadata" | "transformation"> & {
@@ -111,6 +113,7 @@ export type IKUploadProps = Omit<InferProps<typeof Props>, "customMetadata" | "t
     validateFile?: (file: File) => boolean;
     transformation?: TransformationType;
     overrideParameters?: (file: File) => OverrideValues;
+    checks?: string
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default Props;
