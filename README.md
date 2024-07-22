@@ -205,7 +205,7 @@ import { IKImage, IKVideo, IKContext, IKUpload } from 'imagekitio-react'
         }
       ]
     }}
-    checks=`"file.size" < "1mb"` // To run server side checks before uploading files. Notice the quotes around file.size and 1mb.
+    checks={`"file.size" < "1mb"`} // To run server side checks before uploading files. Notice the quotes around file.size and 1mb.
   />
 </IKContext>
 ```
