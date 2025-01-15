@@ -91,7 +91,7 @@ const IKImage = (props: IKImageProps) => {
 
   return <img
     alt={props.alt || ""}
-    src={currentUrl ? currentUrl : ''}
+    src={currentUrl ? currentUrl : undefined}
     ref={imageRef}
     {...restProps}
   />;
