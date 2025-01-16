@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import ImageKit from 'imagekit-javascript';
-import { IKContextBaseProps } from '../IKContext/props';
-import { ImageKitContext } from '../IKContext';
+import { ImageKitProviderBaseProps } from '../ImageKitProvider/props';
+import { ImageKitContext } from '../ImageKitProvider';
 
- const useImageKitComponent= <T = void>(props: React.PropsWithChildren & IKContextBaseProps & T):{getIKClient:() => ImageKit} => {
+ const useImageKitComponent= <T = void>(props: React.PropsWithChildren & ImageKitProviderBaseProps & T):{getIKClient:() => ImageKit} => {
   const contextOptions = useContext(ImageKitContext);
 
   const getIKClient = (): ImageKit => {

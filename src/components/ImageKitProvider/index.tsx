@@ -2,32 +2,32 @@
 import React, { createContext } from 'react';
 import { InferProps } from 'prop-types';
 import ImageKit from 'imagekit-javascript';
-import { IKContextProps, IKContextExtractedProps } from "./props";
+import { ImageKitProviderProps, ImageKitProviderExtractedProps } from "./props";
 
 // Create the context
-export const ImageKitContext = createContext<IKContextExtractedProps>({});
+export const ImageKitContext = createContext<ImageKitProviderExtractedProps>({});
 
 /**
- * Provides a container for ImageKit components. Any option set in IKContext will be passed to the children.
+ * Provides a container for ImageKit components. Any option set in ImageKitProvider will be passed to the children.
  *
  * @example
- *<IKContext  publicKey="<public key>" urlEndpoint="url link">
+ *<ImageKitProvider  publicKey="<public key>" urlEndpoint="url link">
  *    <!-- other tags -->
  *    <Image src={link}/>
- *</IKContext>
+ *</ImageKitProvider>
  */
-const IKContext = (props: React.PropsWithChildren<IKContextProps>) => {
+const ImageKitProvider = (props: React.PropsWithChildren<ImageKitProviderProps>) => {
 
-  const extractContextOptions = (mergedOptions: InferProps<IKContextExtractedProps>) => {
-    var result: IKContextExtractedProps = {};
+  const extractContextOptions = (mergedOptions: InferProps<ImageKitProviderExtractedProps>) => {
+    var result: ImageKitProviderExtractedProps = {};
 
-    const propKeys = Object.keys(IKContextExtractedProps);
+    const propKeys = Object.keys(ImageKitProviderExtractedProps);
 
     for (var i = 0; i < propKeys.length; i++) {
       var key = propKeys[i];
-      const value = mergedOptions[key as keyof IKContextExtractedProps];
+      const value = mergedOptions[key as keyof ImageKitProviderExtractedProps];
       if (value) {
-        result[key as keyof IKContextExtractedProps] = value;
+        result[key as keyof ImageKitProviderExtractedProps] = value;
       }
     }
 
@@ -55,4 +55,4 @@ const IKContext = (props: React.PropsWithChildren<IKContextProps>) => {
   );
 }
 
-export default IKContext;
+export default ImageKitProvider;

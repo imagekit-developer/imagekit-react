@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import ImageKitComponent from '../../src/components/ImageKitComponent';
-import IKContext from '../../src/components/IKContext';
+import ImageKitProvider from '../../src/components/ImageKitProvider';
 import IKUpload from '../../src/components/IKUpload';
 
 const publicKey = 'test_public_key';
@@ -119,9 +119,9 @@ describe('IKUpload', () => {
       test('should successfully upload file', () => {
         // mount component
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
 
         // verify setup integrity
@@ -144,9 +144,9 @@ describe('IKUpload', () => {
     describe('Failure cases', () => {
       test('should call onError for missing publicKey', () => {
         const ikUpload = mount(
-          <IKContext urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+          <ImageKitProvider urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -165,9 +165,9 @@ describe('IKUpload', () => {
 
       test('should call onError for missing urlEndpoint', () => {
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} >
+          <ImageKitProvider publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -186,9 +186,9 @@ describe('IKUpload', () => {
 
       test('should call onError for missing authenticationEndpoint', () => {
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -207,9 +207,9 @@ describe('IKUpload', () => {
 
       test('should not call upload or onError for missing urlEndpoint and missing onError', () => {
         const ikUpload = mount(
-          <IKContext  authenticationEndpoint={authenticationEndpoint} publicKey={publicKey} >
+          <ImageKitProvider  authenticationEndpoint={authenticationEndpoint} publicKey={publicKey} >
             <IKUpload onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -225,9 +225,9 @@ describe('IKUpload', () => {
 
       test('should not call upload for missing publickKey and missing onError', () => {
         const ikUpload = mount(
-          <IKContext  authenticationEndpoint={authenticationEndpoint} urlEndpoint={urlEndpoint} >
+          <ImageKitProvider  authenticationEndpoint={authenticationEndpoint} urlEndpoint={urlEndpoint} >
             <IKUpload onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -243,9 +243,9 @@ describe('IKUpload', () => {
 
       test('should not call upload for missing file', () => {
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} urlEndpoint={urlEndpoint} >
+          <ImageKitProvider publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} urlEndpoint={urlEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -261,9 +261,9 @@ describe('IKUpload', () => {
 
       test('should not call upload for missing authenticationEndpoint and missing onError', () => {
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} >
             <IKUpload onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -279,9 +279,9 @@ describe('IKUpload', () => {
 
       test('should not call onError in case server returns error response and missing onError', () => {
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint}>
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint}>
             <IKUpload onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -304,9 +304,9 @@ describe('IKUpload', () => {
 
       test('should not call onSuccess in case server returns error response and missing onSuccess', () => {
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint}>
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint}>
             <IKUpload onError={onError} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -325,9 +325,9 @@ describe('IKUpload', () => {
 
       test('should call onError in case server returns error response', () => {
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint}>
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint}>
             <IKUpload onError={onError} onSuccess={onSuccess} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -354,9 +354,9 @@ describe('IKUpload', () => {
       test('should call onChange when file input changes', () => {
         // mount component
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} onChange={onChange} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -372,9 +372,9 @@ describe('IKUpload', () => {
       test('should call onUploadStart when file input changes', () => {
         // mount component
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} onUploadStart={onUploadStart} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -391,9 +391,9 @@ describe('IKUpload', () => {
       test('should not upload file if validateFile fails', () => {
         // mount component
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} validateFile={() => false} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -409,9 +409,9 @@ describe('IKUpload', () => {
       test('should call onUploadProgress during file upload', () => {
         // mount component
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} onUploadProgress={onUploadProgress} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -435,9 +435,9 @@ describe('IKUpload', () => {
         // mount component
         const ref = React.createRef();
         const ikUpload = mount(
-          <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+          <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
             <IKUpload onError={onError} onSuccess={onSuccess} ref={ref} />
-          </IKContext>
+          </ImageKitProvider>
         );
         // verify setup integrity
         expect(ikUpload.html()).toEqual('<input type="file">');
@@ -451,12 +451,12 @@ describe('IKUpload', () => {
     });
 
 	describe('props update', () => {
-		test('upload with no urlEndpoint should throw error, then after should succed updating urlEndpoint in IKContext with state change', () => {
+		test('upload with no urlEndpoint should throw error, then after should succed updating urlEndpoint in ImageKitProvider with state change', () => {
 			// mount component
 			const ikUpload = mount(
-				<IKContext publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} >
+				<ImageKitProvider publicKey={publicKey} authenticationEndpoint={authenticationEndpoint} >
 					<IKUpload onError={onError} onSuccess={onSuccess} />
-				</IKContext>
+				</ImageKitProvider>
 			);
 
 			// verify setup integrity
@@ -473,10 +473,10 @@ describe('IKUpload', () => {
 			expect(onError.calledOnce).toEqual(true)
 			expect(onError.args[0][0]).toEqual({ message: 'Missing urlEndpoint' });
 			
-			//update urlEndpoint in IKContext
+			//update urlEndpoint in ImageKitProvider
 			ikUpload.setProps({ urlEndpoint });
 			ikUpload.update();
-			//Now after updating urlEndpoint in IKContext, it should successfully upload
+			//Now after updating urlEndpoint in ImageKitProvider, it should successfully upload
 
 			// verify setup integrity
 			expect(ikUpload.html()).toEqual('<input type="file">');
@@ -497,12 +497,12 @@ describe('IKUpload', () => {
 			ikUpload.unmount();
 		});
 
-		test('upload with no publicKey should throw error, then after should succed updating publicKey in IKContext with state change', () => {
+		test('upload with no publicKey should throw error, then after should succed updating publicKey in ImageKitProvider with state change', () => {
 			// mount component
 			const ikUpload = mount(
-				<IKContext urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+				<ImageKitProvider urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
 					<IKUpload onError={onError} onSuccess={onSuccess} />
-				</IKContext>
+				</ImageKitProvider>
 			);
 
 			// verify setup integrity
@@ -519,10 +519,10 @@ describe('IKUpload', () => {
 			expect(onError.calledOnce).toEqual(true)
 			expect(onError.args[0][0]).toEqual({ message: 'Missing publicKey' });
 			
-			//update publicKey in IKContext
+			//update publicKey in ImageKitProvider
 			ikUpload.setProps({ publicKey });
 			ikUpload.update();
-			//Now after updating publicKey in IKContext, it should successfully upload
+			//Now after updating publicKey in ImageKitProvider, it should successfully upload
 
 			// verify setup integrity
 			expect(ikUpload.html()).toEqual('<input type="file">');
@@ -543,12 +543,12 @@ describe('IKUpload', () => {
 			ikUpload.unmount();
 		});
 		
-		test('upload with no authenticationEndpoint should throw error, then after should succed updating authenticationEndpoint in IKContext with state change', () => {
+		test('upload with no authenticationEndpoint should throw error, then after should succed updating authenticationEndpoint in ImageKitProvider with state change', () => {
 			// mount component
 			const ikUpload = mount(
-				<IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
+				<ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} >
 					<IKUpload onError={onError} onSuccess={onSuccess} />
-				</IKContext>
+				</ImageKitProvider>
 			);
 
 			// verify setup integrity
@@ -565,10 +565,10 @@ describe('IKUpload', () => {
 			expect(onError.calledOnce).toEqual(true)
 			expect(onError.args[0][0]).toEqual({ message: 'Missing authenticationEndpoint' });
 			
-			//update authenticationEndpoint in IKContext
+			//update authenticationEndpoint in ImageKitProvider
 			ikUpload.setProps({ authenticationEndpoint });
 			ikUpload.update();
-			//Now after updating authenticationEndpoint in IKContext, it should successfully upload
+			//Now after updating authenticationEndpoint in ImageKitProvider, it should successfully upload
 
 			// verify setup integrity
 			expect(ikUpload.html()).toEqual('<input type="file">');
@@ -595,16 +595,16 @@ describe('IKUpload', () => {
   describe('Snapshots', () => {
     test('should render with full auth context and onError and onSuccess props', () => {
       const ikUpload = mount(
-        <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+        <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
           <IKUpload onError={onError} onSuccess={onSuccess} />
-        </IKContext>
+        </ImageKitProvider>
       );
       expect(ikUpload.html()).toEqual('<input type="file">');
     });
 
     test('should render with full auth context and all the props', () => {
       const ikUpload = mount(
-        <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+        <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
           <IKUpload
             useUniqueFileName={false}
             tags={['tag1', 'tag2']}
@@ -615,25 +615,25 @@ describe('IKUpload', () => {
             onError={onError}
             onSuccess={onSuccess}
           />
-        </IKContext>
+        </ImageKitProvider>
       );
       expect(ikUpload.html()).toEqual('<input type="file">');
     });
 
     test('should render with full auth context and without fileName prop', () => {
       const ikUpload = mount(
-        <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+        <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
           <IKUpload useUniqueFileName={true} onError={onError} onSuccess={onSuccess} />
-        </IKContext>
+        </ImageKitProvider>
       );
       expect(ikUpload.html()).toEqual('<input type="file">');
     });
 
     test('should render without authenticationEndpoint in auth context', () => {
       const ikUpload = mount(
-        <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint}>
+        <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint}>
           <IKUpload />
-        </IKContext>
+        </ImageKitProvider>
       );
       expect(ikUpload.html()).toEqual('<input type="file">');
     });

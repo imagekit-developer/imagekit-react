@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import COMBINED_PROP_TYPES, { IKImageProps } from './combinedProps';
 import { fetchEffectiveConnection, getIKElementsUrl, getSrc } from '../../utils/Utility';
-import { ImageKitContext } from '../IKContext';
+import { ImageKitContext } from '../ImageKitProvider';
 import useImageKitComponent from '../ImageKitComponent';
 
 const IKImage = (props: IKImageProps) => {

@@ -1,14 +1,14 @@
 import React, { forwardRef, useContext, useEffect, useState } from 'react';
-import { IKContextBaseProps } from "../IKContext/props";
+import { ImageKitProviderBaseProps } from "../ImageKitProvider/props";
 import { IKUploadProps, OverrideValues } from "./props";
-import { ImageKitContext } from '../IKContext';
+import { ImageKitContext } from '../ImageKitProvider';
 import useImageKitComponent from '../ImageKitComponent';
 
 type IKUploadState = {
   xhr?: XMLHttpRequest;
 };
 
-const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & IKContextBaseProps>((props, ref) => {
+const IKUpload = forwardRef<HTMLInputElement, IKUploadProps & ImageKitProviderBaseProps>((props, ref) => {
   const [state, setState] = useState<IKUploadState>({});
   const contextOptions = useContext(ImageKitContext);
   const { getIKClient } = useImageKitComponent({ ...props });

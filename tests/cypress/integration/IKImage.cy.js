@@ -65,7 +65,7 @@ describe('ImageKit React SDK', () => {
   });
 
   describe('State update check', () => {
-    it('should update image src with chained transformation outside IKContext dynamically', () => {
+    it('should update image src with chained transformation outside ImageKitProvider dynamically', () => {
       cy.visit(APP_HOST);
 
       cy.get('.img-transformation-direct').scrollIntoView();
@@ -83,7 +83,7 @@ describe('ImageKit React SDK', () => {
         .should('have.attr', 'src')
         .and('include', 'tr:h-200,w-600,r-max:h-200,w-200,rt-180:ot-TEST,oy-50,ox-100,otc-10C0F0/default-image.jpg');
     });
-    it('should update image src within IKContext when button is clicked', () => {
+    it('should update image src within ImageKitProvider when button is clicked', () => {
       cy.visit(APP_HOST);
 
       cy.get('.img-transformation').scrollIntoView();

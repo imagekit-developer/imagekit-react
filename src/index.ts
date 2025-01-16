@@ -1,13 +1,14 @@
 import ImageKit from 'imagekit-javascript';
-import IKContext from './components/IKContext';
+import ImageKitProvider, { ImageKitContext } from "./components/ImageKitProvider";
 import IKImage from './components/IKImage';
 import IKVideo from  './components/IKVideo';
 import IKUpload from './components/IKUpload';
 
 export {
-    IKContext,
+    ImageKitProvider,
     IKImage,
     IKUpload,
     IKVideo,
-    ImageKit as IKCore
+    ImageKit as IKCore,
+    ImageKitContext
 };

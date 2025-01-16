@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './App.css';
-import { IKImage, IKContext, IKUpload, IKVideo } from 'imagekitio-react'
+import { IKImage, ImageKitProvider, IKUpload, IKVideo } from 'imagekitio-react'
 
 function App() {
   const publicKey = process.env.REACT_APP_PUBLIC_KEY;
@@ -124,8 +124,8 @@ function App() {
       </div>
       <br />
 
-      <p>Using context <code>IKContext</code></p>
-      <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticator={authenticator}>
+      <p>Using context <code>ImageKitProvider</code></p>
+      <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticator={authenticator}>
         <p>Let's add an Image</p>
         <IKImage src={src} />
 
@@ -229,9 +229,9 @@ function App() {
         />
 
         {(error && error.hasOwnProperty('uploadFileErr')) && <p style={{ color: 'red' }} className='upload-error-ik'>{'File upload failed.'}</p>}
-      </IKContext>
+      </ImageKitProvider>
 
-      <IKContext publicKey={publicKey} urlEndpoint={videoUrlEndpoint}>
+      <ImageKitProvider publicKey={publicKey} urlEndpoint={videoUrlEndpoint}>
         <p>Video Element</p>
         <IKVideo
           className='ikvideo-default'
@@ -248,7 +248,7 @@ function App() {
           transformation={[{ height: 200, width: 600, b: '5_red', q: 95 }]}
           controls={true}
         />
-      </IKContext>
+      </ImageKitProvider>
     </div >
   );
 }

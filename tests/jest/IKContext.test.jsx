@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme';
 import IKImage from '../../src/components/IKImage';
 import IKUpload from '../../src/components/IKUpload';
-import IKContext from '../../src/components/IKContext';
+import ImageKitProvider from '../../src/components/ImageKitProvider';
 
 const authenticationEndpoint = 'test_auth_endpoint';
 const relativePath = 'default-image.jpg';
@@ -16,16 +16,16 @@ const differentUrlEndpoint = 'http://ik.imagekit.io/different_imagekit_id';
 
 const trArr = [{height : 300, width : 300}];
 
-describe('IKContext', () => {
+describe('ImageKitProvider', () => {
   describe('Snapshots', () => {
     test('should work with only urlEndpoint', () => {
       const ikContext = mount(
-        <IKContext urlEndpoint={urlEndpoint} >
+        <ImageKitProvider urlEndpoint={urlEndpoint} >
           <IKImage path={relativePath} transformation={[{
             height: 300,
             width: 400
           }]} />
-        </IKContext>
+        </ImageKitProvider>
       );
       // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.x.x">
 
@@ -35,12 +35,12 @@ describe('IKContext', () => {
 
     test('should work with publicKey and urlEndpoint', () => {
       const ikContext = mount(
-        <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
+        <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} >
           <IKImage path={relativePath} transformation={[{
             height: 300,
             width: 400
           }]} />
-        </IKContext>
+        </ImageKitProvider>
       );
       // <img alt="" src="http://ik.imagekit.io/test_imagekit_id/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.x.x">
 
@@ -52,9 +52,9 @@ describe('IKContext', () => {
 
     test('should work with publicKey, urlEndpoint and authenticationEndpoint', () => {
       const ikContext = mount(
-        <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
+        <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticationEndpoint={authenticationEndpoint} >
           <IKUpload onError={() => { }} onSuccess={() => { }} />
-        </IKContext>
+        </ImageKitProvider>
       );
       // '<input type="file">'
       expect(ikContext.html()).toEqual('<input type="file">');
@@ -67,12 +67,12 @@ describe('IKContext', () => {
 
     test('should allow override of own urlEndpoint', () => {
       const ikContext = mount(
-        <IKContext publicKey={publicKey} urlEndpoint={urlEndpoint} >
+        <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} >
           <IKImage path={relativePath} urlEndpoint='https://www.custom-domain.com/' transformation={[{
             height: 300,
             width: 400
           }]} />
-        </IKContext>
+        </ImageKitProvider>
       );
       // <img alt="" src="https://www.custom-domain.com/tr:h-300,w-400/default-image.jpg?ik-sdk-version=react-1.x.x">
 
@@ -82,11 +82,11 @@ describe('IKContext', () => {
   });
 
   describe('props update', () => {
-	test('change urlEndpoint in IKContext props and childContext urlEndpoint and image src should change accordingly', () => {
+	test('change urlEndpoint in ImageKitProvider props and childContext urlEndpoint and image src should change accordingly', () => {
 		const ikContext = mount(
-		  <IKContext urlEndpoint={urlEndpoint} >
+		  <ImageKitProvider urlEndpoint={urlEndpoint} >
 			<IKImage path={relativePath} />
-		  </IKContext>
+		  </ImageKitProvider>
 		);
 
 		ikContext.setProps({ urlEndpoint: differentUrlEndpoint });
@@ -99,11 +99,11 @@ describe('IKContext', () => {
 		expect(ikContext.find('img').prop('src')).toEqual(`${differentUrlEndpoint}/${relativePath}`);
 	});
 	
-	test('change path in IKContext props and childContext path and image src should change accordingly', () => {
+	test('change path in ImageKitProvider props and childContext path and image src should change accordingly', () => {
 		const ikContext = mount(
-		  <IKContext urlEndpoint={urlEndpoint} path={relativePath} >
+		  <ImageKitProvider urlEndpoint={urlEndpoint} path={relativePath} >
 			<IKImage />
-		  </IKContext>
+		  </ImageKitProvider>
 		);
 
 		ikContext.setProps({ path: differentImageRelativePath });
@@ -116,11 +116,11 @@ describe('IKContext', () => {
 		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/${differentImageRelativePath}`);
 	});
 
-	test('change src in IKContext props and childContext src and image src should change accordingly', () => {
+	test('change src in ImageKitProvider props and childContext src and image src should change accordingly', () => {
 		const ikContext = mount(
-		  <IKContext urlEndpoint={urlEndpoint} src={absolutePath} >
+		  <ImageKitProvider urlEndpoint={urlEndpoint} src={absolutePath} >
 			<IKImage />
-		  </IKContext>
+		  </ImageKitProvider>
 		);
 
 		ikContext.setProps({ src: differentAbsolutePath });
@@ -133,11 +133,11 @@ describe('IKContext', () => {
 		expect(ikContext.find('img').prop('src')).toEqual(`${differentAbsolutePath}`);
 	});
 
-	test('change transformation in IKContext props and childContext transformation and image src should change accordingly', () => {
+	test('change transformation in ImageKitProvider props and childContext transformation and image src should change accordingly', () => {
 		const ikContext = mount(
-		  <IKContext urlEndpoint={urlEndpoint} >
+		  <ImageKitProvider urlEndpoint={urlEndpoint} >
 			<IKImage path={relativePath} />
-		  </IKContext>
+		  </ImageKitProvider>
 		);
 
 		ikContext.setProps({ transformation: trArr });
@@ -150,11 +150,11 @@ describe('IKContext', () => {
 		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/tr:h-300,w-300/${relativePath}`);
 	});
 
-	test('change transformationPosition in IKContext props and childContext transformationPosition and image src should change accordingly', () => {
+	test('change transformationPosition in ImageKitProvider props and childContext transformationPosition and image src should change accordingly', () => {
 		const ikContext = mount(
-		  <IKContext urlEndpoint={urlEndpoint} >
+		  <ImageKitProvider urlEndpoint={urlEndpoint} >
 			<IKImage path={relativePath} transformation={trArr} />
-		  </IKContext>
+		  </ImageKitProvider>
 		);
 
 		ikContext.setProps({ transformationPosition: "query" });
@@ -167,11 +167,11 @@ describe('IKContext', () => {
 		expect(ikContext.find('img').prop('src')).toEqual(`${urlEndpoint}/${relativePath}?tr=h-300%2Cw-300`);
 	});
 
-	test('change queryParameters in IKContext props and childContext queryParameters and image src should change accordingly', () => {
+	test('change queryParameters in ImageKitProvider props and childContext queryParameters and image src should change accordingly', () => {
 		const ikContext = mount(
-		  <IKContext urlEndpoint={urlEndpoint} >
+		  <ImageKitProvider urlEndpoint={urlEndpoint} >
 			<IKImage path={relativePath} />
-		  </IKContext>
+		  </ImageKitProvider>
 		);
 
 		ikContext.setProps({ queryParameters: {"v" : "1"} });

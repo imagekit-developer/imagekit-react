@@ -1,6 +1,6 @@
 import { UrlOptionsPath, UrlOptionsSrc } from 'imagekit-javascript/dist/src/interfaces/UrlOptions';
 import { InferProps } from 'prop-types';
-import COMMON_PROPS from "../IKContext/props";
+import COMMON_PROPS from "../ImageKitProvider/props";
 import Props from './props';
 
 const COMBINED_IMAGE_PROP_TYPES = {
