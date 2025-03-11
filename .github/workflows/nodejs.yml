@@ -8,13 +8,13 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
 
@@ -30,16 +30,15 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
 
@@ -61,12 +60,9 @@ jobs:
         npm install
       env:
         CI: true
-        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
-        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
-        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
 
     - name: Run E2E tests
-      uses: cypress-io/github-action@v4
+      uses: cypress-io/github-action@v5
       with:
         start: npm run serve:test-app
         wait-on: 'http://localhost:4000, http://localhost:4001'
