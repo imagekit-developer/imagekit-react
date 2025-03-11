@@ -13,7 +13,7 @@ export type IKVideoState = {
 const IKVideo = (props: IKVideoProps & IKContextBaseProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [state, setState] = useState<IKVideoState>({
-    currentUrl: '',
+    currentUrl: undefined,
     contextOptions: {}
   });
 

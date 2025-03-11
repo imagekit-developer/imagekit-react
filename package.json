@@ -1,6 +1,6 @@
 {
   "name": "imagekitio-react",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "scripts": {
     "build:js": "rollup -c",
@@ -65,10 +65,8 @@
     "cypress-file-upload": "^5.0.8",
     "cypress-log-to-output": "^1.1.2",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.5",
+    "enzyme-adapter-react-16": "^1.15.8",
     "jest": "^26.5.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "react-test-renderer": "^16.13.1",
     "require-context.macro": "^1.2.2",
     "rollup": "^2.28.2",
@@ -84,7 +82,7 @@
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": "^16.13.1 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.13.1 || ^17.0.0 || ^18.0.0"
+    "react": "^16.13.1 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^16.13.1 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   }
 }

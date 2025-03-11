@@ -5,7 +5,7 @@ describe('ImageKit React SDK', () => {
     it('should have empty src before reaching lazyload threshold', () => {
       cy.visit(APP_HOST);
 
-      cy.get('.lazyload').should('have.attr', 'src').and('equal', '');
+      cy.get(".lazyload").should("not.have.attr", "src");
     });
 
     it('should have actual src after reaching lazyload threshold', () => {
@@ -25,9 +25,7 @@ describe('ImageKit React SDK', () => {
     it('should have lqip src before reaching threshold', () => {
       cy.visit(APP_HOST);
 
-      cy.get('.lazyload-lqip')
-        .should('have.attr', 'src')
-        .and('include', '');
+      cy.get(".lazyload-lqip").should("not.have.attr", "src");
     });
 
     it('should have actual src after reaching element', () => {
