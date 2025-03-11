@@ -61,6 +61,11 @@ jobs:
       env:
         CI: true
 
+    - name: Clear NPM and GitHub Actions Cache
+      run: |
+        rm -rf ~/.npm
+        npm cache clean --force
+
     - name: Run E2E tests
       uses: cypress-io/github-action@v5
       with:
