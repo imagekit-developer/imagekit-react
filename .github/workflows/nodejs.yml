@@ -30,6 +30,7 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         node-version: [12.x]
@@ -63,11 +64,6 @@ jobs:
         REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
         REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
         REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
-
-    - name: Clear NPM and GitHub Actions Cache
-      run: |
-        rm -rf ~/.npm
-        npm cache clean --force
 
     - name: Run E2E tests
       uses: cypress-io/github-action@v4
