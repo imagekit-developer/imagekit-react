@@ -2,6 +2,8 @@
 
 # ImageKit.io React SDK
 
+> Note for Next.js users: If you are building a Next.js application, see our separate [ImageKit Next.js SDK](https://github.com/imagekit-developer/imagekit-next). Refer to the official quickstart guide at <https://imagekit.io/docs/integration/nextjs> for easy integration.
+
 [![Node CI](https://github.com/imagekit-developer/imagekit-react/workflows/Node%20CI/badge.svg)](https://github.com/imagekit-developer/imagekit-react/)
 [![npm version](https://img.shields.io/npm/v/imagekitio-react)](https://www.npmjs.com/package/imagekitio-react)
 [![codecov](https://codecov.io/gh/imagekit-developer/imagekit-react/branch/master/graph/badge.svg)](https://codecov.io/gh/imagekit-developer/imagekit-react)
