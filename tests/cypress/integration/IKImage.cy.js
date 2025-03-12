@@ -2,7 +2,7 @@ describe('ImageKit React SDK', () => {
   const APP_HOST = Cypress.env().APP_HOST;
 
   describe('Lazyload', () => {
-    it('should have empty src before reaching lazyload threshold', () => {
+    it('should not have src before reaching lazyload threshold', () => {
       cy.visit(APP_HOST);
 
       cy.get(".lazyload").should("not.have.attr", "src");
@@ -22,7 +22,7 @@ describe('ImageKit React SDK', () => {
   });
 
   describe('Lazyload with LQIP', () => {
-    it('should have lqip src before reaching threshold', () => {
+    it('should not have lqip src before reaching threshold', () => {
       cy.visit(APP_HOST);
 
       cy.get(".lazyload-lqip").should("not.have.attr", "src");
