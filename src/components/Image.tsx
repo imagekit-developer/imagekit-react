@@ -32,7 +32,7 @@ function getInt(x: unknown): number {
 
 
 /**
- * The Image component is a wrapper around the Next.js Image component. It supports all the features of the Next.js Image component, along with additional features provided by ImageKit.
+ * The Image component is a wrapper around the React Image component. It supports all the features of the React Image component, along with additional features provided by ImageKit.
  * 
  * @example
  * ```jsx

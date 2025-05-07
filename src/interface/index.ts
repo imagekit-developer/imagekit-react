@@ -5,8 +5,6 @@ export interface SrcProps {
     /**
      * Accepts a relative or absolute path of the resource. If a relative path is provided, it is appended to the `urlEndpoint`.
      * If an absolute path is provided, `urlEndpoint` is ignored.
-     * 
-     * Do not pass Next.js StaticImports (e.g., `import image from './image.jpg'`).
     */
     src: SrcOptions["src"];
 

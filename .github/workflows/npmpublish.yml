@@ -25,7 +25,7 @@ jobs:
           npm pack
           # cd test-app
           # npm install
-          # npm install ../imagekit-next-*.tgz --no-save
+          # npm install ../imagekit-react-*.tgz --no-save
           # npx playwright install --with-deps
           # npm run test:e2e
         env:
