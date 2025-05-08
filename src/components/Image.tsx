@@ -5,13 +5,18 @@ import { ImageKitContext } from "../provider/ImageKit";
 
 export type IKImageProps = Omit<JSX.IntrinsicElements["img"], "src" | "srcSet" | "width"> & SrcProps & {
   /**
-   * Set to `false` to disable responsive srcset generation. By default, this is `true`.
+   * Set to `false` to disable automatic responsive `srcSet` generation.
+   * Defaults to `true`.
    */
   responsive?: boolean;
 
   /**
-   * The width of the image. This is used to calculate the srcset for responsive images. Provide in number or string format e.g. 100, "100".
-   * If values like "100px" or "100%" are provided, srcset calculation will ignore the value of width and generate a much larger srcset to cater to all possible widths.
+   * The intended display width of the image.
+   *
+   * - Accepts a number (e.g. `100`) or a numeric string (e.g. `"100"`).
+   * - If you pass units such as `"100px"` or a percentage like `"100%"`, the value
+   *   is ignored when generating the `srcSet`. In that case, a broad range of
+   *   widths is produced to cover all possible viewport sizes.
    */
   width?: number | `${number}`;
 }
@@ -32,30 +37,36 @@ function getInt(x: unknown): number {
 
 
 /**
- * The Image component is a wrapper around the React Image component. It supports all the features of the React Image component, along with additional features provided by ImageKit.
- * 
+ * A React wrapper around the native `<img>` element that adds ImageKit's
+ * optimization and transformation capabilities.
+ *
+ * All native `<img>` props are supported, in addition to the ImageKit‑specific props.
+ *
  * @example
  * ```jsx
  * import { Image } from "@imagekit/react";
+ *
  * <Image
- *  urlEndpoint="https://ik.imagekit.io/your_imagekit_id" // You can also set this in a parent ImageKitProvider component
- *  src="/default-image.jpg" // The path to the image in your ImageKit account
- *  alt="Default Image"
- *  width={500}
- *  height={500}
- *  transformation={[{ width: 500, height: 500 }]} // Add ImageKit transformations
+ *   urlEndpoint="https://ik.imagekit.io/your_imagekit_id" // Can also be set on a parent <ImageKitProvider />
+ *   src="/default-image.jpg"                               // Path in your ImageKit account
+ *   alt="Default image"
+ *   width={500}
+ *   height={500}
+ *   transformation={[{ width: 500, height: 500 }]}         // Optional ImageKit transformations
  * />
  * ```
  */
 export const Image = (props: IKImageProps) => {
   const contextValues = useContext(ImageKitContext);
 
-  // Its important to extract the ImageKit specific props from the props, so that we can use the rest of the props as is in the img element
+  // It's important to extract the ImageKit‑specific props so we can spread the
+  // remaining props directly onto the `<img>` element.
   const { transformation = [], src = "", loading = "lazy", queryParameters, urlEndpoint, transformationPosition, sizes, responsive = true, ...nonIKParams } = {
     ...contextValues, // Default values from context
     ...props // Override with props
   };
 
+  // Fail fast in development if the mandatory urlEndpoint is missing.
   if (!urlEndpoint || urlEndpoint.trim() === "") {
     if (process.env.NODE_ENV !== "production") {
       console.error("urlEndpoint is neither provided in this component nor in the ImageKitContext.");

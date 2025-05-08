@@ -192,6 +192,17 @@ export const Basic = () => {
                     transformation={[{ height: 100, width: 100 }]}
                     controls={true}
                 />
+
+                {/* transformationPosition="path" */}
+                <Video
+                    src="sample-video.mp4"
+                    title="Video with path transformation"
+                    transformationPosition="path"
+                    height={300}
+                    width={300}
+                    transformation={[{ height: 100, width: 100 }]}
+                />
+
             </ImageKitProvider>
         </div>
     )

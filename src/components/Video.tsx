@@ -25,12 +25,13 @@ export type IKVideoProps = Omit<JSX.IntrinsicElements["video"], "src"> & SrcProp
 export const Video = (props: IKVideoProps) => {
   const contextValues = useContext(ImageKitContext);
 
-  // Its important to extract the ImageKit specific props from the props, so that we can use the rest of the props as is in the video element
+  // Extract ImageKit‑specific props so we can spread the rest directly onto <video>.
   const { transformation = [], src = "", queryParameters, urlEndpoint, transformationPosition, ...nonIKParams } = {
     ...contextValues, // Default values from context
     ...props // Override with props
   };
 
+  // Fail fast in development if the mandatory urlEndpoint is missing.
   if (!urlEndpoint || urlEndpoint.trim() === "") {
     if (process.env.NODE_ENV !== "production") {
       console.error("urlEndpoint is neither provided in this component nor in the ImageKitContext.");
@@ -43,7 +44,8 @@ export const Video = (props: IKVideoProps) => {
     urlEndpoint,
     src,
     transformation: [...transformation], // Do not mutate original transformation array from the props
-    queryParameters
+    queryParameters,
+    transformationPosition,
   });
 
   return (
