@@ -1,5 +1,5 @@
 {
-  "name": "imagekitio-react",
+  "name": "@imagekit/react",
   "version": "5.0.0-beta.1",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "scripts": {
