@@ -75,15 +75,15 @@ export const Image = (props: IKImageProps) => {
     transformationPosition
   })
 
-  if (!responsive) {
-    return (
-      <img
-        {...nonIKParams}
-        loading={loading}
-        src={newSrc}
-      />
-    )
-  }
+  // if (!responsive) {
+  //   return (
+  //     <img
+  //       {...nonIKParams}
+  //       loading={loading}
+  //       src={newSrc}
+  //     />
+  //   )
+  // }
 
   return (
     <img
