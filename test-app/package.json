@@ -5,8 +5,9 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "start": "npm run build && react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@react-router/node": "^7.5.3",
@@ -17,6 +18,7 @@
     "react-router": "^7.5.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.40.1",
     "@react-router/dev": "^7.5.3",
     "@tailwindcss/vite": "^4.1.4",
     "@types/node": "^20",

@@ -23,11 +23,11 @@ jobs:
           npm install
           npm run build
           npm pack
-          # cd test-app
-          # npm install
-          # npm install ../imagekit-react-*.tgz --no-save
-          # npx playwright install --with-deps
-          # npm run test:e2e
+          cd test-app
+          npm install
+          npm install ../imagekit-react-*.tgz --no-save
+          npx playwright install --with-deps
+          npm run test:e2e
         env:
           CI: true
 
