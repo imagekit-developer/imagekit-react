@@ -10,3 +10,5 @@
 /playwright/.cache/
 /playwright-report/
 /test-results/
+
+package-lock.json
