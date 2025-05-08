@@ -51,7 +51,7 @@ export const Image = (props: IKImageProps) => {
   const contextValues = useContext(ImageKitContext);
 
   // Its important to extract the ImageKit specific props from the props, so that we can use the rest of the props as is in the img element
-  const { transformation = [], src = "", loading = "lazy", queryParameters, urlEndpoint, transformationPosition, responsive = true, ...nonIKParams } = {
+  const { transformation = [], src = "", loading = "lazy", queryParameters, urlEndpoint, transformationPosition, sizes, responsive = true, ...nonIKParams } = {
     ...contextValues, // Default values from context
     ...props // Override with props
   };
@@ -69,24 +69,27 @@ export const Image = (props: IKImageProps) => {
     src,
     transformation,
     width: isNaN(widthInt) ? undefined : widthInt,
-    sizes: nonIKParams.sizes,
+    sizes,
     queryParameters,
     urlEndpoint,
     transformationPosition
   })
 
   if (!responsive) {
-    <img
-      loading={loading}
-      {...nonIKParams}
-      src={newSrc}
-    />
+    return (
+      <img
+        {...nonIKParams}
+        loading={loading}
+        src={newSrc}
+      />
+    )
   }
 
   return (
     <img
-      loading={loading}
       {...nonIKParams}
+      loading={loading}
+      sizes={sizes}
       srcSet={srcSet}
       src={newSrc}
     />

@@ -1,6 +1,5 @@
 import { Image, ImageKitProvider, Video } from "@imagekit/react";
 
-
 export const Basic = () => {
     return (
         <div>
@@ -131,7 +130,7 @@ export const Basic = () => {
                     transformation={[{
                         named: "restrict-unnamed",
                     }]}
-                    responsive={true}
+                    responsive={false}
                     sizes="(max-width: 600px) 100vw, 50vw"
                 />
 
@@ -194,7 +193,6 @@ export const Basic = () => {
                     controls={true}
                 />
             </ImageKitProvider>
-
         </div>
     )
 }
