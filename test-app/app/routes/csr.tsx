@@ -12,6 +12,7 @@ export function meta({ }: Route.MetaArgs) {
 
 export default function CSR() {
   const [pageLoaded, setPageLoaded] = useState(false);
+  // Since we cannot selectively disable SSR on a route, we can use a state variable to determine if the page has loaded. This is a workaround to simulate CSR.
   useEffect(() => {
     setPageLoaded(true);
   }, []);
