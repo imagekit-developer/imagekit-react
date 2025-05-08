@@ -1,6 +1,5 @@
 import { Basic } from "~/components/basic";
 import type { Route } from "./+types/home";
-import { ImageEvents } from "~/components/ImageClient";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -13,8 +12,6 @@ export default function SSR() {
   return (
     <div className="container">
       <Basic />
-      <h1>Advanced</h1>
-      <ImageEvents />
     </div>
   )
 }

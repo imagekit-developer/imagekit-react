@@ -1,6 +1,5 @@
 import { Basic } from "~/components/basic";
 import type { Route } from "./+types/home";
-import { ImageEvents } from "~/components/ImageClient";
 import { useState, useEffect } from "react";
 
 export function meta({ }: Route.MetaArgs) {
@@ -26,8 +25,6 @@ export default function CSR() {
   return (
     <div className="container">
       <Basic />
-      <h1>Advanced</h1>
-      <ImageEvents />
     </div>
   )
 }
