@@ -19,8 +19,6 @@ export type IKImageProps = Omit<JSX.IntrinsicElements["img"], "src" | "srcSet" |
    *   widths is produced to cover all possible viewport sizes.
    */
   width?: number | `${number}`;
-
-
 }
 
 function getInt(x: unknown): number {
