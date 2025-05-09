@@ -1,19 +1,14 @@
 {
-  "name": "imagekitio-react",
-  "version": "4.3.0",
+  "name": "@imagekit/react",
+  "version": "5.0.0",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "scripts": {
     "build:js": "rollup -c",
+    "build-dev:js": "rollup -c --watch",
     "build:types": "tsc --emitDeclarationOnly",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
-    "build": "rm -rf dist*; npm run build:types && npm run build:js",
-    "test": "jest",
-    "test:ci": "jest --coverage && codecov",
-    "test:cov": "jest --coverage",
-    "test:e2e": "cypress open",
-    "test:watch": "jest --watch",
-    "serve:test-app": "export SKIP_PREFLIGHT_CHECK=true;npx serve@13.0.2 -s tests/test-app/build -p 4000 & cd tests/test-app/server && node server"
+    "build": "rm -rf dist*; npm run build:types && npm run build:js"
   },
   "repository": {
     "type": "git",
@@ -21,65 +16,30 @@
   },
   "main": "dist/imagekitio-react.js",
   "module": "dist/imagekitio-react.esm.js",
-  "browser": "dist/imagekitio-react.umd.js",
-  "browser:min": "dist/imagekitio-react.umd.min.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
-  "jest": {
-    "verbose": true,
-    "setupFilesAfterEnv": [
-      "<rootDir>/tests/jest/setupTests.js"
-    ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/tests/jest/mocks"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/tests/cypress/"
-    ]
-  },
   "author": "ImageKit",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.7.4",
-    "@babel/core": "^7.7.4",
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/plugin-proposal-export-default-from": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
-    "@babel/preset-react": "^7.7.4",
-    "@babel/preset-typescript": "^7.18.6",
-    "@babel/register": "^7.7.4",
-    "@babel/runtime": "^7.7.6",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^2.3.3",
-    "@types/prop-types": "^15.7.5",
-    "@types/react": "^18.0.17",
-    "babel-loader": "^8.0.6",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "codecov": "^3.8.0",
-    "cypress": "^10.4.0",
-    "cypress-file-upload": "^5.0.8",
-    "cypress-log-to-output": "^1.1.2",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.5",
-    "jest": "^26.5.2",
-    "react-test-renderer": "^16.13.1",
-    "require-context.macro": "^1.2.2",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/node": "^20.12.13",
+    "@types/react": "^18.3.3",
     "rollup": "^2.28.2",
-    "rollup-plugin-extensions": "^0.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.3",
     "rollup-plugin-terser": "^7.0.2",
-    "sinon": "^9.2.0",
-    "typescript": "^4.8.2"
+    "tslib": "^2.8.1",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "imagekit-javascript": "^3.0.2",
-    "prop-types": "^15.7.2"
+    "@imagekit/javascript": "^5.1.0"
   },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0 || ^19.0.0",

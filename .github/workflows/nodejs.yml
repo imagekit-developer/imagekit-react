@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [20.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -18,74 +18,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Setup module and run unit tests
-      run: |
-        npm install
-        # npm run test:ci
-      env:
-        CI: true
-        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
-        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
-        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
-
-  e2e:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
-    steps:
-    - uses: actions/checkout@v1
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Setup module
+    - name: Build and Test
       run: |
         npm install
         npm run build
         npm pack
-    - name: build test-app
-      run: |
-        cd tests/test-app
-        echo REACT_APP_URL_ENDPOINT = ${{ secrets.ik_url_endopint }} > .env;
-        echo REACT_APP_PUBLIC_KEY = ${{ secrets.ik_public_key }} >> .env;
-        echo REACT_APP_PRIVATE_KEY = ${{ secrets.ik_private_key }} >> .env;
-        echo REACT_APP_AUTHENTICATION_ENDPOINT = 'http://localhost:4001/auth' >> .env;
-        npm install && npm install ../../imagekitio*.tgz --force && npm run build
-        cd server
-        echo PRIVATE_KEY = ${{ secrets.ik_private_key }} >> .env;
+        cd test-app
         npm install
+        npm install ../imagekit-react-*.tgz --no-save
+        npx playwright install --with-deps
+        npm run test:e2e
       env:
         CI: true
-        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
-        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
-        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
 
-    - name: Run E2E tests
-      uses: cypress-io/github-action@v4
-      with:
-        start: npm run serve:test-app
-        wait-on: 'http://localhost:4000, http://localhost:4001'
-      env:
-        DEBUG: 'cypress:server:browsers:electron'
-        CI: true
-        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
-        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
-        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
-        REACT_APP_AUTHENTICATION_ENDPOINT: 'http://localhost:4001/auth'
-
-    - name: tar workspace
-      if: always()
-      run: |
-        tar -cf build.tar --exclude=./build.tar .
-    - name: Archive build details
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: e2e-archive
-        path: build.tar
-        retention-days: 1
+ 

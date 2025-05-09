@@ -1,0 +1,14 @@
+.DS_Store
+/node_modules/
+
+# React Router
+/.react-router/
+/build/
+
+/blob-report/
+/coverage
+/playwright/.cache/
+/playwright-report/
+/test-results/
+
+package-lock.json
