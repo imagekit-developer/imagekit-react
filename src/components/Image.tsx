@@ -1,9 +1,9 @@
-import { getResponsiveImageAttributes } from "@imagekit/javascript";
+import { getResponsiveImageAttributes, type GetImageAttributesOptions } from "@imagekit/javascript";
 import React, { useContext } from "react";
 import type { SrcProps } from "../interface";
 import { ImageKitContext } from "../provider/ImageKit";
 
-export type IKImageProps = Omit<JSX.IntrinsicElements["img"], "src" | "srcSet" | "width"> & SrcProps & {
+export type IKImageProps = Omit<JSX.IntrinsicElements["img"], "src" | "srcSet" | "width"> & SrcProps & Pick<GetImageAttributesOptions, "deviceBreakpoints" | "imageBreakpoints"> & {
   /**
    * Set to `false` to disable automatic responsive `srcSet` generation.
    * Defaults to `true`.
@@ -19,6 +19,8 @@ export type IKImageProps = Omit<JSX.IntrinsicElements["img"], "src" | "srcSet" |
    *   widths is produced to cover all possible viewport sizes.
    */
   width?: number | `${number}`;
+
+
 }
 
 function getInt(x: unknown): number {
@@ -61,7 +63,7 @@ export const Image = (props: IKImageProps) => {
 
   // It's important to extract the ImageKit‑specific props so we can spread the
   // remaining props directly onto the `<img>` element.
-  const { transformation = [], src = "", loading = "lazy", queryParameters, urlEndpoint, transformationPosition, sizes, responsive = true, ...nonIKParams } = {
+  const { transformation = [], src = "", loading = "lazy", queryParameters, urlEndpoint, transformationPosition, sizes, responsive = true, deviceBreakpoints, imageBreakpoints, ...nonIKParams } = {
     ...contextValues, // Default values from context
     ...props // Override with props
   };
@@ -83,7 +85,9 @@ export const Image = (props: IKImageProps) => {
     sizes,
     queryParameters,
     urlEndpoint,
-    transformationPosition
+    transformationPosition,
+    deviceBreakpoints,
+    imageBreakpoints,
   })
 
   if (!responsive) {

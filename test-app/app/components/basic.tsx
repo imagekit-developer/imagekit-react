@@ -114,11 +114,25 @@ export const Basic = () => {
                 />
 
                 <Image
-                    src="https://ik.imagekit/demo/default-image.jpg"
+                    src="https://ik.imagekit.io/demo/default-image.jpg"
                     alt="path not respected with absolute url"
                     transformationPosition="path"
                     height={300}
                     width={300}
+                />
+
+                {/* No width */}
+                <Image
+                    src="/default-image.jpg"
+                    alt="No width"
+                />
+
+                {/* Custom deviceBreakpoints */}
+                <Image
+                    src="https://ik.imagekit.io/demo/default-image.jpg"
+                    alt="Custom deviceBreakpoints"
+                    deviceBreakpoints={[200, 400, 800]}
+                    imageBreakpoints={[100]}
                 />
 
                 {/* Responsive off */}

@@ -7,7 +7,8 @@
     "dev": "react-router dev",
     "start": "npm run build && react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e-update": "playwright test --update-snapshots"
   },
   "dependencies": {
     "@react-router/node": "^7.5.3",
