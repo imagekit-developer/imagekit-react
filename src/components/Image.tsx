@@ -1,4 +1,4 @@
-import { getResponsiveImageAttributes, type GetImageAttributesOptions } from "@imagekit/javascript";
+import { getResponsiveImageAttributes, buildSrc, type GetImageAttributesOptions } from "@imagekit/javascript";
 import React, { useContext } from "react";
 import type { SrcProps } from "../interface";
 import { ImageKitContext } from "../provider/ImageKit";
@@ -76,6 +76,24 @@ export const Image = (props: IKImageProps) => {
 
   const widthInt = getInt(nonIKParams.width);
 
+  if (!responsive) {
+    const nonResponsiveSrc = buildSrc({
+      src,
+      transformation,
+      queryParameters,
+      urlEndpoint,
+      transformationPosition,
+    });
+
+    return (
+      <img
+        {...nonIKParams}
+        loading={loading}
+        src={nonResponsiveSrc}
+      />
+    )
+  }
+
   const { src: newSrc, srcSet } = getResponsiveImageAttributes({
     src,
     transformation,
@@ -87,16 +105,6 @@ export const Image = (props: IKImageProps) => {
     deviceBreakpoints,
     imageBreakpoints,
   })
-
-  if (!responsive) {
-    return (
-      <img
-        {...nonIKParams}
-        loading={loading}
-        src={newSrc}
-      />
-    )
-  }
 
   return (
     <img

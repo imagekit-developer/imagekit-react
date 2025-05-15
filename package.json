@@ -1,6 +1,6 @@
 {
   "name": "@imagekit/react",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "React SDK for ImageKit.io which implements client-side upload and URL generation for use inside a react application.",
   "scripts": {
     "build:js": "rollup -c",
