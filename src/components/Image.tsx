@@ -69,7 +69,7 @@ export const Image = (props: IKImageProps) => {
   // Fail fast in development if the mandatory urlEndpoint is missing.
   if (!urlEndpoint || urlEndpoint.trim() === "") {
     if (process.env.NODE_ENV !== "production") {
-      console.error("urlEndpoint is neither provided in this component nor in the ImageKitContext.");
+      console.error("urlEndpoint is neither provided in this component nor in any parent ImageKitProvider.");
     }
     return null;
   }
