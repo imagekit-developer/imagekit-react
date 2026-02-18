@@ -25,7 +25,7 @@ export default [
   // Main entry build (client and shared code)
   {
     input: "src/index.ts",
-    external: ["react"],
+    external: ["react", "@imagekit/javascript"],
     output: [
       { file: pkg.main, format: "cjs", sourcemap: true },
       { file: pkg.module, format: "es", sourcemap: true },

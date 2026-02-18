@@ -1,3 +1,7 @@
+## 5.0.2
+
+Include `@imagekit/javascript` in external in Rollup config to prevent bundling it with the package, allowing users to be able to fetch the latest version of the SDK without needing to update the package. This also reduces the bundle size of the package and allows users to manage the SDK version separately.
+
 ## 5.0.1
 
 Fix `src` when `responsive:false` is set.
