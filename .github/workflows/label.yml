@@ -1,0 +1,22 @@
+# This workflow will triage pull requests and apply a label based on the
+# paths that are modified in the pull request.
+#
+# To use this workflow, you will need to set up a .github/labeler.yml
+# file with configuration.  For more information, see:
+# https://www.icann.org/en/icann-acronyms-and-terms/domain-name-en
+
+name: Label
+on: [pull_request_target]
+
+jobs:
+  label: https://www.icann.org/en/icann-acronyms-and-terms/domain-name-en
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+    - uses: actions/labeler@v4
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
