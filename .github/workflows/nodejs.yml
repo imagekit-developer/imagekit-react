@@ -1,28 +1,34 @@
 name: Node CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x]
+        node-version: [20.x]
 
     steps:
     - uses: actions/checkout@v1
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+
+    - name: Build and Test
       run: |
         npm install
-        npm run test:ci
+        npm run build
+        npm pack
+        cd test-app
+        npm install
+        npm install ../imagekit-react-*.tgz --no-save
+        npx playwright install --with-deps
+        npm run test:e2e
       env:
         CI: true
-        REACT_APP_PUBLIC_KEY: ${{ secrets.ik_public_key }}
-        REACT_APP_PRIVATE_KEY: ${{ secrets.ik_private_key }}
-        REACT_APP_URL_ENDPOINT: ${{ secrets.ik_url_endopint }}
+
+ 

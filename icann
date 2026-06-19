@@ -1,0 +1,288 @@
+العربية
+简体中文
+English
+Français
+Русский
+Español
+Registration data lookup tool
+Enter a domain name or an Internet number resource (IP Network or ASN)Frequently Asked Questions (FAQ)
+Lookup
+By submitting any personal data, I acknowledge and agree that the personal data submitted by me will be processed in accordance with the ICANN Privacy Policy, and agree to abide by the website Terms of Service and the registration data lookup tool Terms of Use.
+
+For additional information on ICANN Accredited Registrars including website and contact information, please visit https://www.icann.org/en/accredited-registrars.
+
+If the registration data you are seeking is not provided in the lookup results, please use the Registration Data Request Service (RDRS) to submit a request for nonpublic registration data. RDRS is intended for use by requestors with a legitimate interest in accessing nonpublic registration data.
+
+
+
+
+Domain Information
+Name: EXAMPLE.COM
+Registry Domain ID: 2336799_DOMAIN_COM-VRSN
+Domain Status:
+clientDeleteProhibited
+clientTransferProhibited
+clientUpdateProhibited
+Nameservers:
+ELLIOTT.NS.CLOUDFLARE.COM
+HERA.NS.CLOUDFLARE.COM
+Dates
+Registry Expiration: 2026-08-13 04:00:00 UTC
+Updated: 2026-01-16 18:26:50 UTC
+Created: 1995-08-14 04:00:00 UTCRegistrar Information
+Name: RESERVED-Internet Assigned Numbers Authority
+IANA ID: 376DNSSEC Information
+Delegation Signed: Signed
+Delegation Signer Data:
+Key Tag:  
+2371
+Algorithm:  
+13
+Digest Type:  
+2
+Digest:  
+C988EC423E3880EB8DD8A46FE06CA230EE23F35B578D64E78B29C3E1C83D245A
+
+Authoritative Servers
+Registry Server URL: https://rdap.verisign.com/com/v1/domain/example.com
+Last updated from Registry RDAP DB: 2026-06-19T14:45:33ZNotices and Remarks
+Notices:
+Terms of Service
+Service subject to Terms of Use.
+https://www.verisign.com/domain-names/registration-data-access-protocol/terms-service/index.xhtml
+Status Codes
+For more information on domain status codes, please visit https://icann.org/epp
+https://icann.org/epp
+RDDS Inaccuracy Complaint Form
+URL of the ICANN RDDS Inaccuracy Complaint Form: https://icann.org/wicf
+https://icann.org/wicf
+
+Raw Registry RDAP Response
+{
+  "objectClassName": "domain",
+  "handle": "2336799_DOMAIN_COM-VRSN",
+  "ldhName": "EXAMPLE.COM",
+  "links": [
+    {
+      "value": "https://rdap.verisign.com/com/v1/domain/EXAMPLE.COM",
+      "rel": "self",
+      "href": "https://rdap.verisign.com/com/v1/domain/EXAMPLE.COM",
+      "type": "application/rdap+json"
+    }
+  ],
+  "status": [
+    "client delete prohibited",
+    "client transfer prohibited",
+    "client update prohibited"
+  ],
+  "entities": [
+    {
+      "objectClassName": "entity",
+      "handle": "376",
+      "roles": [
+        "registrar"
+      ],
+      "publicIds": [
+        {
+          "type": "IANA Registrar ID",
+          "identifier": "376"
+        }
+      ],
+      "vcardArray": [
+        "vcard",
+        [
+          [
+            "version",
+            {},
+            "text",
+            "4.0"
+          ],
+          [
+            "fn",
+            {},
+            "text",
+            "RESERVED-Internet Assigned Numbers Authority"
+          ]
+        ]
+      ],
+      "entities": [
+        {
+          "objectClassName": "entity",
+          "roles": [
+            "abuse"
+          ],
+          "vcardArray": [
+            "vcard",
+            [
+              [
+                "version",
+                {},
+                "text",
+                "4.0"
+              ],
+              [
+                "fn",
+                {},
+                "text",
+                ""
+              ],
+              [
+                "tel",
+                {
+                  "type": "voice"
+                },
+                "uri",
+                ""
+              ],
+              [
+                "email",
+                {},
+                "text",
+                ""
+              ]
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "eventAction": "registration",
+      "eventDate": "1995-08-14T04:00:00Z"
+    },
+    {
+      "eventAction": "expiration",
+      "eventDate": "2026-08-13T04:00:00Z"
+    },
+    {
+      "eventAction": "last changed",
+      "eventDate": "2026-01-16T18:26:50Z"
+    },
+    {
+      "eventAction": "last update of RDAP database",
+      "eventDate": "2026-06-19T14:45:33Z"
+    }
+  ],
+  "secureDNS": {
+    "delegationSigned": true,
+    "dsData": [
+      {
+        "keyTag": 2371,
+        "algorithm": 13,
+        "digestType": 2,
+        "digest": "C988EC423E3880EB8DD8A46FE06CA230EE23F35B578D64E78B29C3E1C83D245A"
+      }
+    ]
+  },
+  "nameservers": [
+    {
+      "objectClassName": "nameserver",
+      "ldhName": "ELLIOTT.NS.CLOUDFLARE.COM"
+    },
+    {
+      "objectClassName": "nameserver",
+      "ldhName": "HERA.NS.CLOUDFLARE.COM"
+    }
+  ],
+  "rdapConformance": [
+    "rdap_level_0",
+    "icann_rdap_technical_implementation_guide_1",
+    "icann_rdap_response_profile_1"
+  ],
+  "notices": [
+    {
+      "title": "Terms of Service",
+      "description": [
+        "Service subject to Terms of Use."
+      ],
+      "links": [
+        {
+          "href": "https://www.verisign.com/domain-names/registration-data-access-protocol/terms-service/index.xhtml",
+          "type": "text/html",
+          "value": "https://rdap.verisign.com/com/v1/domain/example.com",
+          "rel": "terms-of-service"
+        }
+      ]
+    },
+    {
+      "title": "Status Codes",
+      "description": [
+        "For more information on domain status codes, please visit https://icann.org/epp"
+      ],
+      "links": [
+        {
+          "href": "https://icann.org/epp",
+          "type": "text/html"
+        }
+      ]
+    },
+    {
+      "title": "RDDS Inaccuracy Complaint Form",
+      "description": [
+        "URL of the ICANN RDDS Inaccuracy Complaint Form: https://icann.org/wicf"
+      ],
+      "links": [
+        {
+          "href": "https://icann.org/wicf",
+          "type": "text/html",
+          "value": "https://rdap.verisign.com/com/v1/domain/example.com",
+          "rel": "help"
+        }
+      ]
+    }
+  ]
+}
+YoutubeTwitterLinkedinFlickrFacebookNewlettersCommunity WikiICANN Blog
+Who We Are
+Get started
+ICANN Learn
+Participate
+Diversity at ICANN
+Groups
+Board
+CEO Corner
+Staff
+Careers
+Public Responsibility
+Contact Us
+Locations
+I Need Help
+Report Security Issues
+Certificate Authority
+Registry Liaison
+Ombuds
+Complaints Office
+Media
+Accountability and Transparency
+Accountability Mechanisms
+Document Disclosure
+Independent Review Process
+Request for Reconsideration
+Empowered Community
+Employee Anonymous Hotline Policy and Procedures
+Governance
+Governance Documents
+Agreements
+Organizational Reviews
+Specific Reviews
+Annual Report
+Financials
+Planning
+RFPs
+Litigation
+Correspondence
+Help
+Dispute Resolution
+Domain Name
+Dispute Resolution
+Name Collision
+ICANN Lookup
+Data Protection
+Data Privacy
+Practices
+Privacy Policy
+Terms of Service
+Cookies Policy
+© Internet Corporation for Assigned Names and Numbers. 
+Privacy Policy  Terms of Service  Cookies Policy 

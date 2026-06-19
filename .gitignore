@@ -1,5 +1,9 @@
 node_modules
+.DS_Store
 .env
 .vscode
 lib
 dist
+coverage
+.DS_Store
+*.tgz
