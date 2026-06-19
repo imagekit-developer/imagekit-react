@@ -1,6 +1,9 @@
 node_modules
+.DS_Store
 .env
 .vscode
 lib
 dist
-src/test/__snapshots__
+coverage
+.DS_Store
+*.tgz
