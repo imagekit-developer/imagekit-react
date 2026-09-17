@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+  # Manual trigger, e.g. when GitHub drops the push event for a merge.
+  workflow_dispatch:
 
 permissions:
   contents: write
