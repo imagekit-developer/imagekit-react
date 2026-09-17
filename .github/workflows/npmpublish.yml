@@ -5,35 +5,7 @@ on:
     types: [published]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20.x]
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Build and Test
-        run: |
-          npm install
-          npm run build
-          npm pack
-          cd test-app
-          npm install
-          npm install ../imagekit-react-*.tgz --no-save
-          npx playwright install --with-deps
-          npm run test:e2e
-        env:
-          CI: true
-
-
   publish:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
